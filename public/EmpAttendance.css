@@ -1,0 +1,196 @@
+.react-calendar {
+   
+    background: rgb(234, 245, 234);
+    border: 0.5px solid #a0a096;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.125em;
+    padding: 1rem;
+  }
+  
+  .react-calendar--doubleView {
+    width: 700px;
+  }
+  
+  .react-calendar--doubleView .react-calendar__viewContainer {
+    display: flex;
+    margin: -0.5em;
+  }
+  
+  .react-calendar--doubleView .react-calendar__viewContainer > * {
+    width: 50%;
+    margin: 0.5em;
+  }
+  
+  .react-calendar,
+  .react-calendar *,
+  .react-calendar *:before,
+  .react-calendar *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  
+  .react-calendar button {
+    margin: 0px;
+    border: 1px solid rgb(0, 0, 0);
+    outline: none;
+  }
+  
+  .react-calendar button:enabled:hover {
+    cursor: pointer;
+    background-color: #757575;
+  }
+  
+  .react-calendar__navigation {
+    display: flex;
+    height: 40px;
+    margin-bottom: 1em;
+  }
+  
+  .react-calendar__navigation button {
+    min-width: 44px;
+    font-size: 20px;
+    padding: 0px 10px;
+    color:#0676e6;
+    font: bold;
+    background: none;
+  }
+  
+  .react-calendar__navigation button:disabled {
+    background-color: #f0f0f0;
+  }
+  
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    background-color: rgb(48, 112, 48);
+    color:whitesmoke;
+  }
+  
+  .react-calendar__month-view__weekdays {
+    text-align: center;
+    text-transform: uppercase;
+    font: inherit;
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+  
+  .react-calendar__month-view__weekdays__weekday {
+    padding: 0.5em;
+  }
+  
+  .react-calendar__month-view__weekNumbers .react-calendar__tile {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    font: inherit;
+    font-size: 5em;
+    font-weight: bold;
+  }
+  
+  .react-calendar__month-view__days__day--weekend {
+    color: #d10000;
+  }
+  
+  .react-calendar__month-view__days__day--neighboringMonth,
+  .react-calendar__decade-view__years__year--neighboringDecade,
+  .react-calendar__century-view__decades__decade--neighboringCentury {
+    color: #757575;
+  }
+  
+  .react-calendar__year-view .react-calendar__tile,
+  .react-calendar__decade-view .react-calendar__tile,
+  .react-calendar__century-view .react-calendar__tile {
+    padding: 9em 0.5em;
+  }
+  
+  .react-calendar__tile {
+    
+    max-width: 100%;
+    padding: 3rem 1.6667px;
+    background: rgb(255, 255, 255);
+    text-align: center;
+    line-height: 16px;
+    font: inherit;
+    font-size: 2em;
+    border-radius: 10px;
+    border: 1px solid red;
+  }
+  
+  .react-calendar__tile:disabled {
+    background-color: #f0f0f0;
+    color: #ababab;
+    
+  }
+  
+  .react-calendar__month-view__days__day--neighboringMonth:disabled,
+  .react-calendar__decade-view__years__year--neighboringDecade:disabled,
+  .react-calendar__century-view__decades__decade--neighboringCentury:disabled {
+    color: #cdcdcd;
+    
+  }
+  
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus {
+    background-color: #738e38d3;
+    color: white;
+
+    
+  }
+  
+  /* .react-calendar__tile--now {
+    background: #43d27d;
+  } */
+  
+  .react-calendar__tile--now:enabled:hover,
+  .react-calendar__tile--now:enabled:focus {
+    background: #1fce59;
+  }
+  
+  .react-calendar__tile--hasActive {
+    background: #76baff;
+  }
+  
+  .react-calendar__tile--hasActive:enabled:hover,
+  .react-calendar__tile--hasActive:enabled:focus {
+    background: #4e9be8;
+  }
+  
+  /* .react-calendar__tile--active {
+    background: #006edc;
+    color: white;
+  } */
+  
+  .react-calendar__tile--active:enabled:hover,
+  .react-calendar__tile--active:enabled:focus {
+    background: #1087ff;
+  }
+  
+  .react-calendar--selectRange .react-calendar__tile--hover {
+    background-color: #e6e6e6;
+  }
+
+  /* Add these styles to your existing CSS file */
+.absent-day {
+  background-color: #f01414; /* Red background for absent days */
+}
+
+.present-day {
+  background-color: #3ecd3e; /* Green background for present days */
+ 
+}
+
+.current-day {
+  background-color: #0ba8eb; /* Green background for present days */
+  color:white
+}
+.holi-day {
+  background-color: rgb(30, 183, 183); /* Green background for present days */
+  color:white
+}
+.half-day {
+  background-color: #ecec1d; /* Yellow background for holiday days */
+ 
+}
+.white {
+  background-color: #ffffff; /* Yellow background for holiday days */
+}

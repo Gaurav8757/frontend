@@ -1,0 +1,43 @@
+table {
+    overflow-y: scroll;
+    table-layout: fixed;
+    
+  }
+  th, td {
+    
+    /* border: 1px solid #ddd; */
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  
+  .pane-hScroll {
+    overflow-y: auto;
+   
+  }
+  .pane-vScroll {
+    overflow-y: auto;
+    overflow-x: auto; 
+    overflow-x: scroll;
+  }
+  
+  .pane--table2 {
+    
+    
+  }
+   th, td {
+    width: auto;
+    min-width: 160px;
+    
+  }
+  tbody {
+   
+    overflow-x: hidden;
+    display: block;
+    
+  }
+   thead {
+      display: table-row;
+  }
