@@ -64,6 +64,13 @@ function FinanceDashboard() {
   const [monthlyNonMotorCount, setMonthlyNonMotorCount] = useState(0);
   const [dailyNonMotorCount, setDailyNonMotorCount] = useState(0);
 
+  const [totalLifePayout, setTotalLifePayout] = useState(0);
+  const [monthlyLifePayout, setMonthlyLifePayout] = useState(0);
+  const [dailyLifePayout, setDailyLifePayout] = useState(0);
+  const [totalLifeCount, setTotalLifeCount] = useState(0);
+  const [monthlyLifeCount, setMonthlyLifeCount] = useState(0);
+  const [dailyLifeCount, setDailyLifeCount] = useState(0);
+
   const [totalAdvisors, setTotalAdvisors] = useState(0);
   const [advisor, setAdvisors] = useState([]);
   const [advCounts, setAdvCounts] = useState({});
@@ -261,6 +268,32 @@ function FinanceDashboard() {
   });
   const dailyNonMotorCountProps = useSpring({
     number: dailyNonMotorCount,
+    from: { number: 0 },
+  });
+
+  // life
+  const totalLifePayoutProps = useSpring({
+    number: totalLifePayout,
+    from: { number: 0 },
+  });
+  const monthlyLifePayoutProps = useSpring({
+    number: monthlyLifePayout,
+    from: { number: 0 },
+  });
+  const dailyLifePayoutProps = useSpring({
+    number: dailyLifePayout,
+    from: { number: 0 },
+  });
+  const totalLifeCountProps = useSpring({
+    number: totalLifeCount,
+    from: { number: 0 },
+  });
+  const monthlyLifeCountProps = useSpring({
+    number: monthlyLifeCount,
+    from: { number: 0 },
+  });
+  const dailyLifeCountProps = useSpring({
+    number: dailyLifeCount,
     from: { number: 0 },
   });
 
@@ -704,6 +737,10 @@ function FinanceDashboard() {
           const twMonthlyTotals = calculateTotals(filteredMonthlyData, "TW");
           const twDailyTotals = calculateTotals(filteredDailyData, "TW");
 
+          const lifeYearlyTotals = calculateTotals(filteredYearlyData, "LIFE");
+        const lifeMonthlyTotals = calculateTotals(filteredMonthlyData, "LIFE");
+        const lifeDailyTotals = calculateTotals(filteredDailyData, "LIFE");
+
           const healthYearlyTotals = calculateTotals(
             filteredYearlyData,
             "HEALTH"
@@ -835,6 +872,13 @@ function FinanceDashboard() {
             setTotalPvtCarCount(pvtCarYearlyTotals.totalCount);
             setMonthlyPvtCarCount(pvtCarMonthlyTotals.totalCount);
             setDailyPvtCarCount(pvtCarDailyTotals.totalCount);
+
+            setTotalLifePayout(lifeYearlyTotals.totalPayout);
+            setMonthlyLifePayout(lifeMonthlyTotals.totalPayout);
+            setDailyLifePayout(lifeDailyTotals.totalPayout);
+            setTotalLifeCount(lifeYearlyTotals.totalCount);
+            setMonthlyLifeCount(lifeMonthlyTotals.totalCount);
+            setDailyLifeCount(lifeDailyTotals.totalCount);
 
             setTotalTwPayout(twYearlyTotals.totalPayout);
             setMonthlyTwPayout(twMonthlyTotals.totalPayout);
@@ -1174,20 +1218,62 @@ function FinanceDashboard() {
             </animated.span>
           </div>
         </div>
+
+         {/* life */}
+         <div className="block shadow-2xl drop-shadow-2xl shadow-blue-650">
+          <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
+            LIFE{" "}
+          </h1>
+          <div className=" grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-20 lg:h-20 xl:h-12  rounded-t-lg bg-cyan-600  ">
+            <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold   focus:ring-[#050708]/50 uppercase">
+              YTD
+            </span>
+            <animated.span className="mx-1 text-xs sm:text-xs md:text-sm lg:text-basese xl:text-base font-bold text-gray-50">
+              {totalLifeCountProps.number.to((n) => n.toFixed(0))}
+            </animated.span>
+            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2  text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
+              {totalLifePayoutProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
+            </animated.span>
+          </div>
+
+          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-20 lg:h-20 xl:h-12   bg-blue-600 ">
+            <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg  text-xs sm:text-sm md:text-sm lg:text-base xl:text-base  font-semibold   focus:ring-[#050708]/50 uppercase">
+              MTD
+            </span>
+            <animated.span className="mx-1 text-xs sm:text-xs md:text-sm lg:text-basese xl:text-base font-bold text-gray-50">
+              {monthlyLifeCountProps.number.to((n) => n.toFixed(0))}
+            </animated.span>
+            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2  text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
+              {monthlyLifePayoutProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
+            </animated.span>
+          </div>
+
+          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-20 lg:h-20 xl:h-12 rounded-b-lg bg-sky-500 ">
+            <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold   focus:ring-[#050708]/50 uppercase">
+              FTD
+            </span>
+            <animated.span className="mx-1 text-xs sm:text-xs md:text-sm lg:text-basese xl:text-base font-bold text-gray-50">
+              {dailyLifeCountProps.number.to((n) => n.toFixed(0))}
+            </animated.span>
+            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2  text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
+              {dailyLifePayoutProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
+            </animated.span>
+          </div>
+        </div>
       </div>
 
 
  {/* dynamic branches */}
- <div className="flex flex-wrap justify-between">
+ <div className="grid xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-5 sm:grid-cols-4 grid-cols-3  gap-3">
         {branches.map((br, index) => (
           <div
             key={index}
-            className="flex flex-col w-64 shadow-2xl drop-shadow-2xl shadow-blue-650 mb-4"
+            className="flex flex-col justify-between shadow-2xl drop-shadow-2xl shadow-blue-650 mb-4"
           >
             <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
               {br.toUpperCase()}
             </h1>
-            <div className="grid xl:flex lg:flex md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-16 lg:h-12 xl:h-12 rounded-t-lg bg-cyan-600">
+            <div className="grid xl:flex lg:flex md:grid sm:grid items-center xl:justify-between lg:justify-between h-16 lg:p-1 sm:h-16 lg:h-12 xl:h-12 rounded-t-lg bg-cyan-600">
               <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2 rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold focus:ring-[#050708]/50 uppercase">
                 YTD
               </span>
@@ -1198,7 +1284,7 @@ function FinanceDashboard() {
               </animated.span>
             </div>
 
-            <div className="grid xl:flex lg:flex text-white md:grid sm:grid items-center xl:justify-between h-16 sm:h-16 lg:p-1 lg:h-12 xl:h-12 bg-blue-600">
+            <div className="grid xl:flex lg:flex text-white md:grid sm:grid items-center xl:justify-between lg:justify-between h-16 sm:h-16 lg:p-1 lg:h-12 xl:h-12 bg-blue-600">
               <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold focus:ring-[#050708]/50 uppercase">
                 MTD
               </span>
@@ -1209,7 +1295,7 @@ function FinanceDashboard() {
               </animated.span>
             </div>
 
-            <div className="grid xl:flex lg:flex text-white md:grid sm:grid items-center xl:justify-between h-16 sm:h-16 lg:p-1 lg:h-16 xl:h-12 rounded-b-lg bg-sky-500">
+            <div className="grid xl:flex lg:flex text-white md:grid sm:grid items-center xl:justify-between lg:justify-between h-16 sm:h-16 lg:p-1 lg:h-16 xl:h-12 rounded-b-lg bg-sky-500">
               <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2 rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold focus:ring-[#050708]/50 uppercase">
                 FTD
               </span>
