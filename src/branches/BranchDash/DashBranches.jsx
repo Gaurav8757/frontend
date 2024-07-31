@@ -55,35 +55,16 @@ function DashBranches() {
   const [monthlyHealthCount, setMonthlyHealthCount] = useState(0);
   const [dailyHealthCount, setDailyHealthCount] = useState(0);
 
-  const [hajipurNetPremium, setHajipurNetPremium] = useState(0);
-  const [hajipurMonthlyNetPremium, setHajipurMonthlyNetPremium] = useState(0);
-  const [hajipurDailyNetPremium, setHajipurDailyNetPremium] = useState(0);
-
-  const [ranchiNetPremium, setRanchiNetPremium] = useState(0);
-  const [ranchiMonthlyNetPremium, setRanchiMonthlyNetPremium] = useState(0);
-  const [ranchiDailyNetPremium, setRanchiDailyNetPremium] = useState(0);
-
-  const [patnaNetPremium, setPatnaNetPremium] = useState(0);
-  const [patnaMonthlyNetPremium, setPatnaMonthlyNetPremium] = useState(0);
-  const [patnaDailyNetPremium, setPatnaDailyNetPremium] = useState(0);
-
-  const [samastipurNetPremium, setSamastipurNetPremium] = useState(0);
-  const [samastipurMonthlyNetPremium, setSamastipurMonthlyNetPremium] =
-    useState(0);
-  const [samastipurDailyNetPremium, setSamastipurDailyNetPremium] = useState(0);
-
-  const [muzaffarpurNetPremium, setMuzaffarpurNetPremium] = useState(0);
-  const [muzaffarpurMonthlyNetPremium, setMuzaffarpurMonthlyNetPremium] =
-    useState(0);
-  const [muzaffarpurDailyNetPremium, setMuzaffarpurDailyNetPremium] =
-    useState(0);
-
   const [totalNonMotorPayout, setTotalNonMotorPayout] = useState(0);
   const [monthlyNonMotorPayout, setMonthlyNonMotorPayout] = useState(0);
   const [dailyNonMotorPayout, setDailyNonMotorPayout] = useState(0);
   const [totalNonMotorCount, setTotalNonMotorCount] = useState(0);
   const [monthlyNonMotorCount, setMonthlyNonMotorCount] = useState(0);
   const [dailyNonMotorCount, setDailyNonMotorCount] = useState(0);
+
+  const [branches, setBranches] = useState([]);
+  const [branchesCounts, setBranchesCounts] = useState({});
+
   const name = sessionStorage.getItem("name");
 
   const allDetailsProps = useSpring({
@@ -121,70 +102,7 @@ function DashBranches() {
     from: { number: 0 },
   });
 
-  const hajipurNetPremiumProps = useSpring({
-    number: hajipurNetPremium,
-    from: { number: 0 },
-  });
-  const hajipurMonthlyNetPremiumProps = useSpring({
-    number: hajipurMonthlyNetPremium,
-    from: { number: 0 },
-  });
-  const hajipurDailyNetPremiumProps = useSpring({
-    number: hajipurDailyNetPremium,
-    from: { number: 0 },
-  });
-
-  const patnaNetPremiumProps = useSpring({
-    number: patnaNetPremium,
-    from: { number: 0 },
-  });
-  const patnaMonthlyNetPremiumProps = useSpring({
-    number: patnaMonthlyNetPremium,
-    from: { number: 0 },
-  });
-  const patnaDailyNetPremiumProps = useSpring({
-    number: patnaDailyNetPremium,
-    from: { number: 0 },
-  });
-
-  const samastipurNetPremiumProps = useSpring({
-    number: samastipurNetPremium,
-    from: { number: 0 },
-  });
-  const samastipurMonthlyNetPremiumProps = useSpring({
-    number: samastipurMonthlyNetPremium,
-    from: { number: 0 },
-  });
-  const samastipurDailyNetPremiumProps = useSpring({
-    number: samastipurDailyNetPremium,
-    from: { number: 0 },
-  });
-
-  const muzaffarpurNetPremiumProps = useSpring({
-    number: muzaffarpurNetPremium,
-    from: { number: 0 },
-  });
-  const muzaffarpurMonthlyNetPremiumProps = useSpring({
-    number: muzaffarpurMonthlyNetPremium,
-    from: { number: 0 },
-  });
-  const muzaffarpurDailyNetPremiumProps = useSpring({
-    number: muzaffarpurDailyNetPremium,
-    from: { number: 0 },
-  });
-
-  const ranchiNetPremiumProps = useSpring({
-    number: ranchiNetPremium,
-    from: { number: 0 },
-  });
-  const ranchiMonthlyNetPremiumProps = useSpring({
-    number: ranchiMonthlyNetPremium,
-    from: { number: 0 },
-  });
-  const ranchiDailyNetPremiumProps = useSpring({
-    number: ranchiDailyNetPremium,
-    from: { number: 0 },
-  });
+  
 
   const totalCvPayoutProps = useSpring({
     number: totalCvPayout,
@@ -377,11 +295,11 @@ function DashBranches() {
           const currentDay = new Date().getDate();
           const currentYear = new Date().getFullYear();
 
-          const filteredYearlyData = allData.filter((item) => {
-            const itemDate = new Date(item.entryDate);
-            const itemYear = itemDate.getFullYear();
-            return itemYear === currentYear;
-          });
+          // const filteredYearlyData = allData.filter((item) => {
+          //   const itemDate = new Date(item.entryDate);
+          //   const itemYear = itemDate.getFullYear();
+          //   return itemYear === currentYear;
+          // });
 
           const filteredMonthlyData = allData.filter((item) => {
             const itemDate = new Date(item.entryDate);
@@ -402,136 +320,120 @@ function DashBranches() {
             );
           });
 
-          const calculateBranchTotals = (filteredData, branch) => {
-            const branchData = filteredData.filter(
-              (item) => item.branch === branch
+          // const calculateBranchTotals = (filteredData, branch) => {
+          //   const branchData = filteredData.filter(
+          //     (item) => item.branch === branch
+          //   );
+          //   const totalPayout = branchData.reduce(
+          //     (sum, item) => sum + parseFloat(item.netPremium || 0),
+          //     0
+          //   );
+          //   return totalPayout;
+          // };
+
+          // const calculateMonthlyBranchTotals = (filteredData, branch) => {
+          //   const currentMonth = new Date().getMonth() + 1;
+          //   const branchData = filteredData.filter((item) => {
+          //     const itemDate = new Date(item.entryDate);
+          //     const itemMonth = itemDate.getMonth() + 1;
+          //     return item.branch === branch && itemMonth === currentMonth;
+          //   });
+          //   const totalPayout = branchData.reduce(
+          //     (sum, item) => sum + parseFloat(item.netPremium || 0),
+          //     0
+          //   );
+          //   return totalPayout;
+          // };
+
+          // const calculateDailyBranchTotals = (filteredData, branch) => {
+          //   const currentDay = new Date().getDate();
+          //   const currentMonth = new Date().getMonth() + 1;
+          //   const branchData = filteredData.filter((item) => {
+          //     const itemDate = new Date(item.entryDate);
+          //     const itemDay = itemDate.getDate();
+          //     const itemMonth = itemDate.getMonth() + 1;
+          //     return (
+          //       item.branch === branch &&
+          //       itemDay === currentDay &&
+          //       itemMonth === currentMonth
+          //     );
+          //   });
+          //   const totalPayout = branchData.reduce(
+          //     (sum, item) => sum + parseFloat(item.netPremium || 0),
+          //     0
+          //   );
+          //   return totalPayout;
+          // };
+
+
+           // Extract unique branch (case insensitive), excluding empty branch
+           const uniqueBranches = [
+            ...new Set(
+              allData
+                .filter((item) => item.branch.trim() !== "")
+                .map((item) => item.branch.toLowerCase())
+            ),
+          ];
+          setBranches(uniqueBranches);
+          const newBranchesCounts = uniqueBranches.reduce((acc, br) => {
+            const branchData = allData.filter(
+              (item) => item.branch.toLowerCase() === br
             );
-            const totalPayout = branchData.reduce(
-              (sum, item) => sum + parseFloat(item.netPremium || 0),
-              0
-            );
-            return totalPayout;
-          };
 
-          const calculateMonthlyBranchTotals = (filteredData, branch) => {
-            const currentMonth = new Date().getMonth() + 1;
-            const branchData = filteredData.filter((item) => {
-              const itemDate = new Date(item.entryDate);
-              const itemMonth = itemDate.getMonth() + 1;
-              return item.branch === branch && itemMonth === currentMonth;
-            });
-            const totalPayout = branchData.reduce(
-              (sum, item) => sum + parseFloat(item.netPremium || 0),
-              0
-            );
-            return totalPayout;
-          };
+            acc[br] = {
+              ytd: Math.round(
+                branchData
+                  .filter(
+                    (item) =>
+                      new Date(item.entryDate).getFullYear() === currentYear
+                  )
+                  .reduce(
+                    (sum, item) => sum + parseFloat(item.netPremium || 0),
+                    0
+                  )
+              ),
 
-          const calculateDailyBranchTotals = (filteredData, branch) => {
-            const currentDay = new Date().getDate();
-            const currentMonth = new Date().getMonth() + 1;
-            const branchData = filteredData.filter((item) => {
-              const itemDate = new Date(item.entryDate);
-              const itemDay = itemDate.getDate();
-              const itemMonth = itemDate.getMonth() + 1;
-              return (
-                item.branch === branch &&
-                itemDay === currentDay &&
-                itemMonth === currentMonth
-              );
-            });
-            const totalPayout = branchData.reduce(
-              (sum, item) => sum + parseFloat(item.netPremium || 0),
-              0
-            );
-            return totalPayout;
-          };
+              mtd: Math.round(
+                branchData
+                  .filter((item) => {
+                    const itemDate = new Date(item.entryDate);
+                    return (
+                      itemDate.getMonth() + 1 === currentMonth &&
+                      itemDate.getFullYear() === currentYear
+                    );
+                  })
+                  .reduce(
+                    (sum, item) => sum + parseFloat(item.netPremium || 0),
+                    0
+                  )
+              ),
 
-          const hajipurNetPremium = calculateBranchTotals(
-            filteredYearlyData,
-            "HAJIPUR"
-          );
-          const patnaNetPremium = calculateBranchTotals(
-            filteredYearlyData,
-            "PATNA"
-          );
-          const samastipurNetPremium = calculateBranchTotals(
-            filteredYearlyData,
-            "SAMASTIPUR"
-          );
-          const muzaffarpurNetPremium = calculateBranchTotals(
-            filteredYearlyData,
-            "MUZAFFARPUR"
-          );
-          const ranchiNetPremium = calculateBranchTotals(
-            filteredYearlyData,
-            "RANCHI"
-          );
+              ftd: Math.round(
+                branchData
+                  .filter((item) => {
+                    const itemDate = new Date(item.entryDate);
+                    return (
+                      itemDate.getDate() === currentDay &&
+                      itemDate.getMonth() + 1 === currentMonth &&
+                      itemDate.getFullYear() === currentYear
+                    );
+                  })
+                  .reduce(
+                    (sum, item) => sum + parseFloat(item.netPremium || 0),
+                    0
+                  )
+              ),
+            };
 
-          const hajipurMonthlyNetPremium = calculateMonthlyBranchTotals(
-            filteredMonthlyData,
-            "HAJIPUR"
-          );
-          const patnaMonthlyNetPremium = calculateMonthlyBranchTotals(
-            filteredMonthlyData,
-            "PATNA"
-          );
-          const samastipurMonthlyNetPremium = calculateMonthlyBranchTotals(
-            filteredMonthlyData,
-            "SAMASTIPUR"
-          );
-          const muzaffarpurMonthlyNetPremium = calculateMonthlyBranchTotals(
-            filteredMonthlyData,
-            "MUZAFFARPUR"
-          );
-          const ranchiMonthlyNetPremium = calculateMonthlyBranchTotals(
-            filteredMonthlyData,
-            "RANCHI"
-          );
-
-          const hajipurDailyNetPremium = calculateDailyBranchTotals(
-            filteredDailyData,
-            "HAJIPUR"
-          );
-          const patnaDailyNetPremium = calculateDailyBranchTotals(
-            filteredDailyData,
-            "PATNA"
-          );
-          const samastipurDailyNetPremium = calculateDailyBranchTotals(
-            filteredDailyData,
-            "SAMASTIPUR"
-          );
-          const muzaffarpurDailyNetPremium = calculateDailyBranchTotals(
-            filteredDailyData,
-            "MUZAFFARPUR"
-          );
-          const ranchiDailyNetPremium = calculateDailyBranchTotals(
-            filteredDailyData,
-            "RANCHI"
-          );
+            return acc;
+          }, {});
 
           startTransition(() => {
             setAllDetailsData(allData);
             setMonthlyData(filteredMonthlyData);
             setDailyData(filteredDailyData);
-
-            setHajipurNetPremium(hajipurNetPremium);
-            setPatnaNetPremium(patnaNetPremium);
-            setSamastipurNetPremium(samastipurNetPremium);
-            setMuzaffarpurNetPremium(muzaffarpurNetPremium);
-            setRanchiNetPremium(ranchiNetPremium);
-
-            setHajipurMonthlyNetPremium(hajipurMonthlyNetPremium);
-            setPatnaMonthlyNetPremium(patnaMonthlyNetPremium);
-            setSamastipurMonthlyNetPremium(samastipurMonthlyNetPremium);
-            setMuzaffarpurMonthlyNetPremium(muzaffarpurMonthlyNetPremium);
-            setRanchiMonthlyNetPremium(ranchiMonthlyNetPremium);
-
-            setHajipurDailyNetPremium(hajipurDailyNetPremium);
-            setPatnaDailyNetPremium(patnaDailyNetPremium);
-            setSamastipurDailyNetPremium(samastipurDailyNetPremium);
-            setMuzaffarpurDailyNetPremium(muzaffarpurDailyNetPremium);
-            setRanchiDailyNetPremium(ranchiDailyNetPremium);
+            setBranchesCounts(newBranchesCounts);
+           
           });
         } catch (error) {
           console.error("Policy calculation by ID caught an error", error);
@@ -863,7 +765,7 @@ function DashBranches() {
         </div>
       </div>
 
-      <div className="grid grid-cols-5 gap-3 mb-8">
+      <div className="grid grid-cols-5 gap-3 mb-5">
         <div className="block shadow-2xl drop-shadow-2xl shadow-blue-650">
           <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
             NET SALES
@@ -1140,185 +1042,52 @@ function DashBranches() {
         </div>
       </div>
 
-      <div className="grid grid-cols-5 gap-3 mb-8">
-        {/* HAJIPUR */}
-        <div className="block shadow-2xl drop-shadow-2xl shadow-blue-650">
-          <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
-            HAJIPUR
-          </h1>
-          <div className=" grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-16 lg:h-12 xl:h-12  rounded-t-lg bg-cyan-600 ">
-            <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold   focus:ring-[#050708]/50 uppercase">
-              YTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {hajipurNetPremiumProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
-            </animated.span>
-          </div>
+      {/* dynamic branches */}
+ <div className="flex flex-wrap justify-between mb-5">
+        {branches.map((br, index) => (
+          <div
+            key={index}
+            className="flex flex-col w-64 shadow-2xl drop-shadow-2xl shadow-blue-650 mb-4"
+          >
+            <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
+              {br.toUpperCase()}
+            </h1>
+            <div className="grid xl:flex lg:flex md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-16 lg:h-12 xl:h-12 rounded-t-lg bg-cyan-600">
+              <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2 rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold focus:ring-[#050708]/50 uppercase">
+                YTD
+              </span>
+              <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
+                {branchesCounts[br]?.ytd
+                  ? `₹ ${branchesCounts[br].ytd.toFixed(0)}`
+                  : "₹ 0"}
+              </animated.span>
+            </div>
 
-          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 sm:h-16 lg:p-1 lg:h-12 xl:h-12   bg-blue-600 ">
-            <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg  text-xs sm:text-sm md:text-sm lg:text-base xl:text-base  font-semibold   focus:ring-[#050708]/50 uppercase">
-              MTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2  text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {hajipurMonthlyNetPremiumProps.number.to(
-                (n) => `₹ ${n.toFixed(0)}`
-              )}
-            </animated.span>
-          </div>
+            <div className="grid xl:flex lg:flex text-white md:grid sm:grid items-center xl:justify-between h-16 sm:h-16 lg:p-1 lg:h-12 xl:h-12 bg-blue-600">
+              <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold focus:ring-[#050708]/50 uppercase">
+                MTD
+              </span>
+              <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
+                {branchesCounts[br]?.mtd
+                  ? `₹ ${branchesCounts[br].mtd.toFixed(0)}`
+                  : "₹ 0"}
+              </animated.span>
+            </div>
 
-          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 sm:h-16 lg:p-1 lg:h-16 xl:h-12 rounded-b-lg bg-sky-500 ">
-            <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold   focus:ring-[#050708]/50 uppercase">
-              FTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2  text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {hajipurDailyNetPremiumProps.number.to(
-                (n) => `₹ ${n.toFixed(0)}`
-              )}
-            </animated.span>
+            <div className="grid xl:flex lg:flex text-white md:grid sm:grid items-center xl:justify-between h-16 sm:h-16 lg:p-1 lg:h-16 xl:h-12 rounded-b-lg bg-sky-500">
+              <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2 rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold focus:ring-[#050708]/50 uppercase">
+                FTD
+              </span>
+              <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
+                {branchesCounts[br]?.ftd
+                  ? `₹ ${branchesCounts[br].ftd.toFixed(0)}`
+                  : "₹ 0"}
+              </animated.span>
+            </div>
           </div>
-        </div>
-        {/* PATNA */}
-        <div className="block shadow-2xl drop-shadow-2xl shadow-blue-650">
-          <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
-            PATNA
-          </h1>
-          <div className=" grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-16 lg:h-12 xl:h-12  rounded-t-lg bg-cyan-600">
-            <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold   focus:ring-[#050708]/50 uppercase">
-              YTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {patnaNetPremiumProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
-            </animated.span>
-          </div>
-
-          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 sm:h-16 lg:p-1 lg:h-12 xl:h-12   bg-blue-600 ">
-            <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg  text-xs sm:text-sm md:text-sm lg:text-base xl:text-base  font-semibold   focus:ring-[#050708]/50 uppercase">
-              MTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2  text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {patnaMonthlyNetPremiumProps.number.to(
-                (n) => `₹ ${n.toFixed(0)}`
-              )}
-            </animated.span>
-          </div>
-
-          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 sm:h-16 lg:p-1 lg:h-16 xl:h-12 rounded-b-lg bg-sky-500 ">
-            <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold   focus:ring-[#050708]/50 uppercase">
-              FTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2  text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {patnaDailyNetPremiumProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
-            </animated.span>
-          </div>
-        </div>
-        {/* SAMASTIPUR */}
-        <div className="block shadow-2xl drop-shadow-2xl shadow-blue-650">
-          <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
-            SAMASTIPUR
-          </h1>
-          <div className=" grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-16 lg:h-12 xl:h-12  rounded-t-lg bg-cyan-600 ">
-            <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold   focus:ring-[#050708]/50 uppercase">
-              YTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {samastipurNetPremiumProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
-            </animated.span>
-          </div>
-
-          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 sm:h-16 lg:p-1 lg:h-12 xl:h-12   bg-blue-600 ">
-            <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg  text-xs sm:text-sm md:text-sm lg:text-base xl:text-base  font-semibold   focus:ring-[#050708]/50 uppercase">
-              MTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2  text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {samastipurMonthlyNetPremiumProps.number.to(
-                (n) => `₹ ${n.toFixed(0)}`
-              )}
-            </animated.span>
-          </div>
-
-          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 sm:h-16 lg:p-1 lg:h-16 xl:h-12 rounded-b-lg bg-sky-500 ">
-            <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold   focus:ring-[#050708]/50 uppercase">
-              FTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2  text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {samastipurDailyNetPremiumProps.number.to(
-                (n) => `₹ ${n.toFixed(0)}`
-              )}
-            </animated.span>
-          </div>
-        </div>
-        {/* MUZAFFARPUR */}
-        <div className="block shadow-2xl drop-shadow-2xl shadow-blue-650">
-          <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
-            MUZAFFARPUR
-          </h1>
-          <div className=" grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-16 lg:h-12 xl:h-12  rounded-t-lg bg-cyan-600 ">
-            <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold   focus:ring-[#050708]/50 uppercase">
-              YTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {muzaffarpurNetPremiumProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
-            </animated.span>
-          </div>
-
-          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-16 lg:h-12 xl:h-12   bg-blue-600 ">
-            <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg  text-xs sm:text-sm md:text-sm lg:text-base xl:text-base  font-semibold   focus:ring-[#050708]/50 uppercase">
-              MTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2  text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {muzaffarpurMonthlyNetPremiumProps.number.to(
-                (n) => `₹ ${n.toFixed(0)}`
-              )}
-            </animated.span>
-          </div>
-
-          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-16 lg:h-16 xl:h-12 rounded-b-lg bg-sky-500 ">
-            <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold   focus:ring-[#050708]/50 uppercase">
-              FTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2  text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {muzaffarpurDailyNetPremiumProps.number.to(
-                (n) => `₹ ${n.toFixed(0)}`
-              )}
-            </animated.span>
-          </div>
-        </div>
-
-        {/* ranchi */}
-        <div className="block shadow-2xl drop-shadow-2xl shadow-blue-650">
-          <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
-            RANCHI
-          </h1>
-          <div className=" grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-16 lg:h-12 xl:h-12  rounded-t-lg bg-cyan-600 ">
-            <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold   focus:ring-[#050708]/50 uppercase">
-              YTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {ranchiNetPremiumProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
-            </animated.span>
-          </div>
-
-          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-16 lg:h-12 xl:h-12   bg-blue-600 ">
-            <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg  text-xs sm:text-sm md:text-sm lg:text-base xl:text-base  font-semibold   focus:ring-[#050708]/50 uppercase">
-              MTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2  text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {ranchiMonthlyNetPremiumProps.number.to(
-                (n) => `₹ ${n.toFixed(0)}`
-              )}
-            </animated.span>
-          </div>
-
-          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-16 lg:h-16 xl:h-12 rounded-b-lg bg-sky-500 ">
-            <span className="sm:block mx-1 text-white sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold   focus:ring-[#050708]/50 uppercase">
-              FTD
-            </span>
-            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 xl:mx-2  text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-bold text-gray-50">
-              {ranchiDailyNetPremiumProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
-            </animated.span>
-          </div>
-        </div>
+        ))}
       </div>
+
 
       {/* one liners 5  */}
       <div className="grid grid-cols-5 gap-3 mb-5">
