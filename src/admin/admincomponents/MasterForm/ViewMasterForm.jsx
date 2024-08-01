@@ -649,7 +649,7 @@ function ViewMasterForm() {
           </div>
           <div className="flex-wrap mb-4 flex justify-between  text-blue-500 max-w-auto mx-auto w-auto ">
             {/* date range filter */}
-            <div className="flex   p-0 text-start w-full lg:w-1/5">
+            <div className="flex justify-between items-center  p-0 text-start w-full lg:w-1/4">
               <label className="my-auto text-lg whitespace-nowrap font-medium text-gray-900">
                 Date:
               </label>
@@ -670,7 +670,7 @@ function ViewMasterForm() {
               />
             </div>
 
-            <div className="flex p-0 justify-center  text-end w-full lg:w-1/5">
+            <div className="flex p-0 justify-center  text-end w-full lg:w-1/4">
               <label className="my-auto  text-lg whitespace-nowrap font-medium text-gray-900">
                 ID:
               </label>

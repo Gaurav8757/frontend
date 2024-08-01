@@ -92,8 +92,6 @@ function FinanceDashboard() {
   const [branches, setBranches] = useState([]);
   const [branchesCounts, setBranchesCounts] = useState({});
 
-  
-
   const allDetailsProps = useSpring({
     number: allDetailsData.length,
     from: { number: 0 },
@@ -712,10 +710,6 @@ function FinanceDashboard() {
             return acc;
           }, {});
 
-
-
-        
-
           const cvYearlyTotals = calculateTotals(filteredYearlyData, "C V");
           const cvMonthlyTotals = calculateTotals(filteredMonthlyData, "C V");
           const cvDailyTotals = calculateTotals(filteredDailyData, "C V");
@@ -738,8 +732,11 @@ function FinanceDashboard() {
           const twDailyTotals = calculateTotals(filteredDailyData, "TW");
 
           const lifeYearlyTotals = calculateTotals(filteredYearlyData, "LIFE");
-        const lifeMonthlyTotals = calculateTotals(filteredMonthlyData, "LIFE");
-        const lifeDailyTotals = calculateTotals(filteredDailyData, "LIFE");
+          const lifeMonthlyTotals = calculateTotals(
+            filteredMonthlyData,
+            "LIFE"
+          );
+          const lifeDailyTotals = calculateTotals(filteredDailyData, "LIFE");
 
           const healthYearlyTotals = calculateTotals(
             filteredYearlyData,
@@ -1219,8 +1216,8 @@ function FinanceDashboard() {
           </div>
         </div>
 
-         {/* life */}
-         <div className="block shadow-2xl drop-shadow-2xl shadow-blue-650">
+        {/* life */}
+        <div className="block shadow-2xl drop-shadow-2xl shadow-blue-650">
           <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
             LIFE{" "}
           </h1>
@@ -1262,9 +1259,8 @@ function FinanceDashboard() {
         </div>
       </div>
 
-
- {/* dynamic branches */}
- <div className="grid xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-5 sm:grid-cols-4 grid-cols-3  gap-3">
+      {/* dynamic branches */}
+      <div className="grid xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-5 sm:grid-cols-4 grid-cols-3  gap-3">
         {branches.map((br, index) => (
           <div
             key={index}
@@ -1308,8 +1304,6 @@ function FinanceDashboard() {
           </div>
         ))}
       </div>
-
-
 
       {/* single liners code */}
       <main className="flex justify-between my-5">
@@ -1375,8 +1369,8 @@ function FinanceDashboard() {
         </div>
 
         {/* Att/Emp*/}
-        <div className="block ">
-          <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center ">
+        <div className="block">
+          <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
             Att/Emp
           </h1>
           <div className="shadow-2xl drop-shadow-2xl shadow-blue-650 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-12  sm:h-16 lg:h-16 xl:h-12  rounded-t-lg bg-green-700  ">
@@ -1414,7 +1408,7 @@ function FinanceDashboard() {
           </div>
 
           {/* leave */}
-          <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center ">
+          <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
             Leave
           </h1>
           <div className="shadow-2xl drop-shadow-2xl shadow-blue-650 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-16  sm:h-16 lg:h-16 xl:h-12  rounded-t-lg bg-red-700  ">
@@ -1453,8 +1447,8 @@ function FinanceDashboard() {
         </div>
 
         {/* part 2 employee wise data policy */}
-        <div className="block col-span-2 ">
-          <div className="grid grid-cols-6 items-center ">
+        <div className="block col-span-2">
+          <div className="grid grid-cols-6 items-center">
             <span className="col-span-3 uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
               EMP NAME
             </span>

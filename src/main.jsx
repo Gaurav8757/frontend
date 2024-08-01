@@ -199,6 +199,8 @@ import SubCompName from "./branches/aigtata/SubCompName.jsx";
 import BranchClaimList from "./branches/cic/BranchClaimList.jsx";
 import BranchIndorshment from "./branches/cic/BranchIndorshment.jsx";
 import BranchCancelation from "./branches/cic/BranchCancelation.jsx";
+import VisitDaily from "./Employee/DailyVisitReport/VisitDaily.jsx";
+import ViewDailyVisit from "./Employee/DailyVisitReport/ViewDailyVisit.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -375,6 +377,8 @@ const router = createBrowserRouter(
           <Route path="/employee/home/policy" element={<EmpPolicy />} />
           <Route path="/employee/home/lists" element={<ListOfLeave/>}/>
           <Route path="/employee/home/monthly/salary" element={<ViewSal />} />
+          <Route path="/employee/home/daily/visits/add" element={<VisitDaily />} />
+          <Route path="/employee/home/daily/visits/view" element={<ViewDailyVisit />} />
         </Route>
       </Route>
 

@@ -1142,7 +1142,7 @@ function AddFinance() {
                   <option value="TW">TW</option>
                   <option value="HEALTH">HEALTH</option>
                   <option value="NON-MOTOR">NON-MOTOR</option>
-                  {/* <option value="LIFE">LIFE</option> */}
+                  <option value="LIFE">LIFE</option>
                 </select>
                 {errors.segment && <span className="text-red-600 text-sm ">{errors.segment}</span>}
               </div>
@@ -1604,7 +1604,7 @@ function AddFinance() {
               <div className="flex flex-col p-1 mt-2 text-start w-full lg:w-1/5"></div>
               <div className="flex flex-col p-1 mt-2 text-start w-full lg:w-1/5"></div>
               <div className="flex flex-col p-1 mt-2 text-start w-full lg:w-1/5"></div>
-              <div className="mt-10 p-2 flex justify-center lg:w-full w-full">
+              <div className="mt-4 p-2 flex justify-center lg:w-full w-full">
                 <button
                   className="text-white bg-gradient-to-r from-green-500 via-green-600 to-green-700 hover:text-black hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded text-base px-4 py-2 text-center"
                   onClick={handleSubmit}
