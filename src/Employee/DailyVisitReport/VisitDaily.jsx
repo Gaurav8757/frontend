@@ -123,7 +123,7 @@ function VisitDaily() {
               </div>
 
               <div className="flex flex-col  p-2 text-start  lg:w-1/5 w-1/2">
-                <label htmlFor="mobile" className="text-base  mx-1 ">
+                <label htmlFor="mobile" className="text-base  mx-1">
                   Mobile No:
                 </label>
                 <input
@@ -133,15 +133,12 @@ function VisitDaily() {
                   name="mobile"
                   value={formData.mobile}
                   onChange={handleChange}
-                  placeholder="Mobile No."
-
-                />
+                  placeholder="Mobile No."/>
               </div>
               <div className="flex flex-col  p-2 text-start  lg:w-1/5 w-1/2"></div>
               <div className="flex flex-col  p-2 text-start  lg:w-1/5 w-1/2"></div>
               <div className="flex flex-col  p-2 text-start  lg:w-1/5 w-1/2"></div>
-            
-             
+          
             </div>
             <div className="mx-auto flex mt-8 py-1 text-center justify-center w-auto">
               <button onClick={handleSubmit} className="flex flex-col  text-white bg-gradient-to-r hover:text-black from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br focus:ring-0 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded text-base px-3 py-1 text-center " type="submit">Submit</button>
