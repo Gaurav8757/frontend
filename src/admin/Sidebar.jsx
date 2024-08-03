@@ -156,6 +156,12 @@ const Sidebar = () => {
       ]
     },
     {
+      title: "View DVR",
+      path: "/dashboard/daily/visits/view",
+      // logo: <CgProfile size={24} />,
+      logo: <img src="/tablet.png" height={5} width={25} alt="tablet"/>
+    },
+    {
       title: "View Advisor",
       path: "/dashboard/viewadvisor",
       // logo: <CgProfile size={24} />,

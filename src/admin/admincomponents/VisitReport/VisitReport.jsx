@@ -1,22 +1,26 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import VITE_DATA from "../../config/config.jsx";
-import axios from "axios";
 import * as XLSX from "xlsx";
-import TextLoader from "../../loader/TextLoader.jsx";
-import UpdateDailyVisit from "./UpdateDailyVisit.jsx";
-
-function ViewDailyVisit() {
+import axios from "axios";
+import VITE_DATA from "../../../config/config.jsx";
+import TextLoader from "../../../loader/TextLoader.jsx";
+import UpdateVisitDaily from "./UpdateVisitDaily.jsx";
+function VisitReport() {
   const [APIData, setAPIData] = useState([]);
   // view salary popup
   const [showViewPopup, setShowViewPopup] = useState(false);
   const [selectedViewId, setSelectedViewId] = useState(null);
+  const [deletingStaffId, setDeletingStaffId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState();
   const [names, setNames] = useState("");
   const [categories, setCategories] = useState("");
   const [currdates, setCurrdates] = useState("");
 
+  const deleteStaff = (_id) => {
+    // Show modal confirmation dialog
+    setDeletingStaffId(_id);
+  };
   useEffect(() => {
     setItemsPerPage(1000);
 }, []);
@@ -82,7 +86,7 @@ function ViewDailyVisit() {
         setCurrentPage(page);
     };
 
-  const fetchData = async () => {
+  const fetchDataByAdmin = async () => {
     try {
       const response = await axios.get(`${VITE_DATA}/dailyvisit/view`);
       const responseData = response.data; // Assuming data is stored in response.data
@@ -91,7 +95,21 @@ function ViewDailyVisit() {
       console.error("Error fetching data:", error);
     }
   };
-const exportToExcel = () => {
+
+  const deletedvr = async (_id) => {
+    try {
+      const resp = await axios.delete(`${VITE_DATA}/dailyvisit/delete/${_id}`);
+      toast.error(`${resp.data.message}`, {
+        theme: "dark",
+        position: "top-right",
+      });
+      setAPIData((prevData) => prevData.filter((data) => data._id !== _id));
+    } catch (error) {
+      console.error("Error to Delete Cancelation ", error);
+    }
+  };
+
+  const exportToExcel = () => {
     try {
       const fileType =
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
@@ -136,32 +154,28 @@ const exportToExcel = () => {
     exportToExcel();
   };
 
-
-  const isCurrentDate = (dateString) => {
-    const today = new Date().toLocaleDateString('en-CA'); // Format: YYYY-MM-DD
-    return dateString === today;
-  };
-
   return (
-    <section className="container-fluid relative  p-0 sm:ml-48 bg-orange-100 ">
-      <div className="container-fluid flex flex-col justify-center px-0.5   border-gray-200 border-dashed rounded-lg   bg-orange-100">
-      <div className="flex justify-between">
-      <h1></h1>
-        <h1 className="text-2xl font-medium my-2 text-orange-900">Daily Visit Reports </h1>
-        <span className="flex justify-end ">
+    <section className="container-fluid relative  p-0 sm:ml-48 bg-slate-100 ">
+      <div className="container-fluid flex flex-col justify-center px-0.5   border-gray-200 border-dashed rounded-lg   bg-slate-100">
+        <div className="flex justify-between">
+          <h1></h1>
+          <h1 className="text-2xl font-medium my-2 text-blue-800">
+            Daily Visit Reports{" "}
+          </h1>
+          <span className="flex justify-end ">
             <button className="" onClick={handleExportClick}>
               <img src="/excel.png" alt="download" className="w-8 mr-2" />
             </button>
           </span>
-      </div>
-      <div className="flex flex-wrap justify-between  text-orange-600  ">
+        </div>
+        <div className="flex flex-wrap justify-between  text-blue-500  ">
           <div className="flex flex-col  p-2 text-start sm:w-44 lg:w-44 w-1/3">
             <label htmlFor="currdate" className="text-sm font-medium mx-1 ">
               Date:
             </label>
             <input
               id="currdate"
-              className="input-style p-0.5 ps-2  rounded"
+              className="input-style p-0.5  rounded"
               type="date"
               name="currdate"
               onChange={(e) => setCurrdates(e.target.value)}
@@ -173,16 +187,16 @@ const exportToExcel = () => {
             <input
               type="search"
               onChange={(e) => setNames(e.target.value)}
-              className="input-style p-0.5 ps-2  rounded"
+              className="input-style p-0.5  rounded"
               placeholder="Name"
             />
           </div>
-          <div className="flex flex-col  p-2  text-start sm:w-44 lg:w-44 w-1/3">
+          <div className="flex flex-col  p-2 text-start sm:w-44 lg:w-44 w-1/3">
             <label className="text-sm font-medium mx-1">Category:</label>
             <input
               type="search"
               onChange={(e) => setCategories(e.target.value)}
-              className="input-style p-0.5 ps-2  rounded"
+              className="input-style p-0.5  rounded"
               placeholder="Category"
             />
           </div>
@@ -192,11 +206,8 @@ const exportToExcel = () => {
             <TextLoader />
           ) : (
             <>
-              <thead className="border-b font-base  sticky top-0 bg-slate-200">
-                <tr className="text-orange-700 sticky top-0 ">
-                  <th scope="col" className="px-1 py-0.5 border border-black">
-                    Update
-                  </th>
+              <thead className="border-b font-sm  sticky top-0 bg-slate-200">
+                <tr className="text-blue-700 sticky top-0 ">
                   <th scope="col" className="px-0.5 py-0.5 border border-black">
                     S.No
                   </th>
@@ -215,32 +226,20 @@ const exportToExcel = () => {
                   <th scope="col" className="px-0.5 py-0 border border-black">
                     Mobile No.
                   </th>
+                  <th scope="col" className="px-1 py-0.5 border border-black">
+                    Update
+                  </th>
+                  <th scope="col" className="px-0.5 py-0 border border-black">
+                    Delete
+                  </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 overflow-y-hidden  bg-orange-50">
+              <tbody className="divide-y divide-gray-200 overflow-y-hidden  bg-slate-100">
                 {filteredData.reverse().slice(startIndex, endIndex).map((item) => (
                   <tr
                     key={item.srNo}
                     className="text-black font-medium sticky top-0 hover:bg-orange-100"
                   >
-                    <td className="px-1 py-0.5 border border-black">
-                    {isCurrentDate(item.currdate) ? (
-                        <button
-                          onClick={() => handleViewClick(item)}
-                          type="button"
-                          className="text-white bg-gradient-to-r from-orange-600 via-orange-600 to-orange-600 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-orange-600 my-a shadow-lg shadow-orange-600/50 font-medium rounded text-xs px-1 py-1 text-center">
-                          Update
-                        </button>
-                      ) : (
-                        <button
-                          type="button"
-                          disabled
-                          className="text-white bg-gradient-to-r from-gray-400 via-gray-400 to-gray-400  cursor-not-allowed shadow-lg shadow-gray-400/50 font-medium rounded text-xs px-1 py-1 text-center">
-                          Update
-                        </button>
-                      )}
-                     
-                    </td>
                     <td className="px-0.5 py-0 border border-black">
                       {item.srNo}
                     </td>
@@ -259,6 +258,24 @@ const exportToExcel = () => {
                     <td className="px-0.5 py-0 border border-black">
                       {item.mobile}
                     </td>
+                    <td className="px-1 py-0.5 border border-black">
+                      <button
+                        onClick={() => handleViewClick(item)}
+                        type="button"
+                        className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-600 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-blue-300 my-a  shadow-lg shadow-blue-500/50 font-medium rounded text-xs px-1 py-1  text-center"
+                      >
+                        Update
+                      </button>
+                    </td>
+                    <td className="px-0.5 py-0 border border-black">
+                      <button
+                        type="button"
+                        onClick={() => deleteStaff(item._id)}
+                        className="text-white bg-gradient-to-r from-red-600 via-red-600 to-red-600 hover:bg-red-700 focus:ring-1 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded text-sm px-2 py-0.5 text-center my-0.5"
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -266,13 +283,47 @@ const exportToExcel = () => {
           )}
         </table>
       </div>
+      {deletingStaffId && (
+        <div
+          id="popup-modal"
+          tabIndex="-1"
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+        >
+          <div className="bg-white p-2 rounded-md ">
+            <h2 className="text-sm font-semibold text-gray-800">
+              {`Are you sure you want to delete `}
+              <span className="text-red-600">
+                {APIData.find((data) => data._id === deletingStaffId)?.name}
+              </span>
+              {`?`}
+            </h2>
+            <div className="flex  justify-end mt-8">
+              <button
+                onClick={() => {
+                  deletedvr(deletingStaffId);
+                  setDeletingStaffId(null);
+                }}
+                className="text-white bg-red-600 hover:bg-red-800 focus:ring-0 focus:outline-none focus:ring-red-300  rounded text-xs px-2 font-medium mx-2 py-1"
+              >
+                Yes, I&apos;m sure
+              </button>
+              <button
+                onClick={() => setDeletingStaffId(null)}
+                className="text-gray-100 bg-slate-400 hover:bg-gray-400 focus:ring-1 focus:outline-none focus:ring-gray-500 rounded border border-gray-800 text-xs font-medium px-2 py-1 hover:text-gray-900 focus:z-10 "
+              >
+                No, cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <nav aria-label="Page navigation flex example sticky">
                 <ul className="flex space-x-2 justify-end mt-4">
                     <li>
                         <button
                             onClick={() => handlePageChange(currentPage - 1)}
                             disabled={currentPage === 1}
-                            className="px-3 py-0 text-orange-600 border border-orange-600 bg rounded-l hover:bg-orange-600 hover:text-white"
+                            className="px-3 py-0 text-blue-600 border border-blue-600 bg rounded-l hover:bg-blue-400 hover:text-white"
                         >
                             Previous
                         </button>
@@ -287,8 +338,8 @@ const exportToExcel = () => {
                                         onClick={() => handlePageChange(i + 1)}
                                         className={`px-3 py-0 ${i + 1 === currentPage
                                             ? 'bg-green-700 text-white font-bold'
-                                            : 'text-orange-600 hover:bg-orange-600 hover:text-white'
-                                            } border border-orange-600`}
+                                            : 'text-blue-600 hover:bg-blue-400 hover:text-white'
+                                            } border border-blue-600`}
                                     >
                                         {i + 1}
                                     </button>
@@ -301,7 +352,7 @@ const exportToExcel = () => {
                         <button
                             onClick={() => handlePageChange(currentPage + 1)}
                             disabled={currentPage === totalPages}
-                            className="px-3 py-0 text-orange-600 border border-orange-600 rounded-r hover:bg-orange-600 hover:text-white"
+                            className="px-3 py-0 text-blue-600 border border-blue-600 rounded-r hover:bg-blue-400 hover:text-white"
                         >
                             Next
                         </button>
@@ -309,14 +360,14 @@ const exportToExcel = () => {
                 </ul>
             </nav>
       {showViewPopup && selectedViewId && (
-        <UpdateDailyVisit
+        <UpdateVisitDaily
           data={selectedViewId}
           onClosed={handleViewClosePopup}
-          fetchData = {fetchData}
+          fetchDataByAdmin={fetchDataByAdmin}
         />
       )}
     </section>
   );
 }
 
-export default ViewDailyVisit;
+export default VisitReport;

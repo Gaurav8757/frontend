@@ -119,6 +119,7 @@ function AddPolicyDetail({ insurance, onUpdates, onClose }) {
     company: insurance.company || "",
     category: insurance.category || "",
     segment: insurance.segment || "",
+    productCode: insurance.productCode || "",
     policyType: insurance.policyType || "",
     policyNo: insurance.policyNo || "",
     engNo: insurance.engNo || "",
@@ -438,7 +439,7 @@ function AddPolicyDetail({ insurance, onUpdates, onClose }) {
                         onChange={handleInputChange}
                       >
                         <option value="">
-                          ----- Select Product Type ------
+                          ----- Select Category Type ------
                         </option>
                         {pdata.map(
                           (cat) =>
@@ -476,7 +477,7 @@ function AddPolicyDetail({ insurance, onUpdates, onClose }) {
                     </div>
 
                     {/* FIELD - 4 */}
-                    <div className="flex flex-col  p-1 text-start w-full lg:w-1/5">
+                    <div className="flex flex-col p-1 text-start w-full lg:w-1/5">
                       <label className="text-base mx-1">
                         Policy Type:
                         <span className="text-red-600 font-bold">*</span>
@@ -490,16 +491,35 @@ function AddPolicyDetail({ insurance, onUpdates, onClose }) {
                         <option value="">
                           ------ Select Policy Type --------
                         </option>
-                        {data.map((category) => (
-                          <option key={category._id} value={category.p_type}>
-                            {category.p_type}
+                        {data.map((pol) => (
+                          <option key={pol._id} value={pol.p_type}>
+                            {pol.p_type}
                           </option>
                         ))}
                       </select>
                     </div>
 
+                            {/* FIELD - 36 */}
+                            <div className="flex flex-col p-1 text-start w-full lg:w-1/5">
+                      <label className="text-base mx-1">Product Code:</label>
+                      <select
+                        id="productCode"
+                        className="input-style p-0.5 text-lg rounded"
+                        value={allDetails.productCode}
+                        onChange={handleInputChange}
+                        name="productCode"
+                      >
+                        <option value="">-- Select Product Code ---</option>
+                        {allDetails.policyType && data
+                          .filter(policy => policy.p_type === allDetails.policyType)
+                          .map(policy => policy.products.map((product, idx) => (
+                            <option key={idx} value={product}>{product}</option>
+                          )))}
+                      </select>
+                    </div>
+
                     {/* FIELD - 1 */}
-                    <div className="flex flex-col p-1  text-start w-full lg:w-1/5">
+                    <div className="flex flex-col p-1 mt-4  text-start w-full lg:w-1/5">
                       <label className="text-base mx-1">
                         Policy No:
                         <span className="text-red-600 font-bold">*</span>
@@ -514,7 +534,7 @@ function AddPolicyDetail({ insurance, onUpdates, onClose }) {
                       />
                     </div>
 
-                    <div className="flex flex-col p-1  text-start w-full lg:w-1/5">
+                    <div className="flex flex-col p-1 mt-4  text-start w-full lg:w-1/5">
                       <label className="text-base mx-1">
                         State:<span className="text-red-600 font-bold">*</span>
                       </label>
@@ -863,7 +883,7 @@ function AddPolicyDetail({ insurance, onUpdates, onClose }) {
                         </option>
                       </select>
                     </div>
-                    <div className="flex flex-col p-1 mt-4 text-start lg:w-1/5">
+                    <div className="flex flex-col p-1 mt-2 text-start lg:w-1/5">
                       <label className="text-base mx-1">Advisor Name:</label>
                       <select
                         className="input-style p-1 text-base rounded"

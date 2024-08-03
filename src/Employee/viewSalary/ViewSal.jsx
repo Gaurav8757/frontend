@@ -365,9 +365,7 @@ function ViewSal() {
             </div>
         </div>
     </div>
- {
-    
- }
+
     {showViewPopup && selectedViewId && (
         <SalaryViewPage data={selectedViewId} onClosed={handleViewClosePopup} />
     )}
