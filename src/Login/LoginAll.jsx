@@ -145,6 +145,7 @@ function LoginAll() {
           sessionStorage.setItem("email", response.data.user.empemail);
           sessionStorage.setItem("employeeId", response.data.user._id);
           sessionStorage.setItem("name", response.data.user.empname);
+          sessionStorage.setItem("branch", response.data.user.empbranch);
           sessionStorage.setItem("role", response.data.user.staffType);
           // Mark attendance after successful login
           await handleToggleAttendance(response.data.user._id);
@@ -269,8 +270,13 @@ function LoginAll() {
             break;
 
           case "hrmanager":
+            if (decodedToken.isHr === true) {
             navigate("/hr/home");
             toast.success("Logged In Successfully !");
+          } else {
+            toast.error("You are not authorized to access this page.");
+            navigate("/login");
+          }
             break;
 
           case "advisor":
@@ -284,8 +290,13 @@ function LoginAll() {
             break;
 
           case "ops":
+            if (decodedToken.isOps === true) {
             navigate("/ops/home");
             toast.success("Logged In Successfully !");
+          } else {
+            toast.error("You are not authorized to access this page.");
+            navigate("/login");
+          }
             break;
 
           case "finance":
@@ -300,8 +311,13 @@ function LoginAll() {
             break;
 
           case "cic":
+            if (decodedToken.isCic === true) {
             navigate("/cic/home");
             toast.success("Logged In Successfully !");
+          } else {
+            toast.error("You are not authorized to access this page.");
+            navigate("/login");
+          }
             break;
 
           default:

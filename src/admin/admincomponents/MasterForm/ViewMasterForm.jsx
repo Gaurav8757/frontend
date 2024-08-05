@@ -220,13 +220,16 @@ function ViewMasterForm() {
         const companypercent = matchingCSLab.companypayoutper || 0;
         allDetailsData?.forEach((data) => {
           const vehicleAge1 = parseInt(data.vehicleAge);
+          const vehicleAgeNormalized = (data.vehicleAge === '0 years' || data.vehicleAge === '0' || data.vehicleAge1 === 0) ? 0 : 1;
+          const isMatching = (matchingCSLab.vage === 'NEW' && vehicleAgeNormalized === 0) ||
+                   (matchingCSLab.vage === 'OLD' && vehicleAgeNormalized !== 0);
           if (
             matchingCSLab.cnames === data.company &&
             matchingCSLab.catnames === data.category &&
             matchingCSLab.policytypes === data.policyType &&
             matchingCSLab.states === data.states &&
             ((matchingCSLab.vfuels === data.fuel) || (matchingCSLab.vfuels === 'ALL' || !matchingCSLab.vfuels  || (matchingCSLab.vfuels === 'OTHER THAN DIESEL' && data.fuel !== 'DIESEL'))) &&
-            (!matchingCSLab.vncb || matchingCSLab.vncb === data.ncb || matchingCSLab.vncb === 'BOTH') &&
+            (!matchingCSLab.vncb || matchingCSLab.vncb === data.ncb || ['BOTH', 'NO'].includes(matchingCSLab.vncb))&&
             matchingCSLab.pcodes === data.productCode &&
             (matchingCSLab.districts === data.district || matchingCSLab.districts === 'All' || matchingCSLab.districts === 'ALL') &&
             matchingCSLab.payoutons === data.payoutOn &&
@@ -239,11 +242,11 @@ function ViewMasterForm() {
 
             // (matchingCSLab.advisorName === data.advisorName || matchingCSLab.advisorName === "" )&&
             (
-              ((matchingCSLab.vage === 'NEW' && (data.vehicleAge === '0 years' || data.vehicleAge === '0' || data.vehicleAge1 === 0)) || (matchingCSLab.vage === 'OLD' && (data.vehicleAge !== '0 years' || data.vehicleAge !== '0'))) ||
+              isMatching ||
               ((matchingCSLab.vage === '1-7 YEARS' && vehicleAge1 >= 1 && vehicleAge1 <= 7) ||
                 (matchingCSLab.vage === 'MORE THAN 7 YEARS' && vehicleAge1 > 7))  
             )
-            && ((matchingCSLab.vcc === data.cc) || (matchingCSLab.vcc === 'ALL' || matchingCSLab.vcc === "" || matchingCSLab.vcc === null || matchingCSLab.vcc === undefined))
+            && (matchingCSLab.vcc === data.cc || ['ALL', '', null, undefined].includes(matchingCSLab.vcc))
           ) {
             const netPremium = parseFloat(data.netPremium);
             const finalEntryFields = parseFloat(data.finalEntryFields);
@@ -274,12 +277,12 @@ function ViewMasterForm() {
               profitLoss = companyPayout - branchPayout;
             }
             // Check if data needs an update
-            if (
-              !data.branchPayableAmount ||
-              !data.branchPayout ||
-              !data.companyPayout ||
-              !data.profitLoss
-            ) {
+            // if (
+            //   !data.branchPayableAmount ||
+            //   !data.branchPayout ||
+            //   !data.companyPayout ||
+            //   !data.profitLoss
+            // ) {
 
               // Prepare data for API request
               const postData = {
@@ -316,7 +319,7 @@ function ViewMasterForm() {
                 console.error(
                   `Error updating data for policy ID:`
                 );
-              }
+              // }
             }
           }
         });
@@ -616,7 +619,7 @@ function ViewMasterForm() {
        
           <div className=" mb-4 mt-2 flex  justify-between max-w-auto mx-auto w-auto">
             <h1 className="bg-blue-500 hover:bg-blue-700 p-1 my-auto px-2 rounded"><button className="text-white my-auto" onClick={handleRecalculate}>Recal</button></h1>
-            <span className=" flex text-blue-700 justify-center text-center text-3xl font-semibold">
+            <span className=" flex text-blue-700 justify-center text-center text-2xl font-semibold">
               All Policy List&apos;s
             </span>
             <div className="flex">
@@ -624,12 +627,12 @@ function ViewMasterForm() {
                 className="text-end mx-0 flex justify-end  text-3xl font-semibold"
                 onClick={handleExportClick}
               >
-                <img src="/excel.png" alt="download" height={50} width={40} />
+                <img src="/excel.png" alt="download" height={30} width={40} />
               </button>
               <button className="text-end   mr-1  justify-end  text-xl font-semibold " onClick={handleMisExportClick}>
 
                 <Suspense fallback={<div>Loading...</div>}>
-                  <img src="/xls.png" className="rounded-xl mx-0 my-0" height={50} width={40} alt="mis " />
+                  <img src="/xls.png" className="rounded-xl mx-0 my-0" height={30} width={40} alt="mis " />
                   {/* <span className="text-base">MIS</span> */}
                 </Suspense>
 
@@ -640,7 +643,7 @@ function ViewMasterForm() {
               >
                 <button
                   type="button"
-                  className="text-white  mt-2 justify-end bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded text-sm px-3 py-2 text-center"
+                  className="text-white  mt-0 justify-end bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded text-sm px-2 py-1 text-center"
                 >
                   Go Back
                 </button>
@@ -650,14 +653,14 @@ function ViewMasterForm() {
           <div className="flex-wrap mb-4 flex justify-between  text-blue-500 max-w-auto mx-auto w-auto ">
             {/* date range filter */}
             <div className="flex justify-between items-center  p-0 text-start w-full lg:w-1/4">
-              <label className="my-auto text-lg whitespace-nowrap font-medium text-gray-900">
+              <label className="my-auto text-sm whitespace-nowrap font-medium text-gray-900">
                 Date:
               </label>
               <input
                 type="date"
                 value={startDate}
                 onChange={(e) => handleDateRangeChange(e, "start")}
-                className="shadow input-style w-auto my-auto ps-5 text-base text-blue-700 border border-gray-300 rounded-md bg-gray-100 focus:ring-gray-100 focus:border-gray-500 appearance-none py-1 px-0 mb-2 ml-2"
+                className="shadow input-style w-32 my-auto ps-5 text-base text-blue-700 border border-gray-300 rounded-md bg-gray-100 focus:ring-gray-100 focus:border-gray-500 appearance-none py-1 px-0 mb-2 ml-2"
                 placeholder="From Date"
               />
               <span className="text-justify mx-1 my-auto">to</span>
@@ -665,47 +668,47 @@ function ViewMasterForm() {
                 type="date"
                 value={endDate}
                 onChange={(e) => handleDateRangeChange(e, "end")}
-                className="shadow input-style  w-auto my-auto  ps-5 text-base text-blue-700 border border-gray-300 rounded-md bg-gray-100 focus:ring-gray-100 focus:border-gray-500 appearance-none py-1 px-0 mb-2 "
+                className="shadow input-style  w-32 my-auto  ps-5 text-base text-blue-700 border border-gray-300 rounded-md bg-gray-100 focus:ring-gray-100 focus:border-gray-500 appearance-none py-1 px-0 mb-2 "
                 placeholder="To Date"
               />
             </div>
 
             <div className="flex p-0 justify-center  text-end w-full lg:w-1/4">
-              <label className="my-auto  text-lg whitespace-nowrap font-medium text-gray-900">
+              <label className="my-auto  text-sm whitespace-nowrap font-medium text-gray-900">
                 ID:
               </label>
               <input
                 type="search"
                 onChange={(e) => setSearchId(e.target.value)}
-                className="shadow input-style w-52 my-auto ps-5 text-base text-blue-700 border border-gray-300 rounded-md bg-gray-100 focus:ring-gray-100 focus:border-gray-500 appearance-none py-1 px-0 mb-2 ml-2"
+                className="shadow input-style my-auto ps-5 text-base text-blue-700 border border-gray-300 rounded-md bg-gray-100 focus:ring-gray-100 focus:border-gray-500 appearance-none py-1 px-0 mb-2 ml-2"
                 placeholder="ID"
               />
             </div>
 
             <div className="flex justify-start p-0 text-end w-full lg:w-1/4">
-              <label className="my-auto text-lg font-medium text-gray-900">
+              <label className="my-auto text-sm font-medium text-gray-900">
                 Company:
               </label>
               <input
                 type="search"
                 onChange={(e) => setSearchCompany(e.target.value)}
-                className="shadow input-style w-52 my-auto ps-5 text-base text-blue-700 border border-gray-300 rounded-md bg-gray-100 focus:ring-gray-100 focus:border-gray-500 appearance-none py-1 px-0 mb-2 ml-2"
+                className="shadow input-style  my-auto ps-5 text-base text-blue-700 border border-gray-300 rounded-md bg-gray-100 focus:ring-gray-100 focus:border-gray-500 appearance-none py-1 px-0 mb-2 ml-2"
                 placeholder="Company Name"
               />
             </div>
             <div className="flex justify-start  text-start w-full lg:w-1/4">
-              <label className="my-auto text-lg font-medium text-gray-900">
+              <label className="my-auto text-sm font-medium text-gray-900">
                 Insured Name:
               </label>
               <input
                 type="search"
                 onChange={(e) => setSearchInsuredName(e.target.value)}
-                className="shadow input-style w-52 my-auto ps-5 text-base text-blue-700 border border-gray-300 rounded-md bg-gray-100 focus:ring-gray-100 focus:border-gray-500 appearance-none py-1 px-0 mb-2 ml-2"
+                className="shadow input-style  my-auto ps-5 text-base text-blue-700 border border-gray-300 rounded-md bg-gray-100 focus:ring-gray-100 focus:border-gray-500 appearance-none py-1 px-0 mb-2 ml-2"
                 placeholder="Insured Name"
               />
             </div>
             <div className="flex justify-start mt-4  text-start w-full lg:w-1/4">
-              <label className="my-0 text-lg font-medium text-gray-900">
+              <label className="my-0 text-sm font-medium text-gray-900">
                 Branch:
               </label>
               <input
@@ -716,7 +719,7 @@ function ViewMasterForm() {
               />
             </div>
             <div className="flex text-center justify-start mt-4  lg:w-1/4">
-              <label className="my-0 text-lg whitespace-nowrap font-medium text-gray-900">
+              <label className="my-0 text-sm whitespace-nowrap font-medium text-gray-900">
                 Policy No:
               </label>
               <input
@@ -727,7 +730,7 @@ function ViewMasterForm() {
               />
             </div>
             <div className="flex text-center justify-start mt-4  lg:w-1/4">
-              <label className="my-0 text-lg whitespace-nowrap font-medium text-gray-900">
+              <label className="my-0 text-sm whitespace-nowrap font-medium text-gray-900">
                 Policy Made By:
               </label>
               <input
@@ -738,7 +741,7 @@ function ViewMasterForm() {
               />
             </div>
             <div className="flex text-center justify-start mt-4  lg:w-1/4">
-              <label className="my-0 text-lg whitespace-nowrap font-medium text-gray-900">
+              <label className="my-0 text-sm whitespace-nowrap font-medium text-gray-900">
                 Product Code:
               </label>
               <input
@@ -750,7 +753,7 @@ function ViewMasterForm() {
             </div>
 
             <div className="flex text-center justify-start mt-4  lg:w-1/4">
-              <label className="my-0 text-lg whitespace-nowrap font-medium text-gray-900">
+              <label className="my-0 text-sm whitespace-nowrap font-medium text-gray-900">
                 Policy Type:
               </label>
               <input
@@ -762,7 +765,7 @@ function ViewMasterForm() {
             </div>
 
             <div className="flex text-center justify-start mt-4  lg:w-1/4">
-              <label className="my-0 text-lg whitespace-nowrap font-medium text-gray-900">
+              <label className="my-0 text-sm whitespace-nowrap font-medium text-gray-900">
                 PayoutOn:
               </label>
               <input
@@ -773,7 +776,7 @@ function ViewMasterForm() {
               />
             </div>
             <div className="flex text-center justify-start mt-4  lg:w-1/4">
-              <label className="my-0 text-lg whitespace-nowrap font-medium text-gray-900">
+              <label className="my-0 text-sm whitespace-nowrap font-medium text-gray-900">
                 Vehicle No.:
               </label>
               <input
@@ -784,7 +787,7 @@ function ViewMasterForm() {
               />
             </div>
             <div className="flex text-center justify-start mt-4  lg:w-1/4">
-              <label className="my-0 text-lg whitespace-nowrap font-medium text-gray-900">
+              <label className="my-0 text-sm whitespace-nowrap font-medium text-gray-900">
                 Advisor Name:
               </label>
               <input

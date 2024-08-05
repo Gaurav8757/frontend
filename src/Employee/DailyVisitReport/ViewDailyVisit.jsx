@@ -33,12 +33,14 @@ function ViewDailyVisit() {
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
+    const branch = sessionStorage.getItem("branch");
+    const id = sessionStorage.getItem("employeeId");
     if (!token) {
       toast.error("Not Authorized yet.. Try again! ");
     } else {
       // The user is authenticated, so you can make your API request here.
       axios
-        .get(`${VITE_DATA}/dailyvisit/view`, {
+        .get(`${VITE_DATA}/dailyvisit/view/${branch}/${id}`, {
           headers: {
             Authorization: `${token}`, // Send the token in the Authorization header
           },
@@ -104,12 +106,13 @@ const exportToExcel = () => {
         data.name,
         data.category,
         data.address,
+        data.branch,
         data.mobile,
       ]);
 
       // Create worksheet
       const ws = XLSX.utils.aoa_to_sheet([
-        ["S No.", "Date", "Name", "Category", "Address", "Mobile No."],
+        ["S No.", "Date", "Name", "Category", "Address", "Branch", "Mobile No."],
         ...rowsToInclude,
       ]);
 

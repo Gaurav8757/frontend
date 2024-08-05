@@ -12,6 +12,7 @@ function UpdateVisitDaily({ data, onClosed, fetchDataByAdmin }) {
     category: "",
     address: "",
     mobile: "",
+    branch: ""
   });
 
   useEffect(() => {
@@ -109,6 +110,20 @@ function UpdateVisitDaily({ data, onClosed, fetchDataByAdmin }) {
                 />
               </div>
 
+              <div className="flex flex-col p-1 text-start w-full lg:w-1/4">
+                <label htmlFor="branch" className="text-base mx-1">
+                  Branch:
+                </label>
+                <input
+                  id="branch"
+                  className="input-style p-1 rounded"
+                  type="text"
+                  value={datas.branch}
+                  onChange={handleInputChange}
+                  name="branch"
+                />
+              </div>
+
               {/* FIELD - 2 */}
               <div className="flex flex-col p-1 text-start w-full lg:w-1/4">
                 <label htmlFor="category" className="text-base mx-1">
@@ -125,7 +140,7 @@ function UpdateVisitDaily({ data, onClosed, fetchDataByAdmin }) {
               </div>
 
               {/* FIELD - 3 */}
-              <div className="flex flex-col p-1 text-start w-full lg:w-1/4">
+              <div className="flex flex-col p-1 mt-3 text-start w-full lg:w-1/4">
                 <label htmlFor="address" className="text-base mx-1">
                   Address:
                 </label>
@@ -140,7 +155,7 @@ function UpdateVisitDaily({ data, onClosed, fetchDataByAdmin }) {
                 />
               </div>
               {/* FIELD - 4 */}
-              <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
+              <div className="flex flex-col p-1 mt-3 text-start w-full lg:w-1/4">
                 <label htmlFor="mobile" className="text-base mx-1">
                   Mobile No:
                 </label>
@@ -153,6 +168,8 @@ function UpdateVisitDaily({ data, onClosed, fetchDataByAdmin }) {
                   name="mobile"
                 />
               </div>
+              <div className="flex flex-col p-1 mt-3 text-start w-full lg:w-1/4"></div>
+              <div className="flex flex-col p-1 mt-3 text-start w-full lg:w-1/4"></div>
             </div>
             <div className="col-span-4 p-2 mt-4 flex justify-center">
               <button

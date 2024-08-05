@@ -202,6 +202,7 @@ import BranchCancelation from "./branches/cic/BranchCancelation.jsx";
 import VisitDaily from "./Employee/DailyVisitReport/VisitDaily.jsx";
 import ViewDailyVisit from "./Employee/DailyVisitReport/ViewDailyVisit.jsx";
 import VisitReport from "./admin/admincomponents/VisitReport/VisitReport.jsx";
+import Dvr from "./branches/DVR/Dvr.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -351,6 +352,7 @@ const router = createBrowserRouter(
           <Route path="/branches/home/claim/lists" element={<BranchClaimList />} />
           <Route path="/branches/home/indorsh/lists" element={<BranchIndorshment />} />
           <Route path="/branches/home/cncl/lists" element={<BranchCancelation />} />
+          <Route path="/branches/home/daily/visits" element={<Dvr/>} />
         </Route>
       </Route>
 

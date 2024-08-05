@@ -75,6 +75,12 @@ const BranchSidebar = () => {
         },
       ]
     },
+    {
+      title: "Reports",
+      path: "/branches/home/daily/visits",
+      // logo: <RxDashboard size={25} />
+      logo: <img src="/tablet.png" height={10} width={25} alt="dashboard" />
+    },
   ];
 
   const [sidebarOpen, setSidebarOpen] = useState(false);

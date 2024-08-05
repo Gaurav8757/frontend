@@ -5,11 +5,13 @@ import VITE_DATA from "../../config/config.jsx";
 
 function VisitDaily() {
   const [formData, setFormData] = useState({
+    id: sessionStorage.getItem('employeeId')|| "",
     currdate: "",
     name: "",
     category: "",
     address: "",
     mobile: "",
+    branch:  sessionStorage.getItem('branch') || "",
     location: "",
   });
 
@@ -34,11 +36,13 @@ function VisitDaily() {
         toast.success(`${response.data.message}`);
         // Reset the form and loading state on successful submission
         setFormData({
+          id: "",
           currdate: "",
           name: "",
           category: "",
           address: "",
           mobile: "",
+          branch: "",
           location: "",
         });
       }

@@ -16,6 +16,7 @@ function VisitReport() {
   const [names, setNames] = useState("");
   const [categories, setCategories] = useState("");
   const [currdates, setCurrdates] = useState("");
+  const [branch, setBranch] = useState("");
 
   const deleteStaff = (_id) => {
     // Show modal confirmation dialog
@@ -64,11 +65,13 @@ function VisitReport() {
     const idLower = data.name?.toLowerCase() || "";
     const ptype = data.category?.toLowerCase() || "";
     const companyLower = data.currdate?.toLowerCase() || "";
+    const branchfilter = data.branch?.toLowerCase() || "";
 
     return (
       (ptype.includes(categories.toLowerCase()) || categories === "") &&
       (idLower.includes(names.toLowerCase()) || names === "") &&
-      (companyLower.includes(currdates.toLowerCase()) || currdates === "")
+      (companyLower.includes(currdates.toLowerCase()) || currdates === "") &&
+      (branchfilter.includes(branch.toLowerCase()) || branch === "")
     );
   });
 
@@ -175,7 +178,7 @@ function VisitReport() {
             </label>
             <input
               id="currdate"
-              className="input-style p-0.5  rounded"
+              className="input-style p-0.5 ps-2 rounded"
               type="date"
               name="currdate"
               onChange={(e) => setCurrdates(e.target.value)}
@@ -187,8 +190,17 @@ function VisitReport() {
             <input
               type="search"
               onChange={(e) => setNames(e.target.value)}
-              className="input-style p-0.5  rounded"
+              className="input-style p-0.5 ps-2 rounded"
               placeholder="Name"
+            />
+          </div>
+          <div className="flex flex-col  p-2 text-start sm:w-44 lg:w-44 w-1/3">
+            <label className="text-sm font-medium mx-1">Branch:</label>
+            <input
+              type="search"
+              onChange={(e) => setBranch(e.target.value)}
+              className="input-style p-0.5 ps-2 rounded"
+              placeholder="Branch"
             />
           </div>
           <div className="flex flex-col  p-2 text-start sm:w-44 lg:w-44 w-1/3">
@@ -196,7 +208,7 @@ function VisitReport() {
             <input
               type="search"
               onChange={(e) => setCategories(e.target.value)}
-              className="input-style p-0.5  rounded"
+              className="input-style p-0.5 ps-2 rounded"
               placeholder="Category"
             />
           </div>
@@ -212,11 +224,14 @@ function VisitReport() {
                     S.No
                   </th>
                   <th scope="col" className="px-0.5 py-0 border border-black">
+                    Branch
+                  </th>
+                  <th scope="col" className="px-0.5 py-0 border border-black">
                     Date
                   </th>
                   <th scope="col" className="px-0.5 py-0 border border-black">
                     Name
-                  </th>
+                  </th>  
                   <th scope="col" className="px-0.5 py-0 border border-black">
                     Category
                   </th>
@@ -240,8 +255,12 @@ function VisitReport() {
                     key={item.srNo}
                     className="text-black font-medium sticky top-0 hover:bg-orange-100"
                   >
+                   
                     <td className="px-0.5 py-0 border border-black">
                       {item.srNo}
+                    </td>
+                    <td className="px-0.5 py-0 border border-black">
+                      {item.branch}
                     </td>
                     <td className="px-0.5 py-0 border whitespace-nowrap border-black">
                       {item.currdate}
@@ -249,6 +268,7 @@ function VisitReport() {
                     <td className="px-0.5 py-0 border border-black">
                       {item.name}
                     </td>
+                   
                     <td className="px-0.5 py-0 border border-black">
                       {item.category}
                     </td>
