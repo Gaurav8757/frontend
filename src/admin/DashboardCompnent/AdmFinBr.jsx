@@ -73,6 +73,10 @@ function AdmFinBr() {
   const [monthlyNonMotorCount, setMonthlyNonMotorCount] = useState(0);
   const [dailyNonMotorCount, setDailyNonMotorCount] = useState(0);
 
+  const [visitsData, setVisitsData] = useState([]);
+  const [monthlyVisits, setMonthlyVisits] = useState([]);
+  const [dailyVisits, setDailyVisits] = useState([]);
+
   const [totalAdvisors, setTotalAdvisors] = useState(0);
   const [advisor, setAdvisors] = useState([]);
   const [advCounts, setAdvCounts] = useState({});
@@ -93,6 +97,22 @@ function AdmFinBr() {
 
   const [branches, setBranches] = useState([]);
   const [branchesCounts, setBranchesCounts] = useState({});
+
+
+  const visitsDataProps = useSpring({
+    number: visitsData.length,
+    from: { number: 0 },
+  });
+
+  const monthlyVisitsProps = useSpring({
+    number: monthlyVisits.length,
+    from: { number: 0 },
+  });
+
+  const dailyVisitsProps = useSpring({
+    number:dailyVisits.length,
+    from: { number: 0 },
+  });
 
   const allDetailsProps = useSpring({
     number: allDetailsData.length,
@@ -363,6 +383,60 @@ function AdmFinBr() {
         .then((response) => {
           const car = response.data;
           setCareer(car.length);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      toast.error("Not Authorized yet.. Try again! ");
+    } else {
+      // The user is authenticated, so you can make your API request here.
+      axios
+        .get(`${VITE_DATA}/dailyvisit/view`, {
+          headers: {
+            Authorization: `${token}`, // Send the token in the Authorization header
+          },
+        })
+        .then((response) => {
+          const data = response.data;
+          const currentMonth = new Date().getMonth() + 1; // getMonth() is zero-based
+          const currentDay = new Date().getDate();
+          const currentYear = new Date().getFullYear();
+
+          const filteredYearlyData = data.filter((item) => {
+            const itemDate = new Date(item.currdate);
+            const itemYear = itemDate.getFullYear();
+            return itemYear === currentYear;
+          });
+
+          const filteredMonthlyData = data.filter((item) => {
+            const itemDate = new Date(item.currdate);
+            const itemMonth = itemDate.getMonth() + 1;
+            const itemYear = itemDate.getFullYear();
+            return itemMonth === currentMonth && itemYear === currentYear;
+          });
+
+          const filteredDailyData = data.filter((item) => {
+            const itemDate = new Date(item.currdate);
+            const itemDay = itemDate.getDate();
+            const itemMonth = itemDate.getMonth() + 1;
+            const itemYear = itemDate.getFullYear();
+            return (
+              itemDay === currentDay &&
+              itemMonth === currentMonth &&
+              itemYear === currentYear
+            );
+          });
+          setVisitsData(filteredYearlyData);
+          setMonthlyVisits(filteredMonthlyData);
+          setDailyVisits(filteredDailyData);
+
+
         })
         .catch((error) => {
           console.error(error);
@@ -1337,7 +1411,27 @@ function AdmFinBr() {
             </animated.span>
           </div>
 
-          {/* {add more single elements} */}
+          <div className="shadow-2xl drop-shadow-2xl shadow-blue-650 grid  xl:flex lg:flex text-white md:flex sm:grid col-span-2  items-center xl:justify-between md:justify-between lg:justify-between h-16 lg:p-1 sm:h-20 lg:h-20 xl:h-12 rounded-lg bg-sky-800 ">
+            <span className="sm:block mx-1  text-white sm:mx-2 lg:mx-1  px-2  rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold   focus:ring-[#050708]/50 uppercase">
+              DVR
+            </span>
+            <div className="flex justify-between">
+            <span className="rounded flex mx-2 sm:mx-0 md:mx-2 lg:mx-3 xl:mx-3">D /
+            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1  text-base sm:text-base md:text-base lg:text-base xl:text-base font-bold text-gray-50">
+              {dailyVisitsProps.number.to((n) => n.toFixed(0))}
+            </animated.span></span>
+            <span className="rounded flex mx-2 sm:mx-0 md:mx-2 lg:mx-3 xl:mx-3">M /
+            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1 text-base sm:text-base md:text-base lg:text-base xl:text-base font-bold text-gray-50">
+              {monthlyVisitsProps.number.to((n) => n.toFixed(0))}
+            </animated.span></span>
+            <span className="rounded flex mx-2 sm:mx-0 md:mx-2 lg:mx-3 xl:mx-3">Y /
+            <animated.span className="whitespace-nowrap mx-1 sm:mx-2 lg:mx-1  text-base sm:text-base md:text-base lg:text-base xl:text-base font-bold text-gray-50">
+              {visitsDataProps.number.to((n) => n.toFixed(0))}
+            </animated.span>
+            </span>
+            </div>
+          </div>
+
         </div>
       </main>
 

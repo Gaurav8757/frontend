@@ -68,8 +68,28 @@ function EmpDashboard() {
     const [totalNonMotorCount, setTotalNonMotorCount] = useState(0);
     const [monthlyNonMotorCount, setMonthlyNonMotorCount] = useState(0);
     const [dailyNonMotorCount, setDailyNonMotorCount] = useState(0);
+
+    const [visitsData, setVisitsData] = useState([]);
+    const [monthlyVisits, setMonthlyVisits] = useState([]);
+    const [dailyVisits, setDailyVisits] = useState([]);
+
     const empid = sessionStorage.getItem("employeeId");
     const roles = sessionStorage.getItem("role");
+
+    const visitsDataProps = useSpring({
+      number: visitsData.length,
+      from: { number: 0 },
+    });
+  
+    const monthlyVisitsProps = useSpring({
+      number: monthlyVisits.length,
+      from: { number: 0 },
+    });
+  
+    const dailyVisitsProps = useSpring({
+      number: dailyVisits.length,
+      from: { number: 0 },
+    });
 
     const allDetailsProps = useSpring({ number: yearlyData, from: { number: 0 } });
     const monthlyProps = useSpring({ number: monthlyData, from: { number: 0 } });
@@ -124,6 +144,59 @@ function EmpDashboard() {
     const pendingLeaveProps = useSpring({ number: pendingLeave, from: { number: 0 } });
     const rejectLeaveProps = useSpring({ number: rejectLeave, from: { number: 0 } });
     const approveLeaveProps = useSpring({ number: approveLeave, from: { number: 0 } });
+
+
+    useEffect(() => {
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        toast.error("Not Authorized yet.. Try again! ");
+      } else {
+        // The user is authenticated, so you can make your API request here.
+        axios
+          .get(`${VITE_DATA}/dailyvisit/view`, {
+            headers: {
+              Authorization: `${token}`, // Send the token in the Authorization header
+            },
+          })
+          .then((response) => {
+            const data = response.data;
+            const currentMonth = new Date().getMonth() + 1; // getMonth() is zero-based
+            const currentDay = new Date().getDate();
+            const currentYear = new Date().getFullYear();
+  
+            const filteredYearlyData = data.filter((item) => {
+              const itemDate = new Date(item.currdate);
+              const itemYear = itemDate.getFullYear();
+              return itemYear === currentYear;
+            });
+  
+            const filteredMonthlyData = data.filter((item) => {
+              const itemDate = new Date(item.currdate);
+              const itemMonth = itemDate.getMonth() + 1;
+              const itemYear = itemDate.getFullYear();
+              return itemMonth === currentMonth && itemYear === currentYear;
+            });
+  
+            const filteredDailyData = data.filter((item) => {
+              const itemDate = new Date(item.currdate);
+              const itemDay = itemDate.getDate();
+              const itemMonth = itemDate.getMonth() + 1;
+              const itemYear = itemDate.getFullYear();
+              return (
+                itemDay === currentDay &&
+                itemMonth === currentMonth &&
+                itemYear === currentYear
+              );
+            });
+            setVisitsData(filteredYearlyData);
+            setMonthlyVisits(filteredMonthlyData);
+            setDailyVisits(filteredDailyData);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    }, []);
 
     useEffect(() => {
         const token = sessionStorage.getItem("token");
@@ -413,7 +486,7 @@ function EmpDashboard() {
             <div className="grid grid-cols-3 gap-3 mb-4">
               <div className="grid xl:flex lg:flex md:grid sm:grid items-center xl:justify-between h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                 <span className="sm:block mx-1 sm:mx-2 lg:mx-3 xl:mx-6 px-2 py-1 rounded text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50">
-                  YTD NOP
+                  YTD
                 </span>
                 <animated.span className="mx-1 sm:mx-2 lg:mx-3 xl:mx-6 text-base sm:text-base md:text-base lg:text-lg xl:text-xl font-bold text-gray-200">
                   {allDetailsProps.number.to((n) => n.toFixed(0))}
@@ -422,7 +495,7 @@ function EmpDashboard() {
 
               <div className="grid xl:flex lg:flex md:grid sm:grid items-center xl:justify-between h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                 <span className="sm:block mx-1 sm:mx-2 lg:mx-3 xl:mx-6 px-2 py-1 rounded text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 xl:whitespace-nowrap">
-                  MTD NOP
+                  MTD
                 </span>
                 <animated.span className="mx-1 sm:mx-2 lg:mx-3 xl:mx-6 text-base sm:text-base md:text-base lg:text-lg xl:text-xl font-bold text-gray-200">
                   {monthlyProps.number.to((n) => n.toFixed(0))}
@@ -431,7 +504,7 @@ function EmpDashboard() {
 
               <div className="grid xl:flex lg:flex md:grid sm:grid items-center xl:justify-between h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                 <span className="sm:block mx-1 sm:mx-2 lg:mx-3 xl:mx-6 px-2 py-1 rounded text-xs sm:text-sm md:text-base lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50">
-                  TODAY NOP
+                  FTD
                 </span>
                 <animated.span className="mx-1 sm:mx-2 lg:mx-3 xl:mx-6 text-base sm:text-base md:text-base lg:text-lg xl:text-xl font-bold text-gray-200">
                   {dailyProps.number.to((n) => n.toFixed(0))}
@@ -525,7 +598,7 @@ function EmpDashboard() {
                 </h1>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 lg:h-16 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    YTD NOP PREM.
+                    YTD PREM.
                   </span>
                   <animated.span className="mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-base lg:text-lg xl:text-base font-bold text-gray-200">
                     {totalNsellProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
@@ -534,7 +607,7 @@ function EmpDashboard() {
 
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 lg:h-16 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    MTD NOP PREM.
+                    MTD PREM.
                   </span>
                   <animated.span className="mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-base lg:text-lg xl:text-base font-bold text-gray-200">
                     {monthlyNsellProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
@@ -543,7 +616,7 @@ function EmpDashboard() {
 
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 lg:h-16 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    TODAY NOP PREM.
+                    FTD PREM.
                   </span>
                   <animated.span className="mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-base lg:text-lg xl:text-base font-bold text-gray-200">
                     {dailyNsellProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
@@ -557,7 +630,7 @@ function EmpDashboard() {
                 </h1>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 lg:h-16 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    YTD NOP PREM.
+                    YTD PREM.
                   </span>
                   <animated.span className="mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-base lg:text-lg xl:text-base font-bold text-gray-200">
                     {totalFsellProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
@@ -566,7 +639,7 @@ function EmpDashboard() {
 
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 lg:h-16 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    MTD NOP PREM.
+                    MTD PREM.
                   </span>
                   <animated.span className="mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-base lg:text-lg xl:text-base font-bold text-gray-200">
                     {monthlyFsellProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
@@ -575,7 +648,7 @@ function EmpDashboard() {
 
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 lg:h-16 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    TODAY NOP PREM.
+                    FTD PREM.
                   </span>
                   <animated.span className="mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-base lg:text-lg xl:text-base font-bold text-gray-200">
                     {dailyFsellProps.number.to((n) => `₹ ${n.toFixed(0)}`)}
@@ -620,7 +693,7 @@ function EmpDashboard() {
                 </h1>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    YTD NOP
+                    YTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {totalCvCountProps.number.to((n) => n.toFixed(0))}
@@ -631,7 +704,7 @@ function EmpDashboard() {
                 </div>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    MTD NOP
+                    MTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {monthlyCvCountProps.number.to((n) => n.toFixed(0))}
@@ -642,7 +715,7 @@ function EmpDashboard() {
                 </div>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    TODAY NOP
+                    FTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {dailyCvCountProps.number.to((n) => n.toFixed(0))}
@@ -660,7 +733,7 @@ function EmpDashboard() {
                 </h1>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    YTD NOP
+                    YTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {totalPvtCarCountProps.number.to((n) => n.toFixed(0))}
@@ -673,7 +746,7 @@ function EmpDashboard() {
                 </div>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    MTD NOP
+                    MTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {monthlyPvtCarCountProps.number.to((n) => n.toFixed(0))}
@@ -686,7 +759,7 @@ function EmpDashboard() {
                 </div>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    TODAY NOP
+                    FTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {dailyPvtCarCountProps.number.to((n) => n.toFixed(0))}
@@ -706,7 +779,7 @@ function EmpDashboard() {
                 </h1>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    YTD NOP
+                    YTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {totalTwCountProps.number.to((n) => n.toFixed(0))}
@@ -717,7 +790,7 @@ function EmpDashboard() {
                 </div>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    MTD NOP
+                    MTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {monthlyTwCountProps.number.to((n) => n.toFixed(0))}
@@ -728,7 +801,7 @@ function EmpDashboard() {
                 </div>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    TODAY NOP
+                    FTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {dailyTwCountProps.number.to((n) => n.toFixed(0))}
@@ -746,7 +819,7 @@ function EmpDashboard() {
                 </h1>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    YTD NOP
+                    YTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {totalHealthCountProps.number.to((n) => n.toFixed(0))}
@@ -759,7 +832,7 @@ function EmpDashboard() {
                 </div>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    MTD NOP
+                    MTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {monthlyHealthCountProps.number.to((n) => n.toFixed(0))}
@@ -772,7 +845,7 @@ function EmpDashboard() {
                 </div>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    TODAY NOP
+                    FTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {dailyHealthCountProps.number.to((n) => n.toFixed(0))}
@@ -792,7 +865,7 @@ function EmpDashboard() {
                 </h1>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    YTD NOP
+                    YTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {totalNonMotorCountProps.number.to((n) => n.toFixed(0))}
@@ -805,7 +878,7 @@ function EmpDashboard() {
                 </div>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    MTD NOP
+                    MTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {monthlyNonMotorCountProps.number.to((n) => n.toFixed(0))}
@@ -818,7 +891,7 @@ function EmpDashboard() {
                 </div>
                 <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
                   <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
-                    TODAY NOP
+                    FTD
                   </span>
                   <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
                     {dailyNonMotorCountProps.number.to((n) => n.toFixed(0))}
@@ -828,6 +901,43 @@ function EmpDashboard() {
                       (n) => `₹ ${n.toFixed(0)}`
                     )}
                   </animated.span>
+                </div>
+              </div>
+
+              <div className="block"></div>
+              <div className="block"></div>
+
+              {/* DVR */}
+              <div className="block">
+                <h1 className="uppercase font-serif text-sm sm:text-base lg:text-xl xl:text-2xl">
+                 DVR
+                </h1>
+                <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-cyan-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
+                  <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
+                    YTD
+                  </span>
+                  <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
+                    {visitsDataProps.number.to((n) => n.toFixed(0))}
+                  </animated.span>
+                
+                </div>
+                <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-cyan-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
+                  <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
+                    MTD
+                  </span>
+                  <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
+                    {monthlyVisitsProps.number.to((n) => n.toFixed(0))}
+                  </animated.span>
+                 
+                </div>
+                <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-cyan-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
+                  <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
+                    FTD
+                  </span>
+                  <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
+                    {dailyVisitsProps.number.to((n) => n.toFixed(0))}
+                  </animated.span>
+                  
                 </div>
               </div>
             </div>

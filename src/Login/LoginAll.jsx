@@ -251,7 +251,7 @@ function LoginAll() {
               toast.success("Logged In Successfully !");
             } else {
               toast.error("You are not authorized to access this page.");
-              navigate("/");
+              navigate("/login");
             }
             break;
 

@@ -500,26 +500,10 @@ function AddPolicyDetail({ insurance, onUpdates, onClose }) {
                     </div>
 
                             {/* FIELD - 36 */}
-                            <div className="flex flex-col p-1 text-start w-full lg:w-1/5">
-                      <label className="text-base mx-1">Product Code:</label>
-                      <select
-                        id="productCode"
-                        className="input-style p-0.5 text-lg rounded"
-                        value={allDetails.productCode}
-                        onChange={handleInputChange}
-                        name="productCode"
-                      >
-                        <option value="">-- Select Product Code ---</option>
-                        {allDetails.policyType && data
-                          .filter(policy => policy.p_type === allDetails.policyType)
-                          .map(policy => policy.products.map((product, idx) => (
-                            <option key={idx} value={product}>{product}</option>
-                          )))}
-                      </select>
-                    </div>
+                 
 
                     {/* FIELD - 1 */}
-                    <div className="flex flex-col p-1 mt-4  text-start w-full lg:w-1/5">
+                    <div className="flex flex-col p-1  text-start w-full lg:w-1/5">
                       <label className="text-base mx-1">
                         Policy No:
                         <span className="text-red-600 font-bold">*</span>

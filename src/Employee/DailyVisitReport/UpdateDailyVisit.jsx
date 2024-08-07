@@ -141,7 +141,7 @@ function UpdateDailyVisit({ data, onClosed,fetchData }) {
                 <input
                   id="mobile"
                   className="input-style p-1 rounded"
-                  type="text"
+                  type="number"
                     value={datas.mobile}
                     onChange={handleInputChange}
                   name="mobile"

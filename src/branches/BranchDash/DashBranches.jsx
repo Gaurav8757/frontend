@@ -5,8 +5,9 @@ import { useSpring, animated } from "@react-spring/web";
 import VITE_DATA from "../../config/config.jsx";
 
 function DashBranches() {
-  // eslint-disable-next-line no-unused-vars
   const [allDetailsData, setAllDetailsData] = useState([]);
+  const [branchWiseData, setBranchWiseData] = useState([]);
+
   const [APIData, setAPIData] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [employeePolicyCounts, setEmployeePolicyCounts] = useState({});
@@ -69,10 +70,33 @@ function DashBranches() {
   const [monthlyNonMotorCount, setMonthlyNonMotorCount] = useState(0);
   const [dailyNonMotorCount, setDailyNonMotorCount] = useState(0);
 
+  const [visitsData, setVisitsData] = useState([]);
+  const [monthlyVisits, setMonthlyVisits] = useState([]);
+  const [dailyVisits, setDailyVisits] = useState([]);
+  const [dvrfilter, setDvr] = useState([]);
+
   const [branches, setBranches] = useState([]);
   const [branchesCounts, setBranchesCounts] = useState({});
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const name = sessionStorage.getItem("name");
+
+  const visitsDataProps = useSpring({
+    number: visitsData.length,
+    from: { number: 0 },
+  });
+
+  const monthlyVisitsProps = useSpring({
+    number: monthlyVisits.length,
+    from: { number: 0 },
+  });
+
+  const dailyVisitsProps = useSpring({
+    number: dailyVisits.length,
+    from: { number: 0 },
+  });
 
   const allDetailsProps = useSpring({
     number: yearlyData,
@@ -108,8 +132,6 @@ function DashBranches() {
     number: APIData.length,
     from: { number: 0 },
   });
-
-  
 
   const totalCvPayoutProps = useSpring({
     number: totalCvPayout,
@@ -284,6 +306,61 @@ function DashBranches() {
     number: rejLeaveCounts,
     from: { number: 0 },
   });
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      toast.error("Not Authorized yet.. Try again! ");
+    } else {
+      // The user is authenticated, so you can make your API request here.
+      axios
+        .get(`${VITE_DATA}/dailyvisit/view/${name}`, {
+          headers: {
+            Authorization: `${token}`, // Send the token in the Authorization header
+          },
+        })
+        .then((response) => {
+          const data = response.data;
+          setDvr(data);
+
+          const currentMonth = new Date().getMonth() + 1; // getMonth() is zero-based
+          const currentDay = new Date().getDate();
+          const currentYear = new Date().getFullYear();
+
+          const filteredYearlyData = data.filter((item) => {
+            const itemDate = new Date(item.currdate);
+            const itemYear = itemDate.getFullYear();
+            return itemYear === currentYear;
+          });
+
+          const filteredMonthlyData = data.filter((item) => {
+            const itemDate = new Date(item.currdate);
+            const itemMonth = itemDate.getMonth() + 1;
+            const itemYear = itemDate.getFullYear();
+            return itemMonth === currentMonth && itemYear === currentYear;
+          });
+
+          const filteredDailyData = data.filter((item) => {
+            const itemDate = new Date(item.currdate);
+            const itemDay = itemDate.getDate();
+            const itemMonth = itemDate.getMonth() + 1;
+            const itemYear = itemDate.getFullYear();
+            return (
+              itemDay === currentDay &&
+              itemMonth === currentMonth &&
+              itemYear === currentYear
+            );
+          });
+          setVisitsData(filteredYearlyData);
+          setMonthlyVisits(filteredMonthlyData);
+          setDailyVisits(filteredDailyData);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [name]);
+
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (!token) {
@@ -323,7 +400,7 @@ function DashBranches() {
           );
 
           const allData = response.data;
-
+          setAllDetailsData(allData);
           const currentMonth = new Date().getMonth() + 1; // getMonth() is zero-based
           const currentDay = new Date().getDate();
           const currentYear = new Date().getFullYear();
@@ -398,9 +475,8 @@ function DashBranches() {
           //   return totalPayout;
           // };
 
-
-           // Extract unique branch (case insensitive), excluding empty branch
-           const uniqueBranches = [
+          // Extract unique branch (case insensitive), excluding empty branch
+          const uniqueBranches = [
             ...new Set(
               allData
                 .filter((item) => item.branch.trim() !== "")
@@ -466,7 +542,6 @@ function DashBranches() {
             setMonthlyData(filteredMonthlyData);
             setDailyData(filteredDailyData);
             setBranchesCounts(newBranchesCounts);
-           
           });
         } catch (error) {
           console.error("Policy calculation by ID caught an error", error);
@@ -475,7 +550,7 @@ function DashBranches() {
     };
 
     fetchData();
-  }, [totalCvPayout, monthlyCvPayout, dailyCvPayout]);
+  }, []);
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -561,7 +636,7 @@ function DashBranches() {
           }
         );
         const fetchedData = response.data;
-        setAllDetailsData(fetchedData);
+        setBranchWiseData(fetchedData);
 
         const currentMonth = new Date().getMonth() + 1;
         const currentDay = new Date().getDate();
@@ -776,10 +851,384 @@ function DashBranches() {
     };
 
     fetchData();
-  }, [name, dailyCvPayout, totalCvPayout, monthlyCvPayout]);
+  }, [name]);
+
+  const handleFilter = () => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // dvr open
+    const filteredDataDvr = dvrfilter.filter((item) => {
+      const itemDate = new Date(item.currdate);
+      return (!startDate || itemDate >= start) && (!endDate || itemDate <= end);
+    });
+
+    const filteredYearlyDataDvr = filteredDataDvr.filter((item) => {
+      const itemDate = new Date(item.currdate);
+      const itemYear = itemDate.getFullYear();
+      return itemYear === new Date().getFullYear();
+    });
+
+    const filteredMonthlyDataDvr = filteredDataDvr.filter((item) => {
+      const itemDate = new Date(item.currdate);
+      const itemMonth = itemDate.getMonth() + 1;
+      const itemYear = itemDate.getFullYear();
+      return (
+        itemMonth === new Date().getMonth() + 1 &&
+        itemYear === new Date().getFullYear()
+      );
+    });
+
+    const filteredDailyDataDvr = filteredDataDvr.filter((item) => {
+      const itemDate = new Date(item.currdate);
+      const itemDay = itemDate.getDate();
+      const itemMonth = itemDate.getMonth() + 1;
+      const itemYear = itemDate.getFullYear();
+      return (
+        itemDay === new Date().getDate() &&
+        itemMonth === new Date().getMonth() + 1 &&
+        itemYear === new Date().getFullYear()
+      );
+    });
+
+    // MONEY FILTER
+    const filteredBranchMoney = allDetailsData.filter((item) => {
+      const itemDate = new Date(item.entryDate);
+      return (!startDate || itemDate >= start) && (!endDate || itemDate <= end);
+    });
+
+    const newBranchesCounts = branches.reduce((acc, br) => {
+      const branchData = filteredBranchMoney.filter(
+        (item) => item.branch.toLowerCase() === br
+      );
+      acc[br] = {
+        ytd: Math.round(
+          branchData
+            .filter(
+              (item) =>
+                new Date(item.entryDate).getFullYear() ===
+                new Date().getFullYear()
+            )
+            .reduce((sum, item) => sum + parseFloat(item.netPremium || 0), 0)
+        ),
+
+        mtd: Math.round(
+          branchData
+            .filter((item) => {
+              const itemDate = new Date(item.entryDate);
+              return (
+                itemDate.getMonth() + 1 === new Date().getMonth() + 1 &&
+                itemDate.getFullYear() === new Date().getFullYear()
+              );
+            })
+            .reduce((sum, item) => sum + parseFloat(item.netPremium || 0), 0)
+        ),
+
+        ftd: Math.round(
+          branchData
+            .filter((item) => {
+              const itemDate = new Date(item.entryDate);
+              return (
+                itemDate.getDate() === new Date().getDate() &&
+                itemDate.getMonth() + 1 === new Date().getMonth() + 1 &&
+                itemDate.getFullYear() === new Date().getFullYear()
+              );
+            })
+            .reduce((sum, item) => sum + parseFloat(item.netPremium || 0), 0)
+        ),
+      };
+
+      return acc;
+    }, {});
+
+    // branch wise cv,pvt net, final etc shows
+
+    const filteredData1 = branchWiseData.filter((item) => {
+      const itemDate = new Date(item.entryDate);
+      return (!startDate || itemDate >= start) && (!endDate || itemDate <= end);
+    });
+
+    const filteredYearlyData = filteredData1.filter((item) => {
+      const itemYear = new Date(item.entryDate).getFullYear();
+      return itemYear === new Date().getFullYear();
+    });
+
+    const filteredMonthlyData = filteredData1.filter((item) => {
+      const itemDate = new Date(item.entryDate);
+      const itemYear = itemDate.getFullYear();
+      const itemMonth = itemDate.getMonth() + 1;
+      return (
+        itemYear === new Date().getFullYear() &&
+        itemMonth === new Date().getMonth() + 1
+      );
+    });
+
+    const filteredDailyData = filteredData1.filter((item) => {
+      const itemDate = new Date(item.entryDate);
+      const itemYear = itemDate.getFullYear();
+      const itemMonth = itemDate.getMonth() + 1;
+      const itemDay = itemDate.getDate();
+      return (
+        itemYear === new Date().getFullYear() &&
+        itemMonth === new Date().getMonth() + 1 &&
+        itemDay === new Date().getDate()
+      );
+    });
+
+    const newEmployeePolicyCounts = employees.reduce((acc, employee) => {
+      const employeeData = filteredData1.filter(
+        (item) => item.staffName.toLowerCase() === employee
+      );
+
+      acc[employee] = {
+        ytd: employeeData.filter(
+          (item) =>
+            new Date(item.entryDate).getFullYear() === new Date().getFullYear()
+        ).length,
+        mtd: employeeData.filter((item) => {
+          const itemDate = new Date(item.entryDate);
+          return (
+            itemDate.getMonth() + 1 === new Date().getMonth() + 1 &&
+            itemDate.getFullYear() === new Date().getFullYear()
+          );
+        }).length,
+        daily: employeeData.filter((item) => {
+          const itemDate = new Date(item.entryDate);
+          return (
+            itemDate.getDate() === new Date().getDate() &&
+            itemDate.getMonth() + 1 === new Date().getMonth() + 1 &&
+            itemDate.getFullYear() === new Date().getFullYear()
+          );
+        }).length,
+      };
+      return acc;
+    }, {});
+
+    const calculateTotals = (filteredData1, segment) => {
+      const filteredSegmentData = filteredData1.filter(
+        (item) => item.segment === segment
+      );
+      const totalPayout = filteredSegmentData.reduce(
+        (sum, item) => parseFloat(sum + item.netPremium),
+        0
+      );
+      const totalCount = filteredSegmentData.length;
+      return { totalPayout, totalCount };
+    };
+
+    const cvYearlyTotals = calculateTotals(filteredYearlyData, "C V");
+    const cvMonthlyTotals = calculateTotals(filteredMonthlyData, "C V");
+    const cvDailyTotals = calculateTotals(filteredDailyData, "C V");
+
+    const pvtCarYearlyTotals = calculateTotals(filteredYearlyData, "PVT-CAR");
+    const pvtCarMonthlyTotals = calculateTotals(filteredMonthlyData, "PVT-CAR");
+    const pvtCarDailyTotals = calculateTotals(filteredDailyData, "PVT-CAR");
+
+    const twYearlyTotals = calculateTotals(filteredYearlyData, "TW");
+    const twMonthlyTotals = calculateTotals(filteredMonthlyData, "TW");
+    const twDailyTotals = calculateTotals(filteredDailyData, "TW");
+
+    const lifeYearlyTotals = calculateTotals(filteredYearlyData, "LIFE");
+    const lifeMonthlyTotals = calculateTotals(filteredMonthlyData, "LIFE");
+    const lifeDailyTotals = calculateTotals(filteredDailyData, "LIFE");
+
+    const healthYearlyTotals = calculateTotals(filteredYearlyData, "HEALTH");
+    const healthMonthlyTotals = calculateTotals(filteredMonthlyData, "HEALTH");
+    const healthDailyTotals = calculateTotals(filteredDailyData, "HEALTH");
+
+    const nonMotorYearlyTotals = calculateTotals(
+      filteredYearlyData,
+      "NON-MOTOR"
+    );
+    const nonMotorMonthlyTotals = calculateTotals(
+      filteredMonthlyData,
+      "NON-MOTOR"
+    );
+    const nonMotorDailyTotals = calculateTotals(filteredDailyData, "NON-MOTOR");
+
+    const totalnetPremium = filteredYearlyData.reduce(
+      (sum, item) => sum + parseFloat(item.netPremium || 0),
+      0
+    );
+    const monthlynetPremium = filteredMonthlyData.reduce(
+      (sum, item) => sum + parseFloat(item.netPremium || 0),
+      0
+    );
+    const dailynetPremium = filteredDailyData.reduce(
+      (sum, item) => sum + parseFloat(item.netPremium || 0),
+      0
+    );
+
+    const totalfinalEntryFields = filteredYearlyData.reduce(
+      (sum, item) => sum + item.finalEntryFields,
+      0
+    );
+    const monthlyfinalEntryFields = filteredMonthlyData.reduce(
+      (sum, item) => sum + item.finalEntryFields,
+      0
+    );
+    const dailyfinalEntryFields = filteredDailyData.reduce(
+      (sum, item) => sum + item.finalEntryFields,
+      0
+    );
+
+    startTransition(() => {
+      setYearlyData(filteredYearlyData.length);
+      setMonthlyData(filteredMonthlyData.length);
+      setDailyData(filteredDailyData.length);
+      setEmployeePolicyCounts(newEmployeePolicyCounts);
+
+      setBranchesCounts(newBranchesCounts);
+
+      setVisitsData(filteredYearlyDataDvr);
+      setMonthlyVisits(filteredMonthlyDataDvr);
+      setDailyVisits(filteredDailyDataDvr);
+
+      setTotalNsell(totalnetPremium);
+      setMonthlyNsell(monthlynetPremium);
+      setDailyNsell(dailynetPremium);
+      setTotalFsell(totalfinalEntryFields);
+      setMonthlyFsell(monthlyfinalEntryFields);
+      setDailyFsell(dailyfinalEntryFields);
+
+      setTotalCvPayout(totalCvPayout);
+      setMonthlyCvPayout(monthlyCvPayout);
+      setDailyCvPayout(dailyCvPayout);
+      setTotalCvPayout(cvYearlyTotals.totalPayout);
+      setMonthlyCvPayout(cvMonthlyTotals.totalPayout);
+      setDailyCvPayout(cvDailyTotals.totalPayout);
+      setTotalCvCount(cvYearlyTotals.totalCount);
+      setMonthlyCvCount(cvMonthlyTotals.totalCount);
+      setDailyCvCount(cvDailyTotals.totalCount);
+
+      setTotalPvtCarPayout(pvtCarYearlyTotals.totalPayout);
+      setMonthlyPvtCarPayout(pvtCarMonthlyTotals.totalPayout);
+      setDailyPvtCarPayout(pvtCarDailyTotals.totalPayout);
+      setTotalPvtCarCount(pvtCarYearlyTotals.totalCount);
+      setMonthlyPvtCarCount(pvtCarMonthlyTotals.totalCount);
+      setDailyPvtCarCount(pvtCarDailyTotals.totalCount);
+
+      setTotalTwPayout(twYearlyTotals.totalPayout);
+      setMonthlyTwPayout(twMonthlyTotals.totalPayout);
+      setDailyTwPayout(twDailyTotals.totalPayout);
+      setTotalTwCount(twYearlyTotals.totalCount);
+      setMonthlyTwCount(twMonthlyTotals.totalCount);
+      setDailyTwCount(twDailyTotals.totalCount);
+
+      setTotalHealthPayout(healthYearlyTotals.totalPayout);
+      setMonthlyHealthPayout(healthMonthlyTotals.totalPayout);
+      setDailyHealthPayout(healthDailyTotals.totalPayout);
+      setTotalHealthCount(healthYearlyTotals.totalCount);
+      setMonthlyHealthCount(healthMonthlyTotals.totalCount);
+      setDailyHealthCount(healthDailyTotals.totalCount);
+
+      setTotalLifePayout(lifeYearlyTotals.totalPayout);
+      setMonthlyLifePayout(lifeMonthlyTotals.totalPayout);
+      setDailyLifePayout(lifeDailyTotals.totalPayout);
+      setTotalLifeCount(lifeYearlyTotals.totalCount);
+      setMonthlyLifeCount(lifeMonthlyTotals.totalCount);
+      setDailyLifeCount(lifeDailyTotals.totalCount);
+
+      setTotalNonMotorPayout(nonMotorYearlyTotals.totalPayout);
+      setMonthlyNonMotorPayout(nonMotorMonthlyTotals.totalPayout);
+      setDailyNonMotorPayout(nonMotorDailyTotals.totalPayout);
+      setTotalNonMotorCount(nonMotorYearlyTotals.totalCount);
+      setMonthlyNonMotorCount(nonMotorMonthlyTotals.totalCount);
+      setDailyNonMotorCount(nonMotorDailyTotals.totalCount);
+
+      setIsFiltered(true);
+    });
+  };
+
+  const handleRemoveFilter = () => {
+    setStartDate("");
+    setEndDate("");
+    setIsFiltered(false);
+    startTransition(() => {
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth() + 1;
+      const currentDay = currentDate.getDate();
+
+      const filteredYearlyData = branchWiseData.filter((item) => {
+        const itemYear = new Date(item.entryDate).getFullYear();
+        return itemYear === currentYear;
+      });
+
+      const filteredMonthlyData = branchWiseData.filter((item) => {
+        const itemDate = new Date(item.entryDate);
+        const itemYear = itemDate.getFullYear();
+        const itemMonth = itemDate.getMonth() + 1;
+        return itemYear === currentYear && itemMonth === currentMonth;
+      });
+
+      const filteredDailyData = branchWiseData.filter((item) => {
+        const itemDate = new Date(item.entryDate);
+        const itemYear = itemDate.getFullYear();
+        const itemMonth = itemDate.getMonth() + 1;
+        const itemDay = itemDate.getDate();
+        return (
+          itemYear === currentYear &&
+          itemMonth === currentMonth &&
+          itemDay === currentDay
+        );
+      });
+
+      setYearlyData(filteredYearlyData.length);
+      setMonthlyData(filteredMonthlyData.length);
+      setDailyData(filteredDailyData.length);
+
+      //   setEmployeePolicyCounts(filteredData);
+    });
+  };
 
   return (
     <section className="bg-slate-300 p-2">
+      <div className="flex flex-nowrap flex-auto justify-between mb-5">
+        <div className="flex mr-2">
+          <div className="mr-8">
+            <label className="text-base font-mono font-semibold xl:inline lg:inline md:inline sm:inline hidden mr-1">
+              From:
+            </label>
+            <input
+              type="date"
+              className="input-style font-mono xl:w-auto lg:w-auto sm:w-auto w-24 p-1 rounded"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="text-base font-mono font-semibold xl:inline lg:inline md:inline sm:inline hidden mx-1">
+              To:
+            </label>
+            <input
+              type="date"
+              className="input-style font-mono xl:w-auto lg:w-auto  sm:w-auto w-24 p-1 rounded"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="flex  flex-wrap justify-between">
+          <button
+            onClick={handleFilter}
+            className={`bg-blue-600 text-white font-mono rounded font-semibold mr-4 xl:w-auto w-18 px-3 py-1 ${
+              !startDate && !endDate ? "cursor-not-allowed" : ""
+            }`}
+            disabled={!startDate && !endDate}
+          >
+            Filter
+          </button>
+          {isFiltered && (
+            <button
+              onClick={handleRemoveFilter}
+              className="bg-red-600 text-white font-mono rounded font-semibold xl:w-auto w-18 px-3 py-1"
+            >
+              Clear
+            </button>
+          )}
+        </div>
+      </div>
       <div className="grid grid-cols-3 gap-3 mb-5">
         <div className="flex xl:flex lg:flex md:flex sm:flex items-center justify-between  h-16 rounded-lg bg-cyan-600 shadow-2xl drop-shadow-2xl shadow-blue-650">
           <span className="sm:block mx-1 sm:mx-2 lg:mx-3 xl:mx-6  px-2 py-1 rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold text-white  focus:ring-[#050708]/50">
@@ -1085,8 +1534,8 @@ function DashBranches() {
           </div>
         </div>
 
-         {/* life */}
-         <div className="block shadow-2xl drop-shadow-2xl shadow-blue-650">
+        {/* life */}
+        <div className="block shadow-2xl drop-shadow-2xl shadow-blue-650">
           <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
             LIFE{" "}
           </h1>
@@ -1126,10 +1575,40 @@ function DashBranches() {
             </animated.span>
           </div>
         </div>
+        <div className="block  "></div>
+        <div className="block shadow-2xl drop-shadow-xl shadow-blue-650">
+          <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
+            DVR{" "}
+          </h1>
+          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-20 lg:h-20 xl:h-12 rounded-t-lg bg-cyan-600 ">
+            <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg  text-xs sm:text-sm md:text-sm lg:text-base xl:text-base  font-semibold   focus:ring-[#050708]/50 uppercase">
+              YTD
+            </span>
+            <animated.span className="mx-1 text-xs sm:text-xs md:text-sm lg:text-basese xl:text-base font-bold text-gray-50">
+              {visitsDataProps.number.to((n) => n.toFixed(0))}
+            </animated.span>
+          </div>
+          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-20 lg:h-20 xl:h-12 bg-blue-600 ">
+            <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg  text-xs sm:text-sm md:text-sm lg:text-base xl:text-base  font-semibold   focus:ring-[#050708]/50 uppercase">
+              MTD
+            </span>
+            <animated.span className="mx-1 text-xs sm:text-xs md:text-sm lg:text-basese xl:text-base font-bold text-gray-50">
+              {monthlyVisitsProps.number.to((n) => n.toFixed(0))}
+            </animated.span>
+          </div>
+          <div className=" grid xl:flex lg:grid text-white md:grid sm:grid items-center xl:justify-between h-16 lg:p-1 sm:h-20 lg:h-20 rounded-b-lg xl:h-12 bg-sky-500 ">
+            <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2  rounded-lg  text-xs sm:text-sm md:text-sm lg:text-base xl:text-base  font-semibold   focus:ring-[#050708]/50 uppercase">
+              FTD
+            </span>
+            <animated.span className="mx-1 text-xs sm:text-xs md:text-sm lg:text-basese xl:text-base font-bold text-gray-50">
+              {dailyVisitsProps.number.to((n) => n.toFixed(0))}
+            </animated.span>
+          </div>
+        </div>
       </div>
 
       {/* dynamic branches */}
- <div className="grid xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-5 sm:grid-cols-4 grid-cols-3  gap-3 mb-5">
+      <div className="grid xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-5 sm:grid-cols-4 grid-cols-3  gap-3 mb-5">
         {branches.map((br, index) => (
           <div
             key={index}
@@ -1173,7 +1652,6 @@ function DashBranches() {
           </div>
         ))}
       </div>
-
 
       {/* one liners 5  */}
       <div className="grid grid-cols-5 gap-3 mb-5">
