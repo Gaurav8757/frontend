@@ -38,7 +38,7 @@
 
 .react-calendar button:enabled:hover {
   cursor: pointer;
-  background-color: #757575;
+  background-color: #bc5e05;
 }
 
 .react-calendar__navigation {
