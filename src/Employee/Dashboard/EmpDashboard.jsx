@@ -69,6 +69,13 @@ function EmpDashboard() {
     const [monthlyNonMotorCount, setMonthlyNonMotorCount] = useState(0);
     const [dailyNonMotorCount, setDailyNonMotorCount] = useState(0);
 
+    const [totalLifePayout, setTotalLifePayout] = useState(0);
+  const [monthlyLifePayout, setMonthlyLifePayout] = useState(0);
+  const [dailyLifePayout, setDailyLifePayout] = useState(0);
+  const [totalLifeCount, setTotalLifeCount] = useState(0);
+  const [monthlyLifeCount, setMonthlyLifeCount] = useState(0);
+  const [dailyLifeCount, setDailyLifeCount] = useState(0);
+
     const [visitsData, setVisitsData] = useState([]);
     const [monthlyVisits, setMonthlyVisits] = useState([]);
     const [dailyVisits, setDailyVisits] = useState([]);
@@ -90,6 +97,32 @@ function EmpDashboard() {
       number: dailyVisits.length,
       from: { number: 0 },
     });
+
+     // life
+  const totalLifePayoutProps = useSpring({
+    number: totalLifePayout,
+    from: { number: 0 },
+  });
+  const monthlyLifePayoutProps = useSpring({
+    number: monthlyLifePayout,
+    from: { number: 0 },
+  });
+  const dailyLifePayoutProps = useSpring({
+    number: dailyLifePayout,
+    from: { number: 0 },
+  });
+  const totalLifeCountProps = useSpring({
+    number: totalLifeCount,
+    from: { number: 0 },
+  });
+  const monthlyLifeCountProps = useSpring({
+    number: monthlyLifeCount,
+    from: { number: 0 },
+  });
+  const dailyLifeCountProps = useSpring({
+    number: dailyLifeCount,
+    from: { number: 0 },
+  });
 
     const allDetailsProps = useSpring({ number: yearlyData, from: { number: 0 } });
     const monthlyProps = useSpring({ number: monthlyData, from: { number: 0 } });
@@ -396,6 +429,11 @@ function EmpDashboard() {
                     const twMonthlyTotals = calculateTotals(filteredMonthlyData, 'TW');
                     const twDailyTotals = calculateTotals(filteredDailyData, 'TW');
 
+                    const lifeYearlyTotals = calculateTotals(filteredYearlyData, "LIFE");
+                    const lifeMonthlyTotals = calculateTotals(filteredMonthlyData, "LIFE");
+                    const lifeDailyTotals = calculateTotals(filteredDailyData, "LIFE");
+                
+
                     const healthYearlyTotals = calculateTotals(filteredYearlyData, 'HEALTH');
                     const healthMonthlyTotals = calculateTotals(filteredMonthlyData, 'HEALTH');
                     const healthDailyTotals = calculateTotals(filteredDailyData, 'HEALTH');
@@ -462,6 +500,13 @@ function EmpDashboard() {
                         setTotalNonMotorCount(nonMotorYearlyTotals.totalCount);
                         setMonthlyNonMotorCount(nonMotorMonthlyTotals.totalCount);
                         setDailyNonMotorCount(nonMotorDailyTotals.totalCount);
+
+                        setTotalLifePayout(lifeYearlyTotals.totalPayout);
+                        setMonthlyLifePayout(lifeMonthlyTotals.totalPayout);
+                        setDailyLifePayout(lifeDailyTotals.totalPayout);
+                        setTotalLifeCount(lifeYearlyTotals.totalCount);
+                        setMonthlyLifeCount(lifeMonthlyTotals.totalCount);
+                        setDailyLifeCount(lifeDailyTotals.totalCount);
                     });
                 })
                 .catch((error) => {
@@ -904,7 +949,51 @@ function EmpDashboard() {
                 </div>
               </div>
 
-              <div className="block"></div>
+              <div className="block">
+              <h1 className="uppercase font-serif text-sm sm:text-base lg:text-xl xl:text-2xl">
+                  LIFE
+                </h1>
+                <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
+                  <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
+                    YTD
+                  </span>
+                  <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
+                    {totalLifeCountProps.number.to((n) => n.toFixed(0))}
+                  </animated.span>
+                  <animated.span className="mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
+                    {totalLifePayoutProps.number.to(
+                      (n) => `₹ ${n.toFixed(0)}`
+                    )}
+                  </animated.span>
+                </div>
+                <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
+                  <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
+                    MTD
+                  </span>
+                  <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
+                    {monthlyLifeCountProps.number.to((n) => n.toFixed(0))}
+                  </animated.span>
+                  <animated.span className="mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
+                    {monthlyLifePayoutProps.number.to(
+                      (n) => `₹ ${n.toFixed(0)}`
+                    )}
+                  </animated.span>
+                </div>
+                <div className="mb-3 grid xl:flex lg:grid md:grid sm:grid items-center xl:justify-between h-20 lg:p-1 lg:h-24 xl:h-16 rounded bg-orange-700 shadow-2xl drop-shadow-2xl shadow-orange-950">
+                  <span className="sm:block mx-1 sm:mx-2 lg:mx-1 xl:mx-2 px-2 py-0.5 rounded text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-black-500 bg-[white]/50 focus:ring-[#050708]/50 uppercase">
+                    FTD
+                  </span>
+                  <animated.span className="mx-1 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
+                    {dailyLifeCountProps.number.to((n) => n.toFixed(0))}
+                  </animated.span>
+                  <animated.span className="mx-1 sm:mx-2 lg:mx-1 xl:mx-2 text-xs sm:text-xs md:text-base lg:text-base xl:text-base font-bold text-gray-200">
+                    {dailyLifePayoutProps.number.to(
+                      (n) => `₹ ${n.toFixed(0)}`
+                    )}
+                  </animated.span>
+                </div>
+
+              </div>
               <div className="block"></div>
 
               {/* DVR */}

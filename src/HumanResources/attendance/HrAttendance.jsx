@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import 'react-calendar/dist/Calendar.css';
 import VITE_DATA from '../../config/config.jsx';
 function HrAttendance() {
   const [value, setValue] = useState(new Date());
@@ -135,8 +136,7 @@ function HrAttendance() {
       <div className="container-fluid flex justify-center p-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 bg-orange-100">
         <div className="w-full">
           <h1 className="text-3xl tracking-wider font-medium text-orange-700 py-2">Attendance</h1>
-          <div className='flex justify-start
-        '>
+          <div className='flex justify-start'>
         <div className='text-lg font-semibold text-orange-800'>
         Present Days: <span className='me-4 text-xl font-semibold text-green-600'> {presentDays}</span>
         Absent Days:   <span className='me-4 text-xl font-semibold text-red-600'>{absentDays} </span> 

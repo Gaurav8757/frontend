@@ -9,6 +9,13 @@ function FinanceDashboard() {
   const [monthlyData, setMonthlyData] = useState([]);
   const [dailyData, setDailyData] = useState([]);
 
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [branchWiseData, setBranchWiseData] = useState([]);
+
+  const [empWiseAttendance, setEmpWiseAttendance] = useState([]);
+
   const [totalNsell, setTotalNsell] = useState(0);
   const [monthlyNsell, setMonthlyNsell] = useState(0);
   const [dailyNsell, setDailyNsell] = useState(0);
@@ -403,6 +410,7 @@ function FinanceDashboard() {
         })
         .then((response) => {
           const empLists = response.data;
+          setEmpWiseAttendance(empLists);
           const currentMonth = new Date().getMonth() + 1; // getMonth() is zero-based
           const currentDay = new Date().getDate();
           const currentYear = new Date().getFullYear();
@@ -520,6 +528,7 @@ function FinanceDashboard() {
           );
 
           const allData = response.data;
+          setBranchWiseData(allData);
 
           const currentMonth = new Date().getMonth() + 1; // getMonth() is zero-based
           const currentDay = new Date().getDate();
@@ -908,10 +917,395 @@ function FinanceDashboard() {
     };
 
     fetchData();
-  }, [totalCvPayout, monthlyCvPayout, dailyCvPayout]);
+  }, []);
+
+
+
+
+  const handleFilter = () => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const activeEmp1 = empWiseAttendance.filter(
+      (emp) => emp.flags === true
+    );
+    let totalPresentCount = 0;
+    // activeEmp1.forEach((emp) => {
+    //   const filteredEntries  = emp.employeeDetails.filter((item) => {
+
+    //     const itemDate = new Date(item.date);
+
+    //     return item.status === "present" &&  (!start || itemDate >= start) && (!end || itemDate <= end);
+    //   });
+    //   console.log(filteredEntries );
+    //   // console.log(end);
+    //   // Increment totalPresentCount by the number of today's present entries
+    //   totalPresentCount += filteredEntries .length;
+    // });
+
+    const iterateDays = (start, end, callback) => {
+      const current = new Date(start);
+      while (current <= end) {
+        callback(new Date(current));
+        current.setDate(current.getDate() + 1);
+      }
+    };
+    if (start && end) {
+      iterateDays(start, end, (currentDate) => {
+        const currentDateString = `${currentDate
+          .getDate()
+          .toString()
+          .padStart(2, "0")}/${(currentDate.getMonth() + 1)
+          .toString()
+          .padStart(2, "0")}/${currentDate.getFullYear()}`;
+
+        activeEmp1.forEach((emp) => {
+          const todayEntries = emp.employeeDetails.filter((item) => {
+            return item.status === "present" && item.date === currentDateString;
+          });
+
+          // Increment totalPresentCount by the number of present entries for the current date
+          totalPresentCount += todayEntries.length;
+        });
+      });
+    }
+    setCurrAttendance(totalPresentCount);
+    
+
+    // MONEY FILTER
+    const filteredBranchMoney = branchWiseData.filter((item) => {
+      const itemDate = new Date(item.entryDate);
+      return (!startDate || itemDate >= start) && (!endDate || itemDate <= end);
+    });
+
+    const newBranchesCounts = branches.reduce((acc, br) => {
+      const branchData = filteredBranchMoney.filter(
+        (item) => item.branch.toLowerCase() === br
+      );
+      acc[br] = {
+        ytd: Math.round(
+          branchData
+            .filter(
+              (item) =>
+                new Date(item.entryDate).getFullYear() ===
+                new Date().getFullYear()
+            )
+            .reduce((sum, item) => sum + parseFloat(item.netPremium || 0), 0)
+        ),
+
+        mtd: Math.round(
+          branchData
+            .filter((item) => {
+              const itemDate = new Date(item.entryDate);
+              return (
+                itemDate.getMonth() + 1 === new Date().getMonth() + 1 &&
+                itemDate.getFullYear() === new Date().getFullYear()
+              );
+            })
+            .reduce((sum, item) => sum + parseFloat(item.netPremium || 0), 0)
+        ),
+
+        ftd: Math.round(
+          branchData
+            .filter((item) => {
+              const itemDate = new Date(item.entryDate);
+              return (
+                itemDate.getDate() === new Date().getDate() &&
+                itemDate.getMonth() + 1 === new Date().getMonth() + 1 &&
+                itemDate.getFullYear() === new Date().getFullYear()
+              );
+            })
+            .reduce((sum, item) => sum + parseFloat(item.netPremium || 0), 0)
+        ),
+      };
+
+      return acc;
+    }, {});
+
+    // branch wise cv,pvt net, final etc shows
+
+    const filteredData1 = branchWiseData.filter((item) => {
+      const itemDate = new Date(item.entryDate);
+      return (!startDate || itemDate >= start) && (!endDate || itemDate <= end);
+    });
+
+    const filteredYearlyData = filteredData1.filter((item) => {
+      const itemYear = new Date(item.entryDate).getFullYear();
+      return itemYear === new Date().getFullYear();
+    });
+
+    const filteredMonthlyData = filteredData1.filter((item) => {
+      const itemDate = new Date(item.entryDate);
+      const itemYear = itemDate.getFullYear();
+      const itemMonth = itemDate.getMonth() + 1;
+      return (
+        itemYear === new Date().getFullYear() &&
+        itemMonth === new Date().getMonth() + 1
+      );
+    });
+
+    const filteredDailyData = filteredData1.filter((item) => {
+      const itemDate = new Date(item.entryDate);
+      const itemYear = itemDate.getFullYear();
+      const itemMonth = itemDate.getMonth() + 1;
+      const itemDay = itemDate.getDate();
+      return (
+        itemYear === new Date().getFullYear() &&
+        itemMonth === new Date().getMonth() + 1 &&
+        itemDay === new Date().getDate()
+      );
+    });
+
+    // employee counts policy
+    const newEmployeePolicyCounts = employees.reduce((acc, employee) => {
+      const employeeData = filteredData1.filter(
+        (item) => item.staffName.toLowerCase() === employee
+      );
+
+      acc[employee] = {
+        ytd: employeeData.filter(
+          (item) =>
+            new Date(item.entryDate).getFullYear() === new Date().getFullYear()
+        ).length,
+        mtd: employeeData.filter((item) => {
+          const itemDate = new Date(item.entryDate);
+          return (
+            itemDate.getMonth() + 1 === new Date().getMonth() + 1 &&
+            itemDate.getFullYear() === new Date().getFullYear()
+          );
+        }).length,
+        daily: employeeData.filter((item) => {
+          const itemDate = new Date(item.entryDate);
+          return (
+            itemDate.getDate() === new Date().getDate() &&
+            itemDate.getMonth() + 1 === new Date().getMonth() + 1 &&
+            itemDate.getFullYear() === new Date().getFullYear()
+          );
+        }).length,
+      };
+      return acc;
+    }, {});
+
+    // total calculates
+    const calculateTotals = (filteredData1, segment) => {
+      const filteredSegmentData = filteredData1.filter(
+        (item) => item.segment === segment
+      );
+      const totalPayout = filteredSegmentData.reduce(
+        (sum, item) => parseFloat(sum + item.netPremium),
+        0
+      );
+      const totalCount = filteredSegmentData.length;
+      return { totalPayout, totalCount };
+    };
+
+    const cvYearlyTotals = calculateTotals(filteredYearlyData, "C V");
+    const cvMonthlyTotals = calculateTotals(filteredMonthlyData, "C V");
+    const cvDailyTotals = calculateTotals(filteredDailyData, "C V");
+
+    const pvtCarYearlyTotals = calculateTotals(filteredYearlyData, "PVT-CAR");
+    const pvtCarMonthlyTotals = calculateTotals(filteredMonthlyData, "PVT-CAR");
+    const pvtCarDailyTotals = calculateTotals(filteredDailyData, "PVT-CAR");
+
+    const twYearlyTotals = calculateTotals(filteredYearlyData, "TW");
+    const twMonthlyTotals = calculateTotals(filteredMonthlyData, "TW");
+    const twDailyTotals = calculateTotals(filteredDailyData, "TW");
+
+    const lifeYearlyTotals = calculateTotals(filteredYearlyData, "LIFE");
+    const lifeMonthlyTotals = calculateTotals(filteredMonthlyData, "LIFE");
+    const lifeDailyTotals = calculateTotals(filteredDailyData, "LIFE");
+
+    const healthYearlyTotals = calculateTotals(filteredYearlyData, "HEALTH");
+    const healthMonthlyTotals = calculateTotals(filteredMonthlyData, "HEALTH");
+    const healthDailyTotals = calculateTotals(filteredDailyData, "HEALTH");
+
+    const nonMotorYearlyTotals = calculateTotals(
+      filteredYearlyData,
+      "NON-MOTOR"
+    );
+    const nonMotorMonthlyTotals = calculateTotals(
+      filteredMonthlyData,
+      "NON-MOTOR"
+    );
+    const nonMotorDailyTotals = calculateTotals(filteredDailyData, "NON-MOTOR");
+
+    const totalnetPremium = filteredYearlyData.reduce(
+      (sum, item) => sum + parseFloat(item.netPremium || 0),
+      0
+    );
+    const monthlynetPremium = filteredMonthlyData.reduce(
+      (sum, item) => sum + parseFloat(item.netPremium || 0),
+      0
+    );
+    const dailynetPremium = filteredDailyData.reduce(
+      (sum, item) => sum + parseFloat(item.netPremium || 0),
+      0
+    );
+
+    const totalfinalEntryFields = filteredYearlyData.reduce(
+      (sum, item) => sum + item.finalEntryFields,
+      0
+    );
+    const monthlyfinalEntryFields = filteredMonthlyData.reduce(
+      (sum, item) => sum + item.finalEntryFields,
+      0
+    );
+    const dailyfinalEntryFields = filteredDailyData.reduce(
+      (sum, item) => sum + item.finalEntryFields,
+      0
+    );
+
+    startTransition(() => {
+      setAllDetailsData(filteredYearlyData);
+      setMonthlyData(filteredMonthlyData);
+      setDailyData(filteredDailyData);
+      setEmployeePolicyCounts(newEmployeePolicyCounts);
+
+      setBranchesCounts(newBranchesCounts);
+      setTotalNsell(totalnetPremium);
+      setMonthlyNsell(monthlynetPremium);
+      setDailyNsell(dailynetPremium);
+      setTotalFsell(totalfinalEntryFields);
+      setMonthlyFsell(monthlyfinalEntryFields);
+      setDailyFsell(dailyfinalEntryFields);
+
+      setTotalCvPayout(totalCvPayout);
+      setMonthlyCvPayout(monthlyCvPayout);
+      setDailyCvPayout(dailyCvPayout);
+      setTotalCvPayout(cvYearlyTotals.totalPayout);
+      setMonthlyCvPayout(cvMonthlyTotals.totalPayout);
+      setDailyCvPayout(cvDailyTotals.totalPayout);
+      setTotalCvCount(cvYearlyTotals.totalCount);
+      setMonthlyCvCount(cvMonthlyTotals.totalCount);
+      setDailyCvCount(cvDailyTotals.totalCount);
+
+      setTotalPvtCarPayout(pvtCarYearlyTotals.totalPayout);
+      setMonthlyPvtCarPayout(pvtCarMonthlyTotals.totalPayout);
+      setDailyPvtCarPayout(pvtCarDailyTotals.totalPayout);
+      setTotalPvtCarCount(pvtCarYearlyTotals.totalCount);
+      setMonthlyPvtCarCount(pvtCarMonthlyTotals.totalCount);
+      setDailyPvtCarCount(pvtCarDailyTotals.totalCount);
+
+      setTotalTwPayout(twYearlyTotals.totalPayout);
+      setMonthlyTwPayout(twMonthlyTotals.totalPayout);
+      setDailyTwPayout(twDailyTotals.totalPayout);
+      setTotalTwCount(twYearlyTotals.totalCount);
+      setMonthlyTwCount(twMonthlyTotals.totalCount);
+      setDailyTwCount(twDailyTotals.totalCount);
+
+      setTotalHealthPayout(healthYearlyTotals.totalPayout);
+      setMonthlyHealthPayout(healthMonthlyTotals.totalPayout);
+      setDailyHealthPayout(healthDailyTotals.totalPayout);
+      setTotalHealthCount(healthYearlyTotals.totalCount);
+      setMonthlyHealthCount(healthMonthlyTotals.totalCount);
+      setDailyHealthCount(healthDailyTotals.totalCount);
+
+      setTotalLifePayout(lifeYearlyTotals.totalPayout);
+      setMonthlyLifePayout(lifeMonthlyTotals.totalPayout);
+      setDailyLifePayout(lifeDailyTotals.totalPayout);
+      setTotalLifeCount(lifeYearlyTotals.totalCount);
+      setMonthlyLifeCount(lifeMonthlyTotals.totalCount);
+      setDailyLifeCount(lifeDailyTotals.totalCount);
+
+      setTotalNonMotorPayout(nonMotorYearlyTotals.totalPayout);
+      setMonthlyNonMotorPayout(nonMotorMonthlyTotals.totalPayout);
+      setDailyNonMotorPayout(nonMotorDailyTotals.totalPayout);
+      setTotalNonMotorCount(nonMotorYearlyTotals.totalCount);
+      setMonthlyNonMotorCount(nonMotorMonthlyTotals.totalCount);
+      setDailyNonMotorCount(nonMotorDailyTotals.totalCount);
+
+      setIsFiltered(true);
+    });
+  };
+
+  const handleRemoveFilter = () => {
+    setStartDate("");
+    setEndDate("");
+    setIsFiltered(false);
+    window.location.reload();
+    // startTransition(() => {
+    //   const currentDate = new Date();
+    //   const currentYear = currentDate.getFullYear();
+    //   const currentMonth = currentDate.getMonth() + 1;
+    //   const currentDay = currentDate.getDate();
+
+    //   const filteredYearlyData = branchWiseData.filter((item) => {
+    //     const itemYear = new Date(item.entryDate).getFullYear();
+    //     return itemYear === currentYear;
+    //   });
+
+    //   const filteredMonthlyData = branchWiseData.filter((item) => {
+    //     const itemDate = new Date(item.entryDate);
+    //     const itemYear = itemDate.getFullYear();
+    //     const itemMonth = itemDate.getMonth() + 1;
+    //     return itemYear === currentYear && itemMonth === currentMonth;
+    //   });
+
+    //   const filteredDailyData = branchWiseData.filter((item) => {
+    //     const itemDate = new Date(item.entryDate);
+    //     const itemYear = itemDate.getFullYear();
+    //     const itemMonth = itemDate.getMonth() + 1;
+    //     const itemDay = itemDate.getDate();
+    //     return (
+    //       itemYear === currentYear &&
+    //       itemMonth === currentMonth &&
+    //       itemDay === currentDay
+    //     );
+    //   });
+
+    //   setYearlyData(filteredYearlyData.length);
+    //   setMonthlyData(filteredMonthlyData.length);
+    //   setDailyData(filteredDailyData.length);
+    // });
+  };
 
   return (
-    <section className="bg-slate-300 p-1 pt-3">
+    <section className="bg-slate-300 p-1 pt-1">
+     <div className="flex flex-nowrap flex-auto justify-between my-3">
+        <div className="flex mr-2">
+          <div className="mr-8">
+            <label className="text-base font-mono font-semibold xl:inline lg:inline md:inline sm:inline hidden mr-1">
+              From:
+            </label>
+            <input
+              type="date"
+              className="input-style font-mono xl:w-auto lg:w-auto sm:w-auto w-24 p-1 rounded"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="text-base font-mono font-semibold xl:inline lg:inline md:inline sm:inline hidden mx-1">
+              To:
+            </label>
+            <input
+              type="date"
+              className="input-style font-mono xl:w-auto lg:w-auto  sm:w-auto w-24 p-1 rounded"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="flex  flex-wrap justify-between">
+          <button
+            onClick={handleFilter}
+            className={`bg-blue-600 text-white font-mono rounded font-semibold mr-4 xl:w-auto w-18 px-3 py-1 ${
+              !startDate && !endDate ? "cursor-not-allowed" : ""
+            }`}
+            disabled={!startDate && !endDate}
+          >
+            Filter
+          </button>
+          {isFiltered && (
+            <button
+              onClick={handleRemoveFilter}
+              className="bg-red-600 text-white font-mono rounded font-semibold xl:w-auto w-18 px-3 py-1"
+            >
+              Clear
+            </button>
+          )}
+        </div>
+      </div>
       <div className="grid grid-cols-3 gap-3 mb-5">
         <div className="flex xl:flex lg:flex md:flex sm:flex items-center justify-between  h-16 rounded-lg bg-cyan-600 shadow-2xl drop-shadow-2xl shadow-blue-650">
           <span className="sm:block mx-1 sm:mx-2 lg:mx-3 xl:mx-6  px-2 py-1 rounded-lg text-xs sm:text-sm md:text-sm lg:text-base xl:text-base font-semibold text-white  focus:ring-[#050708]/50">
@@ -1334,11 +1728,11 @@ function FinanceDashboard() {
       {/* HAJIPUR sales  */}
       <div className="grid grid-cols-4 gap-3 mb-4">
         {/* advsisors */}
-        <div className="block shadow-2xl drop-shadow-2xl shadow-blue-650">
+        <div className="block shadow-blue-650">
           <h1 className="uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
             ADVISORS
           </h1>
-          <div>
+          <div className="shadow-2xl drop-shadow-2xl ">
             {/* Display the total number of advisors at the top */}
             <div className="flex justify-between flex-col sm:flex-col md:flex-col lg:flex-row xl:flex-row  items-center  bg-blue-600 shadow-2xl drop-shadow-2xl shadow-blue-650 rounded-t-lg">
               <span className=" sm:block   px-2  py-2   mx-1 sm:mx-2 lg:mx-1 xl:mx-2  rounded-lg text-xs sm:text-xs md:text-sm lg:text-base xl:text-base font-semibold text-white focus:ring-[#050708]/50 uppercase">

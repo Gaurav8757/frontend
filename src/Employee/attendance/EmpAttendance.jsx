@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import '../../../public/EmpAttendance.css';
+import 'react-calendar/dist/Calendar.css';
 import VITE_DATA from '../../config/config.jsx';
 
 function EmpAttendance() {
@@ -112,7 +112,7 @@ function EmpAttendance() {
 
   return (
     <section className="container-fluid emp-attendance-container relative h-screen p-0 sm:ml-48 bg-orange-100">
-      <div className="container-fluid flex justify-center p-1 border-gray-200 border-dashed rounded-lg dark:border-gray-700 bg-orange-100">
+      <div className="container-fluid flex justify-center p-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 bg-orange-100">
         <div className="w-full ">
           <span className="text-3xl tracking-wider text-orange-700 font-medium p-4">Attendance</span>
           <div className='flex justify-start'>

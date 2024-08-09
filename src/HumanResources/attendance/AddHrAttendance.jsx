@@ -108,13 +108,13 @@ function AddHrAttendance() {
   }
   const empnam = sessionStorage.getItem('name');
   return (
-    <section className="container-fluid relative flex flex-wrap p-0 sm:ml-64 bg-slate-100">
-    <div className="container-fluid flex justify-center w-full sm:w-full md:w-full lg:w-full xl:w-full border-dashed rounded-lg  bg-slate-100">
+    <section className="container-fluid relative flex flex-wrap p-0 sm:ml-64 bg-orange-100">
+    <div className="container-fluid flex justify-center w-full sm:w-full md:w-full lg:w-full xl:w-full border-dashed rounded-lg  bg-orange-100">
       <div className="inline-block min-w-full   w-full py-0 ">
         <h2 className="text-xl sm:text-2xl  md:text-2xl lg:text-2xl xl:text-3xl tracking-wider text-orange-700 text-center  font-medium">Attendance</h2>
-        <div className="overflow-x-auto my-0 bg-slate-200">
+        <div className="overflow-x-auto my-0 ">
           {/* name, date, time */}
-          <div className='flex justify-between  shadow-2xl border border-slate-100 py-1 text-xl sm:text-md md:text-xl lg:text-xl xl:text-xl'>
+          <div className='flex justify-between bg-slate-200 shadow-2xl border border-slate-100 py-1 text-xl sm:text-md md:text-xl lg:text-xl xl:text-xl'>
               <span className="text-start font-semibold text-base ">
                 Your Name: <span className="font-base tracking-wide text-orange-700">{empnam}</span>
               </span>
@@ -124,7 +124,7 @@ function AddHrAttendance() {
           {/* part-2 */}
           <div className='flex flex-wrap '>
           <div className=" w-full sm:w-full md:w-full lg:w-full xl:w-1/2">
-          <div className='flex justify-center text-center shadow-2xl'>
+          <div className='flex justify-center text-center '>
             <h1 className='text-xl xl:text-2xl lg:text-2xl tracking-wide text-start font-medium text-orange-700 me-10'>Make Attendance</h1>
             </div>
             <div className="flex flex-wrap mx-2 text-center justify-center mt-4">

@@ -8,6 +8,8 @@ function DashBranches() {
   const [allDetailsData, setAllDetailsData] = useState([]);
   const [branchWiseData, setBranchWiseData] = useState([]);
 
+  const [empWiseAttendance, setEmpWiseAttendance] = useState([]);
+
   const [APIData, setAPIData] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [employeePolicyCounts, setEmployeePolicyCounts] = useState({});
@@ -566,6 +568,7 @@ function DashBranches() {
         })
         .then((response) => {
           const empLists = response.data;
+          setEmpWiseAttendance(empLists);
           const currentMonth = new Date().getMonth() + 1; // getMonth() is zero-based
           const currentDay = new Date().getDate();
           const currentYear = new Date().getFullYear();
@@ -891,6 +894,60 @@ function DashBranches() {
       );
     });
 
+    // emp wise data
+    // const currentDateString = `${new Date()
+    //   .getDate()
+    //   .toString()
+    //   .padStart(2, "0")}/${new Date()
+    //   .getMonth()
+    //   .toString()
+    //   .padStart(2, "0")}/${new Date().getFullYear()}`;
+
+    const activeEmp1 = empWiseAttendance.filter(
+      (emp) => emp.flags === true && emp.empbranch === name
+    );
+    let totalPresentCount = 0;
+    // activeEmp1.forEach((emp) => {
+    //   const filteredEntries  = emp.employeeDetails.filter((item) => {
+
+    //     const itemDate = new Date(item.date);
+
+    //     return item.status === "present" &&  (!start || itemDate >= start) && (!end || itemDate <= end);
+    //   });
+    //   console.log(filteredEntries );
+    //   // console.log(end);
+    //   // Increment totalPresentCount by the number of today's present entries
+    //   totalPresentCount += filteredEntries .length;
+    // });
+
+    const iterateDays = (start, end, callback) => {
+      const current = new Date(start);
+      while (current <= end) {
+        callback(new Date(current));
+        current.setDate(current.getDate() + 1);
+      }
+    };
+    if (start && end) {
+      iterateDays(start, end, (currentDate) => {
+        const currentDateString = `${currentDate
+          .getDate()
+          .toString()
+          .padStart(2, "0")}/${(currentDate.getMonth() + 1)
+          .toString()
+          .padStart(2, "0")}/${currentDate.getFullYear()}`;
+
+        activeEmp1.forEach((emp) => {
+          const todayEntries = emp.employeeDetails.filter((item) => {
+            return item.status === "present" && item.date === currentDateString;
+          });
+
+          // Increment totalPresentCount by the number of present entries for the current date
+          totalPresentCount += todayEntries.length;
+        });
+      });
+    }
+    setCurrAttendance(totalPresentCount);
+
     // MONEY FILTER
     const filteredBranchMoney = allDetailsData.filter((item) => {
       const itemDate = new Date(item.entryDate);
@@ -975,6 +1032,7 @@ function DashBranches() {
       );
     });
 
+    // employee counts policy
     const newEmployeePolicyCounts = employees.reduce((acc, employee) => {
       const employeeData = filteredData1.filter(
         (item) => item.staffName.toLowerCase() === employee
@@ -1004,6 +1062,7 @@ function DashBranches() {
       return acc;
     }, {});
 
+    // total calculates
     const calculateTotals = (filteredData1, segment) => {
       const filteredSegmentData = filteredData1.filter(
         (item) => item.segment === segment
@@ -1144,42 +1203,41 @@ function DashBranches() {
     setStartDate("");
     setEndDate("");
     setIsFiltered(false);
-    startTransition(() => {
-      const currentDate = new Date();
-      const currentYear = currentDate.getFullYear();
-      const currentMonth = currentDate.getMonth() + 1;
-      const currentDay = currentDate.getDate();
+    window.location.reload();
+    // startTransition(() => {
+    //   const currentDate = new Date();
+    //   const currentYear = currentDate.getFullYear();
+    //   const currentMonth = currentDate.getMonth() + 1;
+    //   const currentDay = currentDate.getDate();
 
-      const filteredYearlyData = branchWiseData.filter((item) => {
-        const itemYear = new Date(item.entryDate).getFullYear();
-        return itemYear === currentYear;
-      });
+    //   const filteredYearlyData = branchWiseData.filter((item) => {
+    //     const itemYear = new Date(item.entryDate).getFullYear();
+    //     return itemYear === currentYear;
+    //   });
 
-      const filteredMonthlyData = branchWiseData.filter((item) => {
-        const itemDate = new Date(item.entryDate);
-        const itemYear = itemDate.getFullYear();
-        const itemMonth = itemDate.getMonth() + 1;
-        return itemYear === currentYear && itemMonth === currentMonth;
-      });
+    //   const filteredMonthlyData = branchWiseData.filter((item) => {
+    //     const itemDate = new Date(item.entryDate);
+    //     const itemYear = itemDate.getFullYear();
+    //     const itemMonth = itemDate.getMonth() + 1;
+    //     return itemYear === currentYear && itemMonth === currentMonth;
+    //   });
 
-      const filteredDailyData = branchWiseData.filter((item) => {
-        const itemDate = new Date(item.entryDate);
-        const itemYear = itemDate.getFullYear();
-        const itemMonth = itemDate.getMonth() + 1;
-        const itemDay = itemDate.getDate();
-        return (
-          itemYear === currentYear &&
-          itemMonth === currentMonth &&
-          itemDay === currentDay
-        );
-      });
+    //   const filteredDailyData = branchWiseData.filter((item) => {
+    //     const itemDate = new Date(item.entryDate);
+    //     const itemYear = itemDate.getFullYear();
+    //     const itemMonth = itemDate.getMonth() + 1;
+    //     const itemDay = itemDate.getDate();
+    //     return (
+    //       itemYear === currentYear &&
+    //       itemMonth === currentMonth &&
+    //       itemDay === currentDay
+    //     );
+    //   });
 
-      setYearlyData(filteredYearlyData.length);
-      setMonthlyData(filteredMonthlyData.length);
-      setDailyData(filteredDailyData.length);
-
-      //   setEmployeePolicyCounts(filteredData);
-    });
+    //   setYearlyData(filteredYearlyData.length);
+    //   setMonthlyData(filteredMonthlyData.length);
+    //   setDailyData(filteredDailyData.length);
+    // });
   };
 
   return (
