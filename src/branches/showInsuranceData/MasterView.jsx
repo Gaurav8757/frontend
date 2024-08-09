@@ -517,12 +517,12 @@ function MasterView() {
                       <th scope="col" className="px-1 pt-2 sticky border border-black">State</th>
                       <th scope="col" className="px-1 pt-2 sticky border border-black">District</th>
                       <th scope="col" className="px-1 pt-2 sticky border border-black">Vehicle Reg No</th>
-                      <th scope="col" className="px-1 pt-2 sticky border border-black">Segment</th>
-                      <th scope="col" className="px-1 pt-2 sticky border border-black">Sourcing</th>
                       <th scope="col" className="px-1 pt-2 sticky border border-black">Company</th>
                       <th scope="col" className="px-1 pt-2 sticky border border-black">Category</th>
                       <th scope="col" className="px-1 pt-2 sticky border border-black">Policy Type</th>
+                      <th scope="col" className="px-1 pt-2 sticky border border-black">Segment</th>
                       <th scope="col" className="px-1 pt-2 sticky border border-black">Product Code</th>
+                      <th scope="col" className="px-1 pt-2 sticky border border-black">Sourcing</th>
                       <th scope="col" className="px-1 pt-2 sticky border border-black">Policy No</th>
                       <th scope="col" className="px-1 pt-2 sticky border border-black">Engine No.</th>
                       <th scope="col" className="px-1 pt-2 sticky border border-black">Chassis No</th>
@@ -586,12 +586,12 @@ function MasterView() {
                         <td className="whitespace-nowrap px-1 py-0 border border-black">{data.states}</td>
                         <td className="whitespace-nowrap px-1 py-0 border border-black">{data.district}</td>
                         <td className="whitespace-nowrap px-1 py-0 border border-black">{data.vehRegNo}</td>
-                        <td className="whitespace-nowrap px-1 py-0 border border-black">{data.segment}</td>
-                        <td className="whitespace-nowrap px-1 py-0 border border-black">{data.sourcing}</td>
                         <td className="whitespace-nowrap px-1 py-0 border border-black">{data.company}</td>
                         <td className="whitespace-nowrap px-1 py-0 border border-black">{data.category}</td>
                         <td className="whitespace-nowrap px-1 py-0 border border-black">{data.policyType}</td>
+                        <td className="whitespace-nowrap px-1 py-0 border border-black">{data.segment}</td>
                         <td className="whitespace-nowrap px-1 py-0 border border-black">{data.productCode}</td>
+                        <td className="whitespace-nowrap px-1 py-0 border border-black">{data.sourcing}</td>
                         <td className="whitespace-nowrap px-1 py-0 border border-black">{data.policyNo}</td>
                         <td className="whitespace-nowrap px-1 py-0 border border-black">{data.engNo}</td>
                         <td className="whitespace-nowrap px-1 py-0 border border-black">{data.chsNo}</td>

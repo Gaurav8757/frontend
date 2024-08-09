@@ -246,7 +246,7 @@ function MasterForm() {
           console.error(error);
         });
     }
-  }, [payoutOnList]);
+  }, []);
 
 
 
@@ -269,7 +269,7 @@ function MasterForm() {
           console.error(error);
         });
     }
-  }, [payMode]);
+  }, []);
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -313,7 +313,7 @@ function MasterForm() {
           console.error(error);
         });
     }
-  }, [fuelType]);
+  }, []);
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -346,7 +346,7 @@ function MasterForm() {
       .catch((error) => {
         console.error("Error fetching policy types:", error);
       });
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -381,7 +381,7 @@ function MasterForm() {
       .catch((error) => {
         console.error("Error fetching company names:", error);
       });
-  }, [pdata]);
+  }, []);
 
 
   // useEffect(() => {
@@ -690,8 +690,8 @@ if(company === "GO-DIGIT"){
     if (!productCode) {
       errors.productCode = "required*";
     }
-    if (!advisorName) {
-      errors.advisorName = "required*";
+    if (!advId) {
+      errors.advId = "required*";
     }
 
 
@@ -1716,19 +1716,19 @@ if(company === "GO-DIGIT"){
                 <select
                   className="input-style p-1 rounded-lg"
                   type="text"
-                  value={advisorName}
-                  name="advisorName"
-                  // onChange={(e) => setAdvisorName(e.target.value.toUpperCase())}
+                  value={advId}
+                  name="advId"
                   onChange={(e) => {
-                    const selectedAdvisor = advLists.find((adv) => adv.advisorname === e.target.value);
-                    setAdvisorName(e.target.value.toUpperCase());
-                    setAdvId(selectedAdvisor ? selectedAdvisor.uniqueId : '');
-                  }}
-
+                    const selectedAdvisor = advLists.find((adv) => adv.uniqueId === e.target.value);
+                    setAdvId(e.target.value);
+                    setAdvisorName(selectedAdvisor ? selectedAdvisor.advisorname : '');
+                  }} 
                   placeholder="Enter Advisor Name">
+
+
                   <option value="">----------------- Select Advisor -----------------</option>
                   {advLists.sort((a, b) => a.advisorname.localeCompare(b.advisorname)).map((data) => (
-                    <option key={data._id} value={data.advisorname}>{`${data.advisorname}  -  ${data.advisoraddress}`}</option>
+                    <option key={data._id} value={data.uniqueId}>{`${data.uniqueId} --> ${data.advisoraddress}  -->  ${data.advisorname}`}</option>
                   ))}
                 </select>
                 {errors.advisorName && <span className="text-red-600 text-sm ">{errors.advisorName}</span>}

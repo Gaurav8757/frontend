@@ -1571,19 +1571,16 @@ function AddFinance() {
                 <select
                   className="input-style p-1 rounded-lg"
                   type="text"
-                  value={advisorName}
-                  name="advisorName"
-                  // onChange={(e) => setAdvisorName(e.target.value.toUpperCase())}
+                  value={advId}
+                  name="advId"
                   onChange={(e) => {
-                    const selectedAdvisor = filteredAdvLists.find((adv) => adv.advisorname === e.target.value);
-                    setAdvisorName(e.target.value.toUpperCase());
-                    setAdvId(selectedAdvisor ? selectedAdvisor.uniqueId : '');
-                  }}
-
+                    const selectedAdvisor = filteredAdvLists.find((adv) => adv.uniqueId === e.target.value);
+                    setAdvId(e.target.value);
+                    setAdvisorName(selectedAdvisor ? selectedAdvisor.advisorname : '');                  }} 
                   placeholder="Enter Advisor Name">
                   <option value="">------------- Select Advisor -----------</option>
                   {filteredAdvLists.sort((a, b) => a.advisorname.localeCompare(b.advisorname)).map((data) => (
-                    <option key={data._id} value={data.advisorname}>{`${data.advisorname}  -  ${data.branch[0]}`}</option>
+                    <option key={data._id} value={data.uniqueId}>{`${data.uniqueId} --> ${data.advisoraddress}  -->  ${data.advisorname}`}</option>
                   ))}
                 </select>
                 {errors.advisorName && <span className="text-red-600 text-sm ">{errors.advisorName}</span>}

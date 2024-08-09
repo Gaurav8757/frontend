@@ -53,6 +53,7 @@ const FinanceTable = ({ filteredData, onUpdateInsurance }) => {
               'State',
               'District',
               'Segment',
+              'Product Code',
               'Sourcing',
               'Policy Start Date',
               'Policy End Date',
@@ -68,7 +69,6 @@ const FinanceTable = ({ filteredData, onUpdateInsurance }) => {
               'GVW',
               'Seating Capacity',
               'C.C',
-              'Product Code',
               'Advisor Name',
               'Sub Advisor',
               'Payout On',
@@ -124,6 +124,7 @@ const FinanceTable = ({ filteredData, onUpdateInsurance }) => {
               <td className="whitespace-nowrap px-1 py-0 border border-black">{data.states}</td>
               <td className="whitespace-nowrap px-1 py-0 border border-black">{data.district}</td>
               <td className="whitespace-nowrap px-1 py-1 border border-black">{data.segment}</td>
+              <td className="whitespace-nowrap px-1 py-1 border border-black">{data.productCode}</td>
               <td className="whitespace-nowrap px-1 py-1 border border-black">{data.sourcing}</td>
               <td className="whitespace-nowrap px-1 py-1 border border-black">{data.policyStartDate}</td>
               <td className="whitespace-nowrap px-1 py-1 border border-black">{data.policyEndDate}</td>
@@ -139,7 +140,7 @@ const FinanceTable = ({ filteredData, onUpdateInsurance }) => {
               <td className="whitespace-nowrap px-1 py-1 border border-black">{data.gvw}</td>
               <td className="whitespace-wrap px-1 py-1 border border-black">{data.sitcapacity}</td>
               <td className="whitespace-nowrap px-1 py-1 border border-black">{data.cc}</td>
-              <td className="whitespace-nowrap px-1 py-1 border border-black">{data.productCode}</td>
+              
               <td className="whitespace-nowrap px-1 py-1 border border-black">{data.advisorName}</td>
               <td className="whitespace-nowrap px-1 py-1 border border-black">{data.subAdvisor}</td>
               <td className="whitespace-nowrap px-1  py-0 border border-black">

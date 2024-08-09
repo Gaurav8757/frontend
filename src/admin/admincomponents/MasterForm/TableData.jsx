@@ -18,8 +18,8 @@ const TableData = ({ filteredData, onDeleteAllData, onUpdateInsurance, totalItem
   return (
     <div className="inline-block min-w-full w-full py-0 relative">
       <table className="min-w-full text-center text-xs font-light table border border-black">
-        <thead className="border-b font-medium bg-slate-300 sticky top-16">
-          <tr className="text-blue-700 sticky top-16">
+        <thead className="border-b font-medium bg-slate-300  sticky top-12">
+          <tr className="text-blue-700 sticky top-12">
             {[
               'Update',
               'Reference ID',
@@ -49,6 +49,7 @@ const TableData = ({ filteredData, onDeleteAllData, onUpdateInsurance, totalItem
               'District',
               'Vehicle Reg No',
               'Segment',
+              'Product Code',
               'Sourcing',
               'Policy Start Date',
               'Policy End Date',
@@ -64,7 +65,7 @@ const TableData = ({ filteredData, onDeleteAllData, onUpdateInsurance, totalItem
               'GVW',
               'Seating Capacity',
               'C.C',
-              'Product Code',
+              
               'Advisor Name',
               'Sub Advisor',
               'Payout On',
@@ -80,7 +81,7 @@ const TableData = ({ filteredData, onDeleteAllData, onUpdateInsurance, totalItem
               '',
               'Delete',
             ].map((header) => (
-              <th scope="col" className="px-1 border border-black" key={header}>
+              <th scope="col" className="px-1 py-4 border border-black" key={header}>
                 {header}
               </th>
             ))}
@@ -178,6 +179,9 @@ const TableData = ({ filteredData, onDeleteAllData, onUpdateInsurance, totalItem
                 {data.segment}
               </td>
               <td className="whitespace-nowrap px-1 border border-black">
+                {data.productCode}
+              </td>
+              <td className="whitespace-nowrap px-1 border border-black">
                 {data.sourcing}
               </td>
               <td className="whitespace-nowrap px-1 border border-black">
@@ -222,9 +226,7 @@ const TableData = ({ filteredData, onDeleteAllData, onUpdateInsurance, totalItem
               <td className="whitespace-nowrap px-1 border border-black">
                 {data.cc}
               </td>
-              <td className="whitespace-nowrap px-1 border border-black">
-                {data.productCode}
-              </td>
+             
               <td className="whitespace-nowrap px-1 border border-black">
                 {data.advisorName}
               </td>

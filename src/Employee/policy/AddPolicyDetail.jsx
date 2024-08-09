@@ -161,8 +161,8 @@ function AddPolicyDetail({ insurance, onUpdates, onClose }) {
     }
   }, [formSubmitted]);
 
-  let citys = cities.map((data) => data.name);
-  console.log(citys);
+  // let citys = cities.map((data) => data.name);
+  // console.log(citys);
 
   useEffect(() => {
     axios
@@ -321,17 +321,15 @@ function AddPolicyDetail({ insurance, onUpdates, onClose }) {
         // Handle error appropriately
       }
     }
-    // For setting other details, assuming allDetails is correctly set and has a structure like { selectedState: '', selectedCity: '', ...otherDetails }
+
     setAllDetails((prevData) => ({
       ...prevData,
       [name]: value,
       states: name === "selectedState" ? value : prevData.selectedState,
       district: name === "selectedCity" ? value : prevData.selectedCity,
       empTime: time,
-      advId:
-        name === "advisorName"
-          ? advLists.find((advisor) => advisor.advisorname === value).uniqueId
-          : prevData.advId,
+      advId: name === "advId" ? value : prevData.advId,
+      advisorName: name === "advId" ? (filteredAdvLists.find((advisor) => advisor.uniqueId === value)?.advisorname || '') : prevData.advisorName,
     }));
   };
 
@@ -867,14 +865,14 @@ function AddPolicyDetail({ insurance, onUpdates, onClose }) {
                         </option>
                       </select>
                     </div>
-                    <div className="flex flex-col p-1 mt-2 text-start lg:w-1/5">
+                    <div className="flex flex-col p-1 mt-4 text-start lg:w-1/5">
                       <label className="text-base mx-1">Advisor Name:</label>
                       <select
                         className="input-style p-1 text-base rounded"
                         type="text"
-                        value={allDetails.advisorName}
+                        value={allDetails.advId}
                         onChange={handleInputChange}
-                        name="advisorName"
+                        name="advId"
                         placeholder="Enter Advisor Name"
                       >
                         <option value="">
@@ -887,8 +885,8 @@ function AddPolicyDetail({ insurance, onUpdates, onClose }) {
                           .map((data) => (
                             <option
                               key={data._id}
-                              value={data.advisorname}
-                            >{`${data.advisorname} - ${data.branch[0]} `}</option>
+                              value={data.uniqueId}
+                            >{`${data.uniqueId} --> ${data.branch[0]}  -->  ${data.advisorname}`}</option>
                           ))}
                       </select>
                     </div>
