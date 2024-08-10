@@ -9,66 +9,68 @@ function MasterForm() {
   // eslint-disable-next-line no-unused-vars
   const [cities, setCities] = useState([]);
   const [ncbList, setNcbLists] = useState([]);
-  const [selectedState, setSelectedState] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
-  const [entryDate, setEntryDate] = useState('');
-  const [company, setCompany] = useState('');
-  const [category, setCategory] = useState('');
-  const [segment, setSegment] = useState('');
-  const [sourcing, setSourcing] = useState('');
-  const [policyNo, setPolicyNo] = useState('');
-  const [insuredName, setInsuredName] = useState('');
-  const [contactNo, setContactNo] = useState('');
-  const [vehRegNo, setVehRegNo] = useState('');
-  const [policyStartDate, setPolicyStartDate] = useState('');
-  const [policyEndDate, setPolicyEndDate] = useState('');
-  const [odExpiry, setOdExpiry] = useState('');
-  const [tpExpiry, setTpExpiry] = useState('');
-  const [idv, setIdv] = useState('');
-  const [bodyType, setBodyType] = useState('');
-  const [makeModel, setMakeModel] = useState('');
-  const [mfgYear, setMfgYear] = useState('');
-  const [registrationDate, setRegistrationDate] = useState('');
-  const [vehicleAge, setVehicleAge] = useState('');
-  const [fuel, setFuel] = useState('');
-  const [gvw, setGvw] = useState('');
-  const [rsa, setRSA] = useState('');
-  const [cc, setCc] = useState('');
-  const [engNo, setEngNo] = useState('');
-  const [chsNo, setChsNo] = useState('');
-  const [policyType, setPolicyType] = useState('');
-  const [productCode, setProductCode] = useState('');
-  const [odPremium, setOdPremium] = useState('');
-  const [liabilityPremium, setLiabilityPremium] = useState('');
-  const [netPremium, setNetPremium] = useState('');
-  const [finalEntryFields, setFinalEntryFields] = useState('');
-  const [taxes, setTaxes] = useState('');
-  const [odDiscount, setOdDiscount] = useState('');
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [entryDate, setEntryDate] = useState("");
+  const [company, setCompany] = useState("");
+  const [category, setCategory] = useState("");
+  const [segment, setSegment] = useState("");
+  const [sourcing, setSourcing] = useState("");
+  const [policyNo, setPolicyNo] = useState("");
+  const [insuredName, setInsuredName] = useState("");
+  const [contactNo, setContactNo] = useState("");
+  const [vehRegNo, setVehRegNo] = useState("");
+  const [policyStartDate, setPolicyStartDate] = useState("");
+  const [policyEndDate, setPolicyEndDate] = useState("");
+  const [odExpiry, setOdExpiry] = useState("");
+  const [tpExpiry, setTpExpiry] = useState("");
+  const [idv, setIdv] = useState("");
+  const [bodyType, setBodyType] = useState("");
+  const [makeModel, setMakeModel] = useState("");
+  const [mfgYear, setMfgYear] = useState("");
+  const [registrationDate, setRegistrationDate] = useState("");
+  const [vehicleAge, setVehicleAge] = useState("");
+  const [fuel, setFuel] = useState("");
+  const [gvw, setGvw] = useState("");
+  const [rsa, setRSA] = useState("");
+  const [cc, setCc] = useState("");
+  const [engNo, setEngNo] = useState("");
+  const [chsNo, setChsNo] = useState("");
+  const [policyType, setPolicyType] = useState("");
+  const [productCode, setProductCode] = useState("");
+  const [odPremium, setOdPremium] = useState("");
+  const [liabilityPremium, setLiabilityPremium] = useState("");
+  const [netPremium, setNetPremium] = useState("");
+  const [finalEntryFields, setFinalEntryFields] = useState("");
+  const [taxes, setTaxes] = useState("");
+  const [odDiscount, setOdDiscount] = useState("");
   const [ccList, setCCList] = useState([]);
-  const [ncb, setNcb] = useState('');
-  const [advisorName, setAdvisorName] = useState('');
-  const [subAdvisor, setSubAdvisor] = useState('');
-  const [staffName, setStaffName] = useState('');
-  const [branch, setBranch] = useState('');
-  const [payoutOn, setPayoutOn] = useState('');
+  const [ncb, setNcb] = useState("");
+  const [advisorName, setAdvisorName] = useState("");
+  const [subAdvisor, setSubAdvisor] = useState("");
+  const [staffName, setStaffName] = useState("");
+  const [branch, setBranch] = useState("");
+  const [payoutOn, setPayoutOn] = useState("");
   const [branchname, setBranchName] = useState([]);
-  const [calculationType, setCalculationType] = useState('');
-  const [policyPaymentMode, setPolicyPaymentMode] = useState('');
-  const [paymentDoneBy, setPaymentDoneBy] = useState('');
-  const [chqNoRefNo, setChqNoRefNo] = useState('');
-  const [bankName, setBankName] = useState('');
-  const [chqPaymentDate, setChqPaymentDate] = useState('');
-  const [chqStatus, setChqStatus] = useState('');
+  const [calculationType, setCalculationType] = useState("");
+  const [policyPaymentMode, setPolicyPaymentMode] = useState("");
+  const [paymentDoneBy, setPaymentDoneBy] = useState("");
+  const [chqNoRefNo, setChqNoRefNo] = useState("");
+  const [bankName, setBankName] = useState("");
+  const [chqPaymentDate, setChqPaymentDate] = useState("");
+  const [chqStatus, setChqStatus] = useState("");
   const [advisorPayableAmount, setAdvisorPayableAmount] = useState(0);
-  const [branchPayout, setBranchPayout] = useState('');
-  const [branchPayableAmount, setBranchPayableAmount] = useState('');
+  const [branchPayout, setBranchPayout] = useState("");
+  const [branchPayableAmount, setBranchPayableAmount] = useState("");
   const [companyPayout, setCompanyPayout] = useState(0);
-  const [profitLoss, setProfitLoss] = useState('');
+  const [profitLoss, setProfitLoss] = useState("");
   const [data, setData] = useState([]);
   const [products, setProducts] = useState([]);
   const [pdata, setPdata] = useState([]);
   const [APIData, setAPIData] = useState([]);
-  const [catTypesForSelectedPolicy, setCatTypesForSelectedPolicy] = useState([]);
+  const [catTypesForSelectedPolicy, setCatTypesForSelectedPolicy] = useState(
+    []
+  );
   const [fuelType, setFuelType] = useState([]);
   const [payoutOnList, setPayoutOnList] = useState([]);
   const [payMode, setPayMode] = useState([]);
@@ -77,49 +79,51 @@ function MasterForm() {
   const [cslab, setCslab] = useState([]);
   const [odList, setOdList] = useState([]);
   const [advLists, setAdvLists] = useState([]);
-  const [advId, setAdvId] = useState('');
+  const [advId, setAdvId] = useState("");
   const [advisorPayoutAmount, setAdvisorPayoutAmount] = useState();
   const [sit, setSit] = useState([]);
-  const [sitcapacity, setSitCapacity] = useState('');
-  const citiesToShow = [ "Araria",
-  "Arwal",
-  "Aurangabad",
-  "Banka",
-  "Begusarai",
-  "Bhagalpur",
-  "Bhojpur",
-  "Buxar",
-  "Darbhanga",
-  "Gaya",
-  "Gopalganj",
-  "Jamui",
-  "Jehanabad",
-  "Kaimur District",
-  "Katihar",
-  "Khagaria",
-  "Kishanganj",
-  "Lakhisarai",
-  "Munger",
-  "Madhepura",
-  "Madhubani",
-  "Muzaffarpur",
-  "Nalanda",
-  "Nawada",
-  "Patna",
-  "Purnia",
-  "Pashchim Champaran",
-  "Purba Champaran",
-  "Rohtas",
-  "Saharsa",
-  "Samastipur",
-  "Saran",
-  "Sheikhpura",
-  "Sheohar",
-  "Sitamarhi",
-  "Siwan",
-  "Supaul",
-  "Vaishali",
-  "West Champaran"];
+  const [sitcapacity, setSitCapacity] = useState("");
+  const citiesToShow = [
+    "Araria",
+    "Arwal",
+    "Aurangabad",
+    "Banka",
+    "Begusarai",
+    "Bhagalpur",
+    "Bhojpur",
+    "Buxar",
+    "Darbhanga",
+    "Gaya",
+    "Gopalganj",
+    "Jamui",
+    "Jehanabad",
+    "Kaimur District",
+    "Katihar",
+    "Khagaria",
+    "Kishanganj",
+    "Lakhisarai",
+    "Munger",
+    "Madhepura",
+    "Madhubani",
+    "Muzaffarpur",
+    "Nalanda",
+    "Nawada",
+    "Patna",
+    "Purnia",
+    "Pashchim Champaran",
+    "Purba Champaran",
+    "Rohtas",
+    "Saharsa",
+    "Samastipur",
+    "Saran",
+    "Sheikhpura",
+    "Sheohar",
+    "Sitamarhi",
+    "Siwan",
+    "Supaul",
+    "Vaishali",
+    "West Champaran",
+  ];
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -194,7 +198,7 @@ function MasterForm() {
         .get(`${VITE_DATA}/advisor/all/lists`, {
           headers: {
             Authorization: `${token}`, // Send the token in the Authorization header
-          }
+          },
         })
         .then((response) => {
           setAdvLists(response.data);
@@ -204,7 +208,6 @@ function MasterForm() {
         });
     }
   }, []);
-
 
   useEffect(() => {
     // The user is authenticated, so you can make your API request here.
@@ -248,8 +251,6 @@ function MasterForm() {
     }
   }, []);
 
-
-
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (!token) {
@@ -284,9 +285,7 @@ function MasterForm() {
           },
         })
         .then((response) => {
-
           setAPIData(response.data);
-
         })
         .catch((error) => {
           console.error(error);
@@ -337,7 +336,8 @@ function MasterForm() {
   }, [formSubmitted]);
 
   useEffect(() => {
-    axios.get(`${VITE_DATA}/staff/policy/lists`)
+    axios
+      .get(`${VITE_DATA}/staff/policy/lists`)
       .then((resp) => {
         const PolicyType = resp.data;
 
@@ -362,17 +362,16 @@ function MasterForm() {
         })
         .then((response) => {
           setBranchName(response.data);
-
         })
         .catch((error) => {
-
           console.error(error);
         });
     }
   }, []);
 
   useEffect(() => {
-    axios.get(`${VITE_DATA}/view/company/lists`)
+    axios
+      .get(`${VITE_DATA}/view/company/lists`)
       .then((resp) => {
         const cType = resp.data;
 
@@ -382,7 +381,6 @@ function MasterForm() {
         console.error("Error fetching company names:", error);
       });
   }, []);
-
 
   // useEffect(() => {
   //   // Load states asynchronously when the component mounts
@@ -408,11 +406,13 @@ function MasterForm() {
     // Load states asynchronously when the component mounts
     const fetchStates = async () => {
       try {
-        const { State } = await import('country-state-city').then(module => module);
-        const fetchedStates = State.getStatesOfCountry('IN');
+        const { State } = await import("country-state-city").then(
+          (module) => module
+        );
+        const fetchedStates = State.getStatesOfCountry("IN");
         setStates(fetchedStates);
       } catch (error) {
-        console.error('Error fetching states:', error);
+        console.error("Error fetching states:", error);
       }
     };
     fetchStates();
@@ -425,11 +425,13 @@ function MasterForm() {
     if (stateIsoCode) {
       // Fetch cities only when a state is selected
       try {
-        const { City } = await import('country-state-city').then(module => module);
-        const stateCities = City.getCitiesOfState('IN', stateIsoCode);
+        const { City } = await import("country-state-city").then(
+          (module) => module
+        );
+        const stateCities = City.getCitiesOfState("IN", stateIsoCode);
         setCities(stateCities);
       } catch (error) {
-        console.error('Error fetching cities:', error);
+        console.error("Error fetching cities:", error);
       }
     } else {
       setCities([]);
@@ -445,7 +447,6 @@ function MasterForm() {
     // Set the updated netPremium value directly
     setNetPremium(newNetPremium);
   };
-
 
   const calculateAge = (year) => {
     if (!year) {
@@ -481,30 +482,29 @@ function MasterForm() {
     const taxesValue = parseFloat(taxes) || 0;
     const rsaValue = parseFloat(rsa) || 0;
     const finalAmountValue = netPremiumValue + taxesValue + rsaValue;
-if(company === "GO-DIGIT"){
-  setFinalEntryFields(finalAmountValue.toFixed(2));
-}else{
-  setFinalEntryFields(finalAmountValue.toFixed(0));
-}
+    if (company === "GO-DIGIT") {
+      setFinalEntryFields(finalAmountValue.toFixed(2));
+    } else {
+      setFinalEntryFields(finalAmountValue.toFixed(0));
+    }
 
-     // Assuming you want to display the final amount with two decimal places
+    // Assuming you want to display the final amount with two decimal places
   };
 
   useEffect(() => {
     calculateFinalAmount();
-  },);
+  });
 
   // final amount set
   const handleNetPremiumBlur = () => {
-    if (calculationType === 'finalAmount') {
+    if (calculationType === "finalAmount") {
       calculateFinalAmount();
-    } else if (calculationType === 'branchPayableAmount') {
+    } else if (calculationType === "branchPayableAmount") {
       calculateBranchPayableAmount();
     }
     // Reset the calculation type after performing the calculation
-    setCalculationType('');
+    setCalculationType("");
   };
-
 
   const handlePolicyStartDateChange = (e) => {
     const startDate = e.target.value;
@@ -512,15 +512,23 @@ if(company === "GO-DIGIT"){
     const odExpiryDate = new Date(startDate);
     // odExpiryDate.setFullYear(odExpiryDate.getFullYear() + 1);
     odExpiryDate.setFullYear(odExpiryDate.getFullYear() + 1);
-    setOdExpiry(odExpiryDate.toISOString().split('T')[0]);
+    setOdExpiry(odExpiryDate.toISOString().split("T")[0]);
     // Update policyEndDate by adding 1 year to the selected policyStartDate
     const policyEndDateValue = new Date(startDate);
-    policyEndDateValue.setFullYear(policyEndDateValue.getFullYear() + 1, policyEndDateValue.getMonth(), policyEndDateValue.getDate() - 1);
-    setPolicyEndDate(policyEndDateValue.toISOString().split('T')[0]);
+    policyEndDateValue.setFullYear(
+      policyEndDateValue.getFullYear() + 1,
+      policyEndDateValue.getMonth(),
+      policyEndDateValue.getDate() - 1
+    );
+    setPolicyEndDate(policyEndDateValue.toISOString().split("T")[0]);
     // Update TP Expiry by adding 1 year to the selected policyStartDate
     const tpExpiryDate = new Date(startDate);
-    tpExpiryDate.setFullYear(tpExpiryDate.getFullYear() + 3, tpExpiryDate.getMonth(), tpExpiryDate.getDate() - 1);
-    setTpExpiry(tpExpiryDate.toISOString().split('T')[0]);
+    tpExpiryDate.setFullYear(
+      tpExpiryDate.getFullYear() + 3,
+      tpExpiryDate.getMonth(),
+      tpExpiryDate.getDate() - 1
+    );
+    setTpExpiry(tpExpiryDate.toISOString().split("T")[0]);
     // Set the selected policyStartDate
     setPolicyStartDate(startDate);
   };
@@ -544,12 +552,15 @@ if(company === "GO-DIGIT"){
     return deduction;
   };
 
-  const calculateCompanyPayableAmount = (finalEntryFields, companypayoutper) => {
+  const calculateCompanyPayableAmount = (
+    finalEntryFields,
+    companypayoutper
+  ) => {
     const deduction = finalEntryFields * (companypayoutper / 100);
     return deduction;
   };
 
-  //calculation  profit/loss 
+  //calculation  profit/loss
   const calculateProfitLoss = () => {
     const companyPayoutValue = parseFloat(companyPayout) || 0;
     const branchPayoutValue = parseFloat(branchPayout) || 0;
@@ -558,13 +569,14 @@ if(company === "GO-DIGIT"){
   };
 
   // console.log(profitLoss);
-  const matchingCSLab = cslab.find(cslabItem =>
-    cslabItem.cnames === company &&
-    cslabItem.catnames === category &&
-    cslabItem.policytypes === policyType &&
-    cslabItem.pcodes === productCode &&
-    cslabItem.vfuels === fuel &&
-    cslabItem.payoutons === payoutOn
+  const matchingCSLab = cslab.find(
+    (cslabItem) =>
+      cslabItem.cnames === company &&
+      cslabItem.catnames === category &&
+      cslabItem.policytypes === policyType &&
+      cslabItem.pcodes === productCode &&
+      cslabItem.vfuels === fuel &&
+      cslabItem.payoutons === payoutOn
   );
 
   useEffect(() => {
@@ -575,13 +587,28 @@ if(company === "GO-DIGIT"){
         const branchpercent = matchingCSLab.branchpayoutper || 0;
         const companypercent = matchingCSLab.companypayoutper || 0;
         // const cvPercentage = matchingCSLab.cvpercentage || 0;
-        const advisorPayout = calculateAdvisorPayoutAmount(parseFloat(finalEntryFields), percentage);
-        const advisorPayable = calculateAdvisorPayableAmount(parseFloat(finalEntryFields), percentage);
-        const branchPayables = calculateBranchPayableAmount(parseFloat(finalEntryFields), branchpercent);
-        const branchPayout = calculateBranchPayoutAmount(parseFloat(finalEntryFields), branchpercent);
-        const companyPayables = calculateCompanyPayableAmount(parseFloat(finalEntryFields), companypercent);
+        const advisorPayout = calculateAdvisorPayoutAmount(
+          parseFloat(finalEntryFields),
+          percentage
+        );
+        const advisorPayable = calculateAdvisorPayableAmount(
+          parseFloat(finalEntryFields),
+          percentage
+        );
+        const branchPayables = calculateBranchPayableAmount(
+          parseFloat(finalEntryFields),
+          branchpercent
+        );
+        const branchPayout = calculateBranchPayoutAmount(
+          parseFloat(finalEntryFields),
+          branchpercent
+        );
+        const companyPayables = calculateCompanyPayableAmount(
+          parseFloat(finalEntryFields),
+          companypercent
+        );
         setAdvisorPayableAmount(advisorPayable);
-        setAdvisorPayoutAmount(advisorPayout)
+        setAdvisorPayoutAmount(advisorPayout);
         setBranchPayout(branchPayout);
         setBranchPayableAmount(branchPayables);
         setCompanyPayout(companyPayables);
@@ -589,8 +616,16 @@ if(company === "GO-DIGIT"){
       }
     };
     calculateAmounts();
-  }, [cslab, company, category, policyType, productCode, payoutOn, finalEntryFields, matchingCSLab]);
-
+  }, [
+    cslab,
+    company,
+    category,
+    policyType,
+    productCode,
+    payoutOn,
+    finalEntryFields,
+    matchingCSLab,
+  ]);
 
   // Handle form submission logic here
   const handleSubmit = async (e) => {
@@ -694,7 +729,6 @@ if(company === "GO-DIGIT"){
       errors.advId = "required*";
     }
 
-
     if (!staffName) {
       errors.staffName = "required*";
     }
@@ -702,14 +736,6 @@ if(company === "GO-DIGIT"){
       setErrors(errors);
       return;
     }
-
-
-
-
-
-
-
-
 
     try {
       // Make sure to replace this URL with your actual API endpoint
@@ -770,8 +796,6 @@ if(company === "GO-DIGIT"){
         profitLoss,
       });
 
-
-
       if (response.data) {
         toast.success("Data Added Successfully !");
         setFormSubmitted(true);
@@ -804,7 +828,7 @@ if(company === "GO-DIGIT"){
         setGvw("");
         setCc("");
         setEngNo("");
-        setChsNo("")
+        setChsNo("");
         setPolicyType("");
         setProductCode("");
         setOdPremium("");
@@ -831,8 +855,7 @@ if(company === "GO-DIGIT"){
         setBranchPayableAmount("");
         setCompanyPayout("");
         setProfitLoss("");
-      }
-      else {
+      } else {
         toast.error("Error Occurred. Try again...! ");
       }
     } catch (error) {
@@ -845,14 +868,18 @@ if(company === "GO-DIGIT"){
   return (
     <section className="container-fluid relative  p-0 sm:ml-48 bg-white">
       <div className="container-fluid  justify-center p-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 bg-white">
-      <h1 className="font-semibold text-3xl my-2 text-blue-700">Create Policy</h1>
+        <h1 className="font-semibold text-3xl my-2 text-blue-700">
+          Create Policy
+        </h1>
         <div className="relative w-full lg:w-full p-0 lg:p-4 rounded-xl shadow-xl text-2xl items-center bg-slate-200">
-         
-          <MultiStep activeStep={0} showNavigation={true} className="bg-blue-500 rounded-lg shadow-md flex justify-between mt-0 overflow-hidden"
+          <MultiStep
+            activeStep={0}
+            showNavigation={true}
+            className="bg-blue-500 rounded-lg shadow-md flex justify-between mt-0 overflow-hidden"
             stepCustomStyle={{
               display: "inline",
               width: "30%",
-              marginBottom: "0"
+              marginBottom: "0",
               // justifyContent: "center", // Center align the steps
               // alignItems: "center", // Center align vertically
             }}
@@ -861,56 +888,73 @@ if(company === "GO-DIGIT"){
             prevButton={{
               title: (
                 <span className="flex justify-start text-base">
-                  <img src="/left.png" height={5} width={20} alt="report" className="mr-1 mx-auto mt-auto rounded-xl"/>
+                  <img
+                    src="/left.png"
+                    height={5}
+                    width={20}
+                    alt="report"
+                    className="mr-1 mx-auto mt-auto rounded-xl"
+                  />
                   {/* <SlArrowLeftCircle className="mr-2 mx-auto my-auto" /> */}
-                   Back
+                  Back
                 </span>
               ),
               style: {
                 display: "inline",
                 width: "max-content",
-                background: 'red',
-                color: 'white',
-                fontWeight: '',
-                borderRadius: '12rem',
-                padding: '0.2rem 0.6rem',
-                border: 'none',
-                cursor: 'pointer',
-                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.08)',
-                transition: 'background 1.3s ease',
-                marginRight: 'auto', // Adjusted to marginRight auto
-                marginBottom: '0.5rem',
-                float: 'left'
-              }
+                background: "red",
+                color: "white",
+                fontWeight: "",
+                borderRadius: "12rem",
+                padding: "0.2rem 0.6rem",
+                border: "none",
+                cursor: "pointer",
+                boxShadow:
+                  "0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.08)",
+                transition: "background 1.3s ease",
+                marginRight: "auto", // Adjusted to marginRight auto
+                marginBottom: "0.5rem",
+                float: "left",
+              },
             }}
             nextButton={{
               title: (
-                <span className="flex justify-end text-base">Next
-                  <img src="/right.png" height={5} width={20} alt="report" className=" mx-auto ml-1 mt-auto rounded-xl"/>
+                <span className="flex justify-end text-base">
+                  Next
+                  <img
+                    src="/right.png"
+                    height={5}
+                    width={20}
+                    alt="report"
+                    className=" mx-auto ml-1 mt-auto rounded-xl"
+                  />
                 </span>
               ),
               style: {
                 display: "inline",
                 width: "max-content",
-                background: 'green',
-                color: 'white',
-                fontWeight: '',
-                borderRadius: '12rem',
-                padding: '0.2rem 0.6rem',
-                border: 'none',
-                cursor: 'pointer',
-                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.08)',
-                transition: 'background 1.3s ease',
-                marginLeft: 'auto', // Adjusted to marginLeft auto
-                marginBottom: '0.5rem',
-                float: 'right'
-              }
+                background: "green",
+                color: "white",
+                fontWeight: "",
+                borderRadius: "12rem",
+                padding: "0.2rem 0.6rem",
+                border: "none",
+                cursor: "pointer",
+                boxShadow:
+                  "0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.08)",
+                transition: "background 1.3s ease",
+                marginLeft: "auto", // Adjusted to marginLeft auto
+                marginBottom: "0.5rem",
+                float: "right",
+              },
             }}
           >
             <div className="flex flex-wrap mb-12 justify-between">
               {/* FIELD - 1 */}
               <div className="flex flex-col p-1 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Entry Date:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Entry Date:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="date"
@@ -919,29 +963,42 @@ if(company === "GO-DIGIT"){
                   onChange={(e) => setEntryDate(e.target.value)}
                   placeholder="Select Entry Date"
                 />
-                {errors.entryDate && <span className="text-red-600 text-sm ">{errors.entryDate}</span>}
+                {errors.entryDate && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.entryDate}
+                  </span>
+                )}
               </div>
               {/* FIELD - 2 */}
               <div className="flex flex-col p-1 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Branch:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Branch:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
-                  id="branch" name="branch"
+                  id="branch"
+                  name="branch"
                   className="input-style p-0.5 text-lg rounded-lg"
                   value={branch}
                   onChange={(e) => setBranch(e.target.value)}
                 >
-                  <option className="w-1" value="" >---------------- Select Branch --------------</option>
-                  {
-                    branchname.map((item) => (
-                      <option value={item.branchname} key={item._id}>{item.branchname}</option>
-                    ))
-                  }
+                  <option className="w-1" value="">
+                    ---------------- Select Branch --------------
+                  </option>
+                  {branchname.map((item) => (
+                    <option value={item.branchname} key={item._id}>
+                      {item.branchname}
+                    </option>
+                  ))}
                 </select>
-                {errors.branch && <span className="text-red-600 text-sm ">{errors.branch}</span>}
+                {errors.branch && (
+                  <span className="text-red-600 text-sm ">{errors.branch}</span>
+                )}
               </div>
               {/* FIELD - 3 */}
               <div className="flex flex-col p-1 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Insured Name:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Insured Name:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -950,7 +1007,11 @@ if(company === "GO-DIGIT"){
                   onChange={(e) => setInsuredName(e.target.value.toUpperCase())}
                   placeholder="Enter Insured Name"
                 />
-                {errors.insuredName && <span className="text-red-600 text-sm">{errors.insuredName}</span>}
+                {errors.insuredName && (
+                  <span className="text-red-600 text-sm">
+                    {errors.insuredName}
+                  </span>
+                )}
               </div>
 
               {/* FIELD - 4 */}
@@ -968,7 +1029,10 @@ if(company === "GO-DIGIT"){
 
               {/* FIELD - 5 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Policy Made By:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Policy Made By:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
                   id="staffName"
                   name="staffName"
@@ -976,64 +1040,93 @@ if(company === "GO-DIGIT"){
                   value={staffName}
                   onChange={(e) => setStaffName(e.target.value)}
                 >
-                  <option className="w-1" value="" >--------------- Policy Made By --------------</option>
-                  {
-                    APIData.filter(emp => emp.staffType === "OPS Executive" | emp.staffType === "OPS EXECUTIVE")
-                      .map((emp) => (
-                        <option key={emp._id} value={emp.empname}>
-                          {emp.empid} - {emp.empname}
-                        </option>
-                      ))
-                  }
-                  {errors.staffName && <span className="text-red-600 text-sm ">{errors.staffName}</span>}
+                  <option className="w-1" value="">
+                    --------------- Policy Made By --------------
+                  </option>
+                  {APIData.filter(
+                    (emp) =>
+                      (emp.staffType === "OPS Executive") |
+                      (emp.staffType === "OPS EXECUTIVE")
+                  ).map((emp) => (
+                    <option key={emp._id} value={emp.empname}>
+                      {emp.empid} - {emp.empname}
+                    </option>
+                  ))}
+                  {errors.staffName && (
+                    <span className="text-red-600 text-sm ">
+                      {errors.staffName}
+                    </span>
+                  )}
                 </select>
               </div>
 
               {/* FIELD - 6 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base  mx-1">Company Name:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base  mx-1">
+                  Company Name:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
-                  id="company" name="company"
+                  id="company"
+                  name="company"
                   className="input-style p-0.5 text-lg rounded-lg"
                   value={company}
                   onChange={(e) => {
                     setCompany(e.target.value.toUpperCase());
-                    const selectedCatId = e.target.selectedOptions[0].getAttribute("data-id");
+                    const selectedCatId =
+                      e.target.selectedOptions[0].getAttribute("data-id");
                     setCatTypesForSelectedPolicy(selectedCatId);
                   }}
                 >
-                  <option className="w-1" value="" >------------- Select Company --------------</option>
+                  <option className="w-1" value="">
+                    ------------- Select Company --------------
+                  </option>
                   {pdata.map((comp) => (
-                    <option key={comp._id} value={comp.c_type} data-id={comp._id}>
+                    <option
+                      key={comp._id}
+                      value={comp.c_type}
+                      data-id={comp._id}
+                    >
                       {comp.c_type}
                     </option>
                   ))}
                 </select>
-                {errors.company && <span className="text-red-600 text-sm">{errors.company}</span>}
+                {errors.company && (
+                  <span className="text-red-600 text-sm">{errors.company}</span>
+                )}
               </div>
 
               {/* FIELD - 7 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Category:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Category:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
                   className="input-style w-full p-0.5 text-lg rounded-lg"
                   value={category}
                   name="category"
-                  onChange={(e) => setCategory(e.target.value)}>
-                  <option value="">------------ Select Product Type ------------</option>
-                  {pdata.map((cat) => (
-                    cat._id === catTypesForSelectedPolicy &&
-                    cat.category.map((product, idx) => (
-                      <option key={idx} value={product}>{product}</option>
-                    ))))
-                  }
+                  onChange={(e) => setCategory(e.target.value)}
+                >
+                  <option value="">
+                    ------------ Select Product Type ------------
+                  </option>
+                  {pdata.map(
+                    (cat) =>
+                      cat._id === catTypesForSelectedPolicy &&
+                      cat.category.map((product, idx) => (
+                        <option key={idx} value={product}>
+                          {product}
+                        </option>
+                      ))
+                  )}
                 </select>
                 {/* {errors.category && <span className="text-red-600 text-sm ">{errors.category}</span>} */}
               </div>
 
               {/* FIELD - 8 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Policy Type:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Policy Type:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
                   className="input-style p-0.5 text-lg rounded-lg"
                   value={policyType}
@@ -1042,23 +1135,36 @@ if(company === "GO-DIGIT"){
                     const selectedPolicyType = e.target.value;
                     setPolicyType(selectedPolicyType);
                     // Filter products based on selected policy type
-                    const filteredProducts = data.find(prod => prod.p_type === selectedPolicyType)?.products;
+                    const filteredProducts = data.find(
+                      (prod) => prod.p_type === selectedPolicyType
+                    )?.products;
                     setProducts(filteredProducts);
                     // Reset product code when policy type changes
-                    setProductCode('');
+                    setProductCode("");
                   }}
-                > <option value="">------------ Select Policy Type --------------</option>
-                  {data.map(prod => (
-                    <option key={prod._id} value={prod.p_type}>{prod.p_type}</option>
+                >
+                  {" "}
+                  <option value="">
+                    ------------ Select Policy Type --------------
+                  </option>
+                  {data.map((prod) => (
+                    <option key={prod._id} value={prod.p_type}>
+                      {prod.p_type}
+                    </option>
                   ))}
-
                 </select>
-                {errors.policyType && <span className="text-red-600 text-sm ">{errors.policyType}</span>}
+                {errors.policyType && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.policyType}
+                  </span>
+                )}
               </div>
 
               {/* FIELD - 9 */}
               <div className="flex flex-col  p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Policy No:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Policy No:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1067,12 +1173,18 @@ if(company === "GO-DIGIT"){
                   onChange={(e) => setPolicyNo(e.target.value)}
                   placeholder="Enter Policy No"
                 />
-                {errors.policyNo && <span className="text-red-600 text-sm ">{errors.policyNo}</span>}
+                {errors.policyNo && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.policyNo}
+                  </span>
+                )}
               </div>
 
               {/* FIELD - 10 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Engine No:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Engine No:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1081,10 +1193,14 @@ if(company === "GO-DIGIT"){
                   onChange={(e) => setEngNo(e.target.value.toUpperCase())}
                   placeholder="Enter Engine No"
                 />
-                {errors.engNo && <span className="text-red-600 text-sm ">{errors.engNo}</span>}
+                {errors.engNo && (
+                  <span className="text-red-600 text-sm ">{errors.engNo}</span>
+                )}
               </div>
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Chassis No:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Chassis No:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1093,12 +1209,16 @@ if(company === "GO-DIGIT"){
                   onChange={(e) => setChsNo(e.target.value.toUpperCase())}
                   placeholder="Enter Chassis No"
                 />
-                {errors.chsNo && <span className="text-red-600 text-sm ">{errors.chsNo}</span>}
+                {errors.chsNo && (
+                  <span className="text-red-600 text-sm ">{errors.chsNo}</span>
+                )}
               </div>
 
-              {
-                policyType === "SATP" ? (<div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                  <label className="text-base mx-1">OD Premium:<span className="text-red-600 font-bold">*</span></label>
+              {policyType === "SATP" ? (
+                <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
+                  <label className="text-base mx-1">
+                    OD Premium:<span className="text-red-600 font-bold">*</span>
+                  </label>
                   <input
                     className="input-style p-1 rounded-lg"
                     type="number"
@@ -1109,8 +1229,12 @@ if(company === "GO-DIGIT"){
                     onBlur={updateNetPremium}
                     disabled
                   />
-                </div>) : (<div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                  <label className="text-base mx-1">OD Premium:<span className="text-red-600 font-bold">*</span></label>
+                </div>
+              ) : (
+                <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
+                  <label className="text-base mx-1">
+                    OD Premium:<span className="text-red-600 font-bold">*</span>
+                  </label>
                   <input
                     className="input-style p-1 rounded-lg"
                     type="number"
@@ -1120,15 +1244,22 @@ if(company === "GO-DIGIT"){
                     placeholder="Enter OD Premium"
                     onBlur={updateNetPremium}
                   />
-                  {errors.odPremium && <span className="text-red-600 text-sm ">{errors.odPremium}</span>}
-                </div>)
-              }
+                  {errors.odPremium && (
+                    <span className="text-red-600 text-sm ">
+                      {errors.odPremium}
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="flex flex-wrap mb-12 justify-between">
-              {
-                policyType === "SAOD" ? (<div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                  <label className="text-base mx-1">Liability Premium:<span className="text-red-600 font-bold">*</span></label>
+              {policyType === "SAOD" ? (
+                <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
+                  <label className="text-base mx-1">
+                    Liability Premium:
+                    <span className="text-red-600 font-bold">*</span>
+                  </label>
                   <input
                     className="input-style p-1 rounded-lg"
                     type="number"
@@ -1139,25 +1270,35 @@ if(company === "GO-DIGIT"){
                     onBlur={updateNetPremium}
                     disabled
                   />
-                </div>)
-                  : (<div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                    <label className="text-base mx-1">Liability Premium:<span className="text-red-600 font-bold">*</span></label>
-                    <input
-                      className="input-style p-1 rounded-lg"
-                      type="number"
-                      name="liabilityPremium"
-                      value={liabilityPremium}
-                      onChange={(e) => setLiabilityPremium(e.target.value)}
-                      placeholder="Enter Liability Premium"
-                      onBlur={updateNetPremium}
-                    />
-                    {errors.liabilityPremium && <span className="text-red-600 text-sm ">{errors.liabilityPremium}</span>}
-                  </div>)
-              }
+                </div>
+              ) : (
+                <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
+                  <label className="text-base mx-1">
+                    Liability Premium:
+                    <span className="text-red-600 font-bold">*</span>
+                  </label>
+                  <input
+                    className="input-style p-1 rounded-lg"
+                    type="number"
+                    name="liabilityPremium"
+                    value={liabilityPremium}
+                    onChange={(e) => setLiabilityPremium(e.target.value)}
+                    placeholder="Enter Liability Premium"
+                    onBlur={updateNetPremium}
+                  />
+                  {errors.liabilityPremium && (
+                    <span className="text-red-600 text-sm ">
+                      {errors.liabilityPremium}
+                    </span>
+                  )}
+                </div>
+              )}
 
               {/* FIELD - 14 */}
               <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Net Premium:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Net Premium:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="number"
@@ -1171,7 +1312,9 @@ if(company === "GO-DIGIT"){
 
               {/* FIELD - 15 */}
               <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">GST(Amount):<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  GST(Amount):<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1181,11 +1324,15 @@ if(company === "GO-DIGIT"){
                   // onBlur={calculateFinalAmount}
                   placeholder="GST"
                 />
-                {errors.taxes && <span className="text-red-600 text-sm ">{errors.taxes}</span>}
+                {errors.taxes && (
+                  <span className="text-red-600 text-sm ">{errors.taxes}</span>
+                )}
               </div>
 
               <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">RSA:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  RSA:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1195,12 +1342,16 @@ if(company === "GO-DIGIT"){
                   // onBlur={calculateFinalAmount}
                   placeholder="RSA"
                 />
-                {errors.rsa && <span className="text-red-600 text-sm ">{errors.rsa}</span>}
+                {errors.rsa && (
+                  <span className="text-red-600 text-sm ">{errors.rsa}</span>
+                )}
               </div>
 
               {/* FIELD - 16 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Final Amount:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Final Amount:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1226,34 +1377,48 @@ if(company === "GO-DIGIT"){
                 {errors.odDiscount && <span className="text-red-600 text-sm ">{errors.odDiscount}</span>}
               </div> */}
 
-
               <div className="flex flex-col p-1 mt-5 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">OD Discount%:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  OD Discount%:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
                   className="input-style text-base p-1 rounded-lg"
                   type="text"
                   name="odDiscount"
                   value={odDiscount}
                   onChange={(e) => setOdDiscount(e.target.value)}
-                  placeholder="Enter OD Discount">
-                  <option className="w-1" value="" >-------------- Select OD Discount -------------</option>
-                  {
-                    odList.map((data) => (
-                      <option key={data._id} value={data.odDiscount} > {data.odDiscount}% </option>
-                    ))
-                  }
+                  placeholder="Enter OD Discount"
+                >
+                  <option className="w-1" value="">
+                    -------------- Select OD Discount -------------
+                  </option>
+                  {odList.map((data) => (
+                    <option key={data._id} value={data.odDiscount}>
+                      {" "}
+                      {data.odDiscount}%{" "}
+                    </option>
+                  ))}
                 </select>
-                {errors.odDiscount && <span className="text-red-600 text-sm ">{errors.odDiscount}</span>}
+                {errors.odDiscount && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.odDiscount}
+                  </span>
+                )}
               </div>
 
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Segment:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Segment:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
                   className="input-style p-0.5 text-lg rounded-lg"
                   name="segment"
                   value={segment}
-                  onChange={(e) => setSegment(e.target.value)}>
-                  <option className="w-1" value="" >-------------- Select Segment --------------</option>
+                  onChange={(e) => setSegment(e.target.value)}
+                >
+                  <option className="w-1" value="">
+                    -------------- Select Segment --------------
+                  </option>
                   <option value="C V">CV</option>
                   <option value="PVT-CAR">PVT-CAR</option>
                   <option value="TW">TW</option>
@@ -1261,12 +1426,18 @@ if(company === "GO-DIGIT"){
                   <option value="NON-MOTOR">NON-MOTOR</option>
                   {/* <option value="LIFE">LIFE</option> */}
                 </select>
-                {errors.segment && <span className="text-red-600 text-sm ">{errors.segment}</span>}
+                {errors.segment && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.segment}
+                  </span>
+                )}
               </div>
 
-              {
-                segment === "PVT-CAR" ? (<div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                  <label className="text-base mx-1">NCB%:<span className="text-red-600 font-bold">*</span></label>
+              {segment === "PVT-CAR" ? (
+                <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
+                  <label className="text-base mx-1">
+                    NCB%:<span className="text-red-600 font-bold">*</span>
+                  </label>
                   <select
                     className="input-style p-1 text-base rounded-lg"
                     type="text"
@@ -1274,41 +1445,53 @@ if(company === "GO-DIGIT"){
                     value={ncb}
                     onChange={(e) => setNcb(e.target.value)}
                   >
-                    <option className="w-1" value="" >------------------- Select NCB -------------------</option>
-                    {
-                      ncbList.map((data) => (
-                        <option key={data._id} value={data.ncb}>{data.ncb}</option>
-                      ))
-                    }
+                    <option className="w-1" value="">
+                      ------------------- Select NCB -------------------
+                    </option>
+                    {ncbList.map((data) => (
+                      <option key={data._id} value={data.ncb}>
+                        {data.ncb}
+                      </option>
+                    ))}
                   </select>
-                  {errors.ncb && <span className="text-red-600 text-sm ">{errors.ncb}</span>}
-                </div>)
-                  : (<div className="flex flex-col p-1 mt-4 text-start w-full  lg:w-1/4">
-                    <label className="text-base mx-1">NCB%:<span className="text-red-600 text-sm">Disabled</span></label>
-                    <select
-                      className="input-style p-1 text-base rounded-lg"
-                      type="text"
-                      name="ncb"
-                      value={ncb}
-                      onChange={(e) => setNcb(e.target.value)}
-                      disabled
-                    >
-                      <option className="w-1" value="" >-------------------- Select NCB ---------------------</option>
-                      {
-                        ncbList.map((data) => (
-                          <option key={data._id} value={data.ncb}>{data.ncb}</option>
-                        ))
-                      }
-                    </select>
-                    {errors.ncb && <span className="text-red-600 text-sm ">{errors.ncb}</span>}
-                  </div>)
-              }
-
-
+                  {errors.ncb && (
+                    <span className="text-red-600 text-sm ">{errors.ncb}</span>
+                  )}
+                </div>
+              ) : (
+                <div className="flex flex-col p-1 mt-4 text-start w-full  lg:w-1/4">
+                  <label className="text-base mx-1">
+                    NCB%:<span className="text-red-600 text-sm">Disabled</span>
+                  </label>
+                  <select
+                    className="input-style p-1 text-base rounded-lg"
+                    type="text"
+                    name="ncb"
+                    value={ncb}
+                    onChange={(e) => setNcb(e.target.value)}
+                    disabled
+                  >
+                    <option className="w-1" value="">
+                      -------------------- Select NCB ---------------------
+                    </option>
+                    {ncbList.map((data) => (
+                      <option key={data._id} value={data.ncb}>
+                        {data.ncb}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.ncb && (
+                    <span className="text-red-600 text-sm ">{errors.ncb}</span>
+                  )}
+                </div>
+              )}
 
               {/* FIELD - 19 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Policy Payment Mode:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Policy Payment Mode:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
                   id="policyPaymentMode"
                   className="input-style p-0.5 text-lg rounded-lg"
@@ -1316,27 +1499,45 @@ if(company === "GO-DIGIT"){
                   name="policyPaymentMode"
                   onChange={(e) => setPolicyPaymentMode(e.target.value)}
                 >
-                  <option className="w-1" value="" >------- Select Policy Payment Mode -------</option>
-                  {
-                    payMode.map((mode) => (
-                      <option key={mode._id} value={mode.paymentmode} >{mode.paymentmode}</option>
-                    ))
-                  }
+                  <option className="w-1" value="">
+                    ------- Select Policy Payment Mode -------
+                  </option>
+                  {payMode.map((mode) => (
+                    <option key={mode._id} value={mode.paymentmode}>
+                      {mode.paymentmode}
+                    </option>
+                  ))}
                 </select>
-                {errors.policyPaymentMode && <span className="text-red-600 text-sm ">{errors.policyPaymentMode}</span>}
+                {errors.policyPaymentMode && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.policyPaymentMode}
+                  </span>
+                )}
               </div>
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">State:<span className="text-red-600 font-bold">*</span></label>
-                <select className="input-style text-lg p-0.5 rounded-lg" value={selectedState} onChange={handleStateChange}>
-                  <option value="">---------------- Select State ----------------- </option>
-                  {states.map(state => (
-                    <option key={state.isoCode} value={state.isoCode}>{state.name}</option>
+                <label className="text-base mx-1">
+                  State:<span className="text-red-600 font-bold">*</span>
+                </label>
+                <select
+                  className="input-style text-lg p-0.5 rounded-lg"
+                  value={selectedState}
+                  onChange={handleStateChange}
+                >
+                  <option value="">
+                    ---------------- Select State -----------------{" "}
+                  </option>
+                  {states.map((state) => (
+                    <option key={state.isoCode} value={state.isoCode}>
+                      {state.name}
+                    </option>
                   ))}
                 </select>
               </div>
 
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">District:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  District:<span className="text-red-600 font-bold">*</span>
+                </label>
                 {
                   // selectedCity ? (
                   <select
@@ -1345,21 +1546,27 @@ if(company === "GO-DIGIT"){
                     onChange={(e) => setSelectedCity(e.target.value)}
                     disabled={!selectedState} // Disable city dropdown until a state is selected
                   >
-                    <option value="">------------------- Select District --------------</option>
+                    <option value="">
+                      ------------------- Select District --------------
+                    </option>
                     <option value="All">All</option>
                     {/* Render other city options here if needed */}
-                    {
-                      cities.filter(data => citiesToShow.includes(data.name)).map((data, index) => (
-                        <option key={index} value={data.name}>{data.name}</option>
-                      ))
-                    }
+                    {cities
+                      .filter((data) => citiesToShow.includes(data.name))
+                      .map((data, index) => (
+                        <option key={index} value={data.name}>
+                          {data.name}
+                        </option>
+                      ))}
                   </select>
                 }
               </div>
 
-
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Vehicle Reg No:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Vehicle Reg No:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1  rounded-lg"
                   type="text"
@@ -1368,36 +1575,47 @@ if(company === "GO-DIGIT"){
                   onChange={(e) => setVehRegNo(e.target.value.toUpperCase())}
                   placeholder="Enter Vehicle Reg No"
                 />
-                {errors.vehRegNo && <span className="text-red-600 text-sm ">{errors.vehRegNo}</span>}
+                {errors.vehRegNo && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.vehRegNo}
+                  </span>
+                )}
               </div>
-
-              
-
-
-
             </div>
 
             {/* part-3 */}
             <div className="flex flex-wrap mb-12 justify-between">
               {/* FIELD - 22 */}
               <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Sourcing:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Sourcing:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
                   className="input-style p-0.5 text-lg rounded-lg"
                   value={sourcing}
                   name="sourcing"
-                  onChange={(e) => setSourcing(e.target.value)}>
-                  <option className="w-1" value="" >------------ Select Sourcing Type -----------</option>
+                  onChange={(e) => setSourcing(e.target.value)}
+                >
+                  <option className="w-1" value="">
+                    ------------ Select Sourcing Type -----------
+                  </option>
                   <option value="NEW">NEW</option>
                   <option value="RENEWAL">RENEWAL</option>
                   <option value="ROLL OVER">ROLL OVER</option>
                 </select>
-                {errors.sourcing && <span className="text-red-600 text-sm ">{errors.sourcing}</span>}
+                {errors.sourcing && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.sourcing}
+                  </span>
+                )}
               </div>
 
               {/* FIELD - 23 */}
               <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Policy Start Date:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Policy Start Date:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="date"
@@ -1406,11 +1624,18 @@ if(company === "GO-DIGIT"){
                   onChange={handlePolicyStartDateChange}
                   placeholder="Select Policy Start Date"
                 />
-                {errors.policyStartDate && <span className="text-red-600 text-sm ">{errors.policyStartDate}</span>}
+                {errors.policyStartDate && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.policyStartDate}
+                  </span>
+                )}
               </div>
               {/* FIELD - 24 */}
               <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Policy End Date:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Policy End Date:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="date"
@@ -1419,12 +1644,18 @@ if(company === "GO-DIGIT"){
                   onChange={(e) => setPolicyEndDate(e.target.value)}
                   placeholder="Select Policy End Date"
                 />
-                {errors.policyEndDate && <span className="text-red-600 text-sm ">{errors.policyEndDate}</span>}
+                {errors.policyEndDate && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.policyEndDate}
+                  </span>
+                )}
               </div>
 
               {/* FIELD - 25 */}
               <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">OD Expiry:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  OD Expiry:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="date"
@@ -1437,7 +1668,9 @@ if(company === "GO-DIGIT"){
               </div>
               {/* FIELD - 26 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">TP Expiry:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  TP Expiry:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="date"
@@ -1451,7 +1684,9 @@ if(company === "GO-DIGIT"){
 
               {/* FIELD - 27 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">IDV:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  IDV:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1460,12 +1695,16 @@ if(company === "GO-DIGIT"){
                   onChange={(e) => setIdv(e.target.value.toUpperCase())}
                   placeholder="Enter IDV"
                 />
-                {errors.idv && <span className="text-red-600 text-sm ">{errors.idv}</span>}
+                {errors.idv && (
+                  <span className="text-red-600 text-sm ">{errors.idv}</span>
+                )}
               </div>
 
               {/* FIELD - 28 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Body Type:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Body Type:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1474,12 +1713,18 @@ if(company === "GO-DIGIT"){
                   onChange={(e) => setBodyType(e.target.value.toUpperCase())}
                   placeholder="Enter Body Type"
                 />
-                {errors.bodyType && <span className="text-red-600 text-sm ">{errors.bodyType}</span>}
+                {errors.bodyType && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.bodyType}
+                  </span>
+                )}
               </div>
 
               {/* FIELD - 29 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Make & Model:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Make & Model:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1488,11 +1733,18 @@ if(company === "GO-DIGIT"){
                   onChange={(e) => setMakeModel(e.target.value.toUpperCase())}
                   placeholder="Enter Make & Model"
                 />
-                {errors.makeModel && <span className="text-red-600 text-sm ">{errors.makeModel}</span>}
+                {errors.makeModel && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.makeModel}
+                  </span>
+                )}
               </div>
               {/* FIELD - 30 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Manufacturing Year:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Manufacturing Year:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1  rounded-lg"
                   type="text"
@@ -1501,12 +1753,19 @@ if(company === "GO-DIGIT"){
                   onChange={handleMfgYearChange}
                   placeholder="Enter Manufacturing Year"
                 />
-                {errors.mfgYear && <span className="text-red-600 text-sm ">{errors.mfgYear}</span>}
+                {errors.mfgYear && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.mfgYear}
+                  </span>
+                )}
               </div>
 
               {/* FIELD - 31 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Registration Year:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Registration Year:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1  rounded-lg"
                   type="text"
@@ -1514,15 +1773,21 @@ if(company === "GO-DIGIT"){
                   name="registrationDate"
                   onChange={(e) => setRegistrationDate(e.target.value)}
                   placeholder="Enter Registration Year"
-                // min="1950-01-01"
-                // max={getLastDayOfPreviousMonth()}
+                  // min="1950-01-01"
+                  // max={getLastDayOfPreviousMonth()}
                 />
-                {errors.registrationDate && <span className="text-red-600 text-sm">{errors.registrationDate}</span>}
+                {errors.registrationDate && (
+                  <span className="text-red-600 text-sm">
+                    {errors.registrationDate}
+                  </span>
+                )}
               </div>
 
               {/* FIELD - 32 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Vehicle Age:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Vehicle Age:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1535,120 +1800,146 @@ if(company === "GO-DIGIT"){
 
               {/* FIELD - 33 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Fuel:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Fuel:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
                   className="input-style p-0.5 text-lg rounded-lg"
                   value={fuel}
                   name="fuel"
-                  onChange={(e) => setFuel(e.target.value)}>
-                  <option className="w-1" value="" >------------- Select Fuel Type -------------</option>
-                  {
-                    fuelType.map((fuel) => (
-                      <option key={fuel._id} value={fuel.fuels} >{fuel.fuels}</option>
-                    ))
-                  }
+                  onChange={(e) => setFuel(e.target.value)}
+                >
+                  <option className="w-1" value="">
+                    ------------- Select Fuel Type -------------
+                  </option>
+                  {fuelType.map((fuel) => (
+                    <option key={fuel._id} value={fuel.fuels}>
+                      {fuel.fuels}
+                    </option>
+                  ))}
                 </select>
               </div>
               {/* FIELD - 34 */}
-
-
             </div>
 
-
             <div className="flex flex-wrap mb-12 justify-between">
-            <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Product Code:<span className="text-red-600 font-bold">*</span></label>
+              <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
+                <label className="text-base mx-1">
+                  Product Code:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
-                  id="productCode" name="productCode"
+                  id="productCode"
+                  name="productCode"
                   className="input-style p-0.5 text-lg rounded-lg"
                   value={productCode}
                   onChange={(e) => setProductCode(e.target.value)}
                 >
-                  <option className="w-1" value="" >----------- Select Product Code ------------</option>
-                  {data.map((policy) => (
-                    policy.p_type === policyType &&
-                    products.map((product, idx) => (
-                      <option key={idx} value={product}>{product}</option>
-                    ))
-                  ))}
-
+                  <option className="w-1" value="">
+                    ----------- Select Product Code ------------
+                  </option>
+                  {data.map(
+                    (policy) =>
+                      policy.p_type === policyType &&
+                      products.map((product, idx) => (
+                        <option key={idx} value={product}>
+                          {product}
+                        </option>
+                      ))
+                  )}
                 </select>
-                {errors.productCode && <span className="text-red-600 text-sm ">{errors.productCode}</span>}
+                {errors.productCode && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.productCode}
+                  </span>
+                )}
               </div>
 
-             {
-                        segment === "C V" ? (<div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                          <label className="text-base mx-1">GVW (kg):</label>
-                          <input
-                            className="input-style p-1 rounded-lg"
-                            type="text"
-                            value={gvw}
-                            onChange={(e) => setGvw(e.target.value)}
-                            placeholder="Enter GVW"
-                            name="gvw"
+              {segment === "C V" ? (
+                <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
+                  <label className="text-base mx-1">GVW (kg):</label>
+                  <input
+                    className="input-style p-1 rounded-lg"
+                    type="text"
+                    value={gvw}
+                    onChange={(e) => setGvw(e.target.value)}
+                    placeholder="Enter GVW"
+                    name="gvw"
+                  />
+                </div>
+              ) : (
+                <div className="flex flex-col p-1 text-start w-full mt-0 lg:w-1/4">
+                  <label className="text-base mx-1">
+                    GVW (kg):
+                    <span className="text-red-600 text-sm">Disabled</span>
+                  </label>
+                  <input
+                    className="input-style p-1 rounded-lg"
+                    type="text"
+                    value={gvw}
+                    onChange={(e) => setGvw(e.target.value)}
+                    name="gvw"
+                    placeholder="Disabled"
+                    disabled
+                  />
+                </div>
+              )}
 
-                          />
-                        </div>)
-                          : (<div className="flex flex-col p-1 text-start w-full mt-0 lg:w-1/4">
-                            <label className="text-base mx-1">GVW (kg):<span className="text-red-600 text-sm">Disabled</span></label>
-                            <input
-                              className="input-style p-1 rounded-lg"
-                              type="text"
-                              value={gvw}
-                              onChange={(e) => setGvw(e.target.value)}
-                              name="gvw"
-                              placeholder="Disabled"
-                              disabled
-                            />
-                          </div>)
-                      }
+              {segment === "C V" &&
+              (productCode === "SCHOOL BUS" ||
+                productCode === "ROUTE BUS" ||
+                productCode === "TAXI") ? (
+                <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
+                  <label className="text-base mx-1 ">Seating Capacity:</label>
+                  <select
+                    className="input-style p-1 text-base rounded-lg"
+                    type="text"
+                    value={sitcapacity}
+                    onChange={(e) => setSitCapacity(e.target.value)}
+                    name="sitcapacity"
+                    placeholder="Enter Sitting Capacity"
+                  >
+                    <option value="">
+                      ----------------- Select Seating -----------------
+                    </option>
+                    {sit &&
+                      sit.map((data) => (
+                        <option key={data._id} value={data.sitcapacity}>
+                          {data.sitcapacity}
+                        </option>
+                      ))}
+                    {/* <option value="">NOT APPLICABLE</option> */}
+                  </select>
+                </div>
+              ) : (
+                <div className="flex flex-col p-1 text-start w-full mt-0 lg:w-1/4">
+                  <label className="text-base mx-1">
+                    Seating Capacity:
+                    <span className="text-red-600 text-sm">Disabled</span>
+                  </label>
+                  <select
+                    className="input-style p-1 text-base rounded-lg"
+                    type="text"
+                    value={sitcapacity}
+                    onChange={(e) => setSitCapacity(e.target.value)}
+                    name="sitcapacity"
+                    placeholder="Disabled"
+                    disabled
+                  >
+                    <option value="">
+                      ------------------ Select Seating --------------
+                    </option>
+                    {sit &&
+                      sit.map((data) => (
+                        <option key={data._id} value={data.sitcapacity}>
+                          {data.sitcapacity}
+                        </option>
+                      ))}
+                    {/* <option value="">NOT APPLICABLE</option> */}
+                  </select>
+                </div>
+              )}
 
-
-
-
-{
-                        segment === "C V" && (productCode === "SCHOOL BUS" || productCode === "ROUTE BUS" || productCode === "TAXI") ? (<div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                          <label className="text-base mx-1 ">Seating Capacity:</label>
-                        <select
-                          className="input-style p-1 text-base rounded-lg"
-                          type="text"
-                          value={sitcapacity}
-                          onChange={(e) => setSitCapacity(e.target.value)}
-                          name="sitcapacity"
-                          placeholder="Enter Sitting Capacity"
-                        >
-                          <option value="">----------------- Select Seating -----------------</option>
-                          {
-                            sit && sit.map((data) => (
-                              <option key={data._id} value={data.sitcapacity}>{data.sitcapacity}</option>
-                            ))
-                          }
-                          {/* <option value="">NOT APPLICABLE</option> */}
-                        </select>
-                        </div>)
-                          : (<div className="flex flex-col p-1 text-start w-full mt-0 lg:w-1/4">
-                            <label className="text-base mx-1">Seating Capacity:<span className="text-red-600 text-sm">Disabled</span></label>
-                            <select
-                          className="input-style p-1 text-base rounded-lg"
-                          type="text"
-                          value={sitcapacity}
-                          onChange={(e) => setSitCapacity(e.target.value)}
-                          name="sitcapacity"
-                          placeholder="Disabled"
-                          disabled
-                        >
-                          <option value="">------------------ Select Seating --------------</option>
-                          {
-                            sit && sit.map((data) => (
-                              <option key={data._id} value={data.sitcapacity}>{data.sitcapacity}</option>
-                            ))
-                          }
-                          {/* <option value="">NOT APPLICABLE</option> */}
-                        </select>
-                          </div>)
-                      }
-
-{/* 
+              {/* 
               <div className="flex flex-col p-1  text-start w-full lg:w-1/4">
                 <label className="text-base mx-1">CC:<span className="text-red-600 font-bold">*</span></label>
                 <select
@@ -1668,75 +1959,103 @@ if(company === "GO-DIGIT"){
                 </select>
               </div> */}
 
-{
-                        segment === "PVT-CAR" || segment === "TW" ? (<div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                          <label className="text-base mx-1">CC:<span className="text-red-600 font-bold">*</span></label>
-                          <select
-                            className="input-style p-1 rounded-lg"
-                            type="text"
-                            name="cc"
-                            value={cc}
-                            onChange={(e) => setCc(e.target.value.toUpperCase())}
-                            placeholder="Enter CC">
-                            <option className="w-1" value="" >-------------------- Select CC ------------------</option>
-                            {
-                              ccList.map((data) => (
-                                <option key={data._id} value={data.cc}>{data.cc}</option>
-                              ))
-                            }
-                          </select>
-                        </div>)
-                          : (<div className="flex flex-col p-1 text-start w-full mt-0 lg:w-1/4">
-                            <label className="text-base mx-1">CC:<span className="text-red-600 text-sm">Disabled</span></label>
-                            <select
-                              className="input-style p-1 rounded-lg"
-                              type="text"
-                              name="cc"
-                              value={cc}
-                              onChange={(e) => setCc(e.target.value.toUpperCase())}
-                              placeholder="Enter CC"
-                              disabled>
-                              <option className="w-1" value="" >-------------------- Select CC -----------</option>
-                              {
-                                ccList.map((data) => (
-                                  <option key={data._id} value={data.cc}>{data.cc}</option>
-                                ))
-                              }
-                            </select>
-                          </div>)
-                      }
-
+              {segment === "PVT-CAR" || segment === "TW" ? (
+                <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
+                  <label className="text-base mx-1">
+                    CC:<span className="text-red-600 font-bold">*</span>
+                  </label>
+                  <select
+                    className="input-style p-1 rounded-lg"
+                    type="text"
+                    name="cc"
+                    value={cc}
+                    onChange={(e) => setCc(e.target.value.toUpperCase())}
+                    placeholder="Enter CC"
+                  >
+                    <option className="w-1" value="">
+                      -------------------- Select CC ------------------
+                    </option>
+                    {ccList.map((data) => (
+                      <option key={data._id} value={data.cc}>
+                        {data.cc}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                <div className="flex flex-col p-1 text-start w-full mt-0 lg:w-1/4">
+                  <label className="text-base mx-1">
+                    CC:<span className="text-red-600 text-sm">Disabled</span>
+                  </label>
+                  <select
+                    className="input-style p-1 rounded-lg"
+                    type="text"
+                    name="cc"
+                    value={cc}
+                    onChange={(e) => setCc(e.target.value.toUpperCase())}
+                    placeholder="Enter CC"
+                    disabled
+                  >
+                    <option className="w-1" value="">
+                      -------------------- Select CC -----------
+                    </option>
+                    {ccList.map((data) => (
+                      <option key={data._id} value={data.cc}>
+                        {data.cc}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
 
               {/* FIELD - 36 */}
-             
 
               {/* FIELD - 37*/}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Advisor Name:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Advisor Name:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
                   className="input-style p-1 rounded-lg"
                   type="text"
                   value={advId}
                   name="advId"
                   onChange={(e) => {
-                    const selectedAdvisor = advLists.find((adv) => adv.uniqueId === e.target.value);
+                    const selectedAdvisor = advLists.find(
+                      (adv) => adv.uniqueId === e.target.value
+                    );
                     setAdvId(e.target.value);
-                    setAdvisorName(selectedAdvisor ? selectedAdvisor.advisorname : '');
-                  }} 
-                  placeholder="Enter Advisor Name">
-
-
-                  <option value="">----------------- Select Advisor -----------------</option>
-                  {advLists.sort((a, b) => a.advisorname.localeCompare(b.advisorname)).map((data) => (
-                    <option key={data._id} value={data.uniqueId}>{`${data.uniqueId} --> ${data.advisoraddress}  -->  ${data.advisorname}`}</option>
-                  ))}
+                    setAdvisorName(
+                      selectedAdvisor ? selectedAdvisor.advisorname : ""
+                    );
+                  }}
+                  placeholder="Enter Advisor Name"
+                >
+                  <option value="">
+                    ----------------- Select Advisor -----------------
+                  </option>
+                  {advLists
+                    .sort((a, b) => a.advisorname.localeCompare(b.advisorname))
+                    .map((data) => (
+                      <option
+                        key={data._id}
+                        value={data.uniqueId}
+                      >{`${data.uniqueId} --> ${data.branch[0]}  -->  ${data.advisorname} --> ${data.advisoraddress}`}</option>
+                    ))}
                 </select>
-                {errors.advisorName && <span className="text-red-600 text-sm ">{errors.advisorName}</span>}
+                {errors.advisorName && (
+                  <span className="text-red-600 text-sm ">
+                    {errors.advisorName}
+                  </span>
+                )}
               </div>
 
               {/* FIELD - 38 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Sub-Advisor Name:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Sub-Advisor Name:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1747,10 +2066,11 @@ if(company === "GO-DIGIT"){
                 />
               </div>
 
-
               {/* FIELD - 39 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Payout On:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Payout On:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
                   id="payoutOn"
                   name="payoutOn"
@@ -1758,25 +2078,39 @@ if(company === "GO-DIGIT"){
                   value={payoutOn}
                   onChange={(e) => setPayoutOn(e.target.value)}
                 >
-                  <option className="w-1" value="" >-------------- Select Payout on -------------</option>
-                  {
-                    payoutOnList.map((pay) => (
-                      <option key={pay._id} value={pay.payouton} >{pay.payouton}</option>
-                    ))
-                  }
+                  <option className="w-1" value="">
+                    -------------- Select Payout on -------------
+                  </option>
+                  {payoutOnList.map((pay) => (
+                    <option key={pay._id} value={pay.payouton}>
+                      {pay.payouton}
+                    </option>
+                  ))}
                 </select>
-                {errors.payoutOn && <span className="text-red-600 text-sm">{errors.payoutOn}</span>}
+                {errors.payoutOn && (
+                  <span className="text-red-600 text-sm">
+                    {errors.payoutOn}
+                  </span>
+                )}
               </div>
               {/* FIELD - 40 */}
               <div className="flex flex-col  p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Payment Done By:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Payment Done By:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <select
                   className="input-style p-0.5 text-lg rounded-lg"
                   value={paymentDoneBy}
                   name="paymentDoneBy"
-                  onChange={(e) => setPaymentDoneBy(e.target.value)}>
-                  <option className="w-1" value="" >--------- Select Payment Done By ------------</option>
-                  <option value="ELEEDOM IMF PVT LTD">ELEEDOM IMF PVT LTD</option>
+                  onChange={(e) => setPaymentDoneBy(e.target.value)}
+                >
+                  <option className="w-1" value="">
+                    --------- Select Payment Done By ------------
+                  </option>
+                  <option value="ELEEDOM IMF PVT LTD">
+                    ELEEDOM IMF PVT LTD
+                  </option>
                   <option value="HAJIPUR BRANCH">HAJIPUR BRANCH</option>
                   <option value="SAMASTIPUR BRANCH">SAMASTIPUR BRANCH</option>
                   <option value="PATNA BRANCH">PATNA BRANCH</option>
@@ -1785,7 +2119,10 @@ if(company === "GO-DIGIT"){
               </div>
               {/* FIELD - 41 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">CHQ No / Ref No:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  CHQ No / Ref No:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1797,7 +2134,9 @@ if(company === "GO-DIGIT"){
               </div>
               {/* FIELD - 42 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Bank Name:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Bank Name:<span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   id="bankName"
                   type="text"
@@ -1806,12 +2145,14 @@ if(company === "GO-DIGIT"){
                   value={bankName}
                   placeholder="Enter Bank Name"
                   onChange={(e) => setBankName(e.target.value.toUpperCase())}
-                >
-                </input>
+                ></input>
               </div>
               {/* FIELD - 43 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Endorshment Date:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Endorshment Date:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="date"
@@ -1828,10 +2169,15 @@ if(company === "GO-DIGIT"){
                   className="input-style p-0.5 text-lg rounded-lg"
                   value={chqStatus}
                   name="chqStatus"
-                  onChange={(e) => setChqStatus(e.target.value)}>
-                  <option className="w-1" value="" >--- Select CHQ Status ---</option>
+                  onChange={(e) => setChqStatus(e.target.value)}
+                >
+                  <option className="w-1" value="">
+                    --- Select CHQ Status ---
+                  </option>
                   <option value="PENDING">PENDING</option>
-                  <option value="SUBMITTED TO BRANCH">SUBMITTED TO BRANCH</option>
+                  <option value="SUBMITTED TO BRANCH">
+                    SUBMITTED TO BRANCH
+                  </option>
                   <option value="CLEAR FROM BANK">CLEAR FROM BANK</option>
                   <option value="BCQ">BCQ</option>
                   <option value="SUBMITTED TO BANK">SUBMITTED TO BANK</option>
@@ -1839,7 +2185,10 @@ if(company === "GO-DIGIT"){
               </div>
 
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Advisor Payout Amount:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Advisor Payout Amount:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="bg-slate-200 p-1 rounded-lg"
                   type="number"
@@ -1849,14 +2198,16 @@ if(company === "GO-DIGIT"){
                   // placeholder="Advisor Payo Amount"
                   readOnly
                 />
-
               </div>
             </div>
 
             <div className="flex flex-wrap mb-10 justify-between">
               {/* FIELD - 45 */}
               <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Advisor Payable Amount:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Advisor Payable Amount:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className=" rounded-lg p-1"
                   type="number"
@@ -1866,12 +2217,14 @@ if(company === "GO-DIGIT"){
                   placeholder="Advisor Payable Amount"
                   readOnly
                 />
-
               </div>
 
               {/* FIELD - 46 */}
               <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Branch Payout:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Branch Payout:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="number"
@@ -1885,12 +2238,14 @@ if(company === "GO-DIGIT"){
                   placeholder="Enter Branch Payout"
                   readOnly
                 />
-
               </div>
 
               {/* FIELD - 47 */}
               <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Branch Payable Amount:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Branch Payable Amount:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1904,7 +2259,10 @@ if(company === "GO-DIGIT"){
 
               {/* FIELD - 48 */}
               <div className="flex flex-col p-1 mt-0 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Company Payout:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Company Payout:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="number"
@@ -1917,7 +2275,10 @@ if(company === "GO-DIGIT"){
               </div>
               {/* FIELD - 49 */}
               <div className="flex flex-col p-1 mt-4 text-start w-full lg:w-1/4">
-                <label className="text-base mx-1">Profit/Loss Amount:<span className="text-red-600 font-bold">*</span></label>
+                <label className="text-base mx-1">
+                  Profit/Loss Amount:
+                  <span className="text-red-600 font-bold">*</span>
+                </label>
                 <input
                   className="input-style p-1 rounded-lg"
                   type="text"
@@ -1936,7 +2297,8 @@ if(company === "GO-DIGIT"){
                   className="text-white bg-gradient-to-r from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-green-300 shadow-lg shadow-green-500/50 dark:shadow-lg font-medium rounded text-base px-4 py-2 text-center "
                   onClick={handleSubmit}
                   disabled={formSubmitted}
-                  type="button">
+                  type="button"
+                >
                   {formSubmitted ? "Submitted" : "Submit"}
                 </button>
               </div>
@@ -1945,7 +2307,7 @@ if(company === "GO-DIGIT"){
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 export default MasterForm;

@@ -525,7 +525,9 @@ function UpdateMaster({ insurance, onUpdate, onClose }) {
       // empTime: empTime,
       states: name === 'selectedState' ? value : prevData.selectedState,
       district: name === 'selectedCity' ? value : prevData.selectedCity,
-      advId: name === 'advisorName' ? advLists.find(advisor => advisor.advisorname === value).uniqueId : prevData.advId
+      advId: name === "advId" ? value : prevData.advId,
+      advisorName: name === "advId" ? (advLists.find((advisor) => advisor.uniqueId === value)?.advisorname || '') : prevData.advisorName,
+    
     }));
   };
 
@@ -1332,14 +1334,14 @@ function UpdateMaster({ insurance, onUpdate, onClose }) {
                           <select
                             className="input-style p-1 text-base rounded-lg"
                             type="text"
-                            value={allDetails.advisorName}
+                            value={allDetails.advId}
                             onChange={handleInputChange}
-                            name="advisorName"
+                            name="advId"
                             placeholder="Enter Advisor Name"
                           >
                             <option value="data">------------- Select Advisor -----------</option>
                             {advLists.sort((a, b) => a.advisorname.localeCompare(b.advisorname)).map((data) => (
-                              <option key={data._id} value={data.advisorname}>{`${data.advisorname}  -  ${data.advisoraddress}`}</option>
+                              <option key={data._id} value={data.uniqueId}>{`${data.uniqueId} --> ${data.branch[0]}  -->  ${data.advisorname}  --> ${data.advisoraddress}`}</option>
                             ))}
 
                           </select>
