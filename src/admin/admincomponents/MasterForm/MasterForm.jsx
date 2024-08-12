@@ -2034,7 +2034,7 @@ function MasterForm() {
                   <option value="">
                     ----------------- Select Advisor -----------------
                   </option>
-                  {advLists
+                  {advLists.filter((emp)=> emp.branch[0] === branch)
                     .sort((a, b) => a.advisorname.localeCompare(b.advisorname))
                     .map((data) => (
                       <option

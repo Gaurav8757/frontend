@@ -163,6 +163,9 @@ function GenerateSalary() {
       }
     });
     const workday = workingDaysCount - holiDayCount;
+
+    console.log(workday + " sunday: " + sundayCount + " P-days: " + totalPresentDays);
+    
     setPresentDay(totalPresentDays);
     setTotal(formattedDays.length);
     setTotalDays(workday);

@@ -156,7 +156,7 @@ function CurrentAttendance() {
             // }
             // Prepare the request data
             const requestData = {
-                status,
+                status: status || "",
                 date: datePart,
                 time: timePart,
                 weekday: weekdayPart,
@@ -250,7 +250,7 @@ function CurrentAttendance() {
                             <option value="present">Present</option>
                             <option value="absent">Absent</option>
                             <option value="halfday">Halfday</option>
-                            <option value="">Delete</option>
+                            <option value="nan">Delete</option>
                         </select>
                     </td>
                 </tr>

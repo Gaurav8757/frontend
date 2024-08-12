@@ -1579,8 +1579,8 @@ function AddFinance() {
                     setAdvisorName(selectedAdvisor ? selectedAdvisor.advisorname : '');                  }} 
                   placeholder="Enter Advisor Name">
                   <option value="">------------- Select Advisor -----------</option>
-                  {filteredAdvLists.sort((a, b) => a.advisorname.localeCompare(b.advisorname)).map((data) => (
-                    <option key={data._id} value={data.uniqueId}>{`${data.uniqueId} --> ${data.advisoraddress}  -->  ${data.advisorname}`}</option>
+                  {filteredAdvLists.filter((emp)=> emp.branch[0] === branch).sort((a, b) => a.advisorname.localeCompare(b.advisorname)).map((data) => (
+                    <option key={data._id} value={data.uniqueId}>{`${data.uniqueId} --> ${data.branch[0]}   -->  ${data.advisorname} -->  ${data.advisoraddress}`}</option>
                   ))}
                 </select>
                 {errors.advisorName && <span className="text-red-600 text-sm ">{errors.advisorName}</span>}

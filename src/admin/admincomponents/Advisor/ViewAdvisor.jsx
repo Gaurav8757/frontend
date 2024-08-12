@@ -79,6 +79,7 @@ function ViewAdvisor() {
                     row.advisorname,
                     row.advisoremail,
                     row.advisormobile,
+                    row.branch[0],
                     row.advisoraddress,
                 ];
             });
@@ -89,6 +90,7 @@ function ViewAdvisor() {
                 "Advisor Name",
                 "Email ID",
                 "Mobile No.",
+                "Branch",
                 "Address",
             ];
             // Create worksheet
@@ -238,6 +240,9 @@ function ViewAdvisor() {
                                         Location
                                     </th>
                                     <th scope="col" className="px-1 border border-black">
+                                        Branch
+                                    </th>
+                                    <th scope="col" className="px-1 border border-black">
                                         Payout Type
                                     </th>
                                     <th scope="col" className="px-1 border border-black">
@@ -269,6 +274,9 @@ function ViewAdvisor() {
                                             </td>
                                             <td className="whitespace-nowrap px-0.5 border border-black">
                                                 {data.advisormobile}
+                                            </td>
+                                            <td className="whitespace-nowrap px-0.5 border border-black">
+                                                {data.branch[0]}
                                             </td>
                                             <td className="whitespace-nowrap px-0.5 border border-black">
                                                 {data.advisoraddress}

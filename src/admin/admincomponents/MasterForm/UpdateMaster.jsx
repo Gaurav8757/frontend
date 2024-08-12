@@ -1340,7 +1340,7 @@ function UpdateMaster({ insurance, onUpdate, onClose }) {
                             placeholder="Enter Advisor Name"
                           >
                             <option value="data">------------- Select Advisor -----------</option>
-                            {advLists.sort((a, b) => a.advisorname.localeCompare(b.advisorname)).map((data) => (
+                            {advLists.filter((emp)=> emp.branch[0] === allDetails.branch).sort((a, b) => a.advisorname.localeCompare(b.advisorname)).map((data) => (
                               <option key={data._id} value={data.uniqueId}>{`${data.uniqueId} --> ${data.branch[0]}  -->  ${data.advisorname}  --> ${data.advisoraddress}`}</option>
                             ))}
 
