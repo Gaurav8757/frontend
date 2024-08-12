@@ -11,7 +11,8 @@ function UpdateAdvisor({ advisor, onUpdate, onClose }) {
         advisormobile: "",
         advisorpassword: "",
         uniqueId: "",
-        advisortype: ""
+        advisortype: "",
+        branch:[""]
     })
  
 
@@ -21,14 +22,31 @@ function UpdateAdvisor({ advisor, onUpdate, onClose }) {
     }, [advisor]);
 
     // handle input change
+    // const handleInputChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setAdvInfo((prevData) => ({
+    //         ...prevData,
+    //         [name]: value.toUpperCase(),
+    //     }));
+    // };
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setAdvInfo((prevData) => ({
+        setAdvInfo((prevData) => {
+          if (name === "branch") {
+            const updatedBranches = [...prevData.branch];
+            updatedBranches[0] = value.toUpperCase(); // Assuming you are only editing the first branch
+            return {
+              ...prevData,
+              branch: updatedBranches,
+            };
+          }
+          return {
             ...prevData,
             [name]: value.toUpperCase(),
-        }));
-    };
-
+          };
+        });
+      };
+      
     const updateAdvisorAPI = async () => {
         try {
             setLoading(true);
@@ -157,6 +175,17 @@ function UpdateAdvisor({ advisor, onUpdate, onClose }) {
                                         />
                                     </div>
 
+                                    <div className="flex flex-col my-4 p-2 text-start w-full lg:w-1/4">
+                                        <label className="text-base mx-1">Branch:</label>
+                                        <input
+                                            className="input-style p-1 rounded-lg"
+                                            type="text"
+                                            value={advInfo.branch[0]}
+                                            onChange={handleInputChange}
+                                            name="branch"
+                                            placeholder=""
+                                        />
+                                    </div>
 
 
 

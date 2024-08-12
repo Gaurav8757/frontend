@@ -6,6 +6,7 @@ function AddAdvisors() {
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState();
   const [fname, setFname] = useState("");
+  const [ids, setIds] = useState("");
   const [advType, setAdvType] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
@@ -17,6 +18,7 @@ function AddAdvisors() {
     try {
       // Make sure to replace this URL with your actual API endpoint
       const response = await axios.post(`${VITE_DATA}/advisor/register`, {
+        uniqueId: ids,
         advisorname: fname,
         advisoremail: email,
         advisormobile: mobile,
@@ -29,11 +31,13 @@ function AddAdvisors() {
       if (response.data.status) {
         toast.success(`${response.data.status}`);
         // Reset the form and loading state on successful submission
+        setIds("");
         setEmail("");
         setMobile("");
         setPassword("");
         setFname("");
         setAddress("");
+        setAdvType("");
         setLoading(false);
       }
       else {
@@ -57,6 +61,16 @@ function AddAdvisors() {
 
           <div className="flex flex-wrap justify-between">
             {/* <div className="w-full lg:w-1/2 p-2 text-start"> */}
+            <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
+              <label className="text-base mx-1">ID:</label>
+              <input
+                className="input-style p-1 rounded-lg"
+                type="text"
+                value={ids}
+                onChange={(e) => setIds(e.target.value.toUpperCase())}
+                placeholder="HJP, WB, PAT, MUZ"
+              />
+            </div>
             <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Name</label>
               <input
@@ -122,6 +136,9 @@ function AddAdvisors() {
                 placeholder="***********"
               />
             </div>
+            <div className="flex flex-col p-2 mt-1  text-start w-full lg:w-1/5"></div>
+            <div className="flex flex-col p-2 mt-1  text-start w-full lg:w-1/5"></div>
+            <div className="flex flex-col p-2 mt-1  text-start w-full lg:w-1/5"></div>
           </div>
 
           <div className="w-full mt-5 p-2">
