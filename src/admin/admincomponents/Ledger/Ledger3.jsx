@@ -419,7 +419,7 @@ function Ledger3() {
                     <th scope="col" className="px-0 whitespace-nowrap py-3">Advisor Name</th>
                     <th scope="col" className="px-0 whitespace-nowrap py-3">Insured Name</th>
                     <th scope="col" className="px-0 whitespace-nowrap py-3">Final Prem.</th>
-                    <th scope="col" className="px-4 whitespace-nowrap py-3 ">Payout</th>
+                    {/* <th scope="col" className="px-4 whitespace-nowrap py-3 ">Payout</th> */}
                     <th scope="col" className="px-0 whitespace-nowrap py-3">Debit Amount</th>
                     <th scope="col" className="px-0 whitespace-nowrap py-3">Payment Date</th>
                     <th scope="col" className="px-0 whitespace-nowrap py-3">Payment Type</th>
@@ -453,8 +453,8 @@ function Ledger3() {
                             <td className="whitespace-wrap w-1/8">{item.advisorName}</td>
                             <td >{item.insuredName}</td>
                             <td >{`₹ ${item.finalEntryFields}`}</td>
-                            <td>{`₹ ${item.advisorPayoutAmount}`}</td>
-                            <td>{`₹ ${item.company === "GO-DIGIT" ? debitCompanyAmount.toFixed(2) : debitCompanyAmount.toFixed(0)}`}</td>
+                            {/* <td>{`₹ ${item.advisorPayoutAmount}`}</td> */}
+                            <td className="whitespace-wrap w-1/4">{`₹ ${item.company === "GO-DIGIT" ? debitCompanyAmount.toFixed(2) : debitCompanyAmount.toFixed(0)}`}</td>
                             <td className="">
                               <input
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-32 ps-2 p-1"
