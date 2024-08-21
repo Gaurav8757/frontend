@@ -102,22 +102,24 @@ function SalaryViewPage({ data, onClosed }) {
                                 <div className='flex text-left'>
                                     <div className="border w-1/2 rounded-b-lg overflow-hidden  border-slate-500">
                                         <div className="bg-red-300 py-2 px-4">
-                                            <h3 className="text-lg  font-semibold text-center">Employee Summary </h3>
+                                            <h3 className="text-lg  font-semibold text-center">Employee Summary</h3>
                                         </div>
                                         <div className="p-4">
                                             <div className="grid grid-cols-2 text-base gap-1">
                                                 <div className="font-semibold">Employee ID:</div>
-                                                <div className="ml-28">{data.empid}</div>
+                                                <div className="ml-16">{data.empid}</div>
                                                 <div className="font-semibold">Employee Name:</div>
-                                                <div className="ml-28">{data.empName}</div>
+                                                <div className="ml-16">{data.empName}</div>
                                                 <div className="font-semibold">Designation:</div>
-                                                <div className="ml-28">{data.empdesignation}</div>
+                                                <div className="ml-16">{data.empdesignation}</div>
                                                 <div className="font-semibold">Branch Name:</div>
-                                                <div className="ml-28">{data.empbranch}</div>
+                                                <div className="ml-16">{data.empbranch}</div>
                                                 <div className="font-semibold">Location:</div>
-                                                <div className="ml-28">{data.location}</div>
+                                                <div className="ml-16">{data.location}</div>
+                                                <div className="font-semibold">Bank Name:</div>
+                                                <div className="ml-16">{data.bankNamed}</div>
                                                 <div className="font-semibold">Account Number:</div>
-                                                <div className="ml-28">{data.accNum}</div>
+                                                <div className="ml-16">{data.accNum}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -239,7 +241,7 @@ function SalaryViewPage({ data, onClosed }) {
                                     <div className="bg-red-800 py-2 px-4">
                                         <h3 className="text-lg text-white font-semibold text-center">NET PAYABLE </h3>
                                     </div>
-                                    <div className="p-4  text-start mx-52">
+                                    <div className="p-4  text-start ml-52 mr-10">
                                         <div className="grid grid-cols-2 gap-1 text-base">
                                             <div className="font-semibold ">Salary(E-D):</div>
                                             <div className='ml-60 font-medium'> {`₹ ${parseFloat((data.genSalary || 0) +(data.incentive || 0) + (data.arrear || 0) - (data.finalDeduction || 0)).toFixed(0)}/-`}</div>
@@ -248,7 +250,11 @@ function SalaryViewPage({ data, onClosed }) {
                                             <div className="font-semibold">Other Expenses:</div>
                                             <div className="ml-60">{`₹ ${data.otherExpense || 0}`}</div>
                                             <div className="font-bold">Total Payable Amount:</div>
-                                            <div className="font-bold text-green-600 ml-60">{`₹ ${parseFloat((TotalPayableAmount || 0) + (data.fuelExpense || 0) + (data.otherExpense || 0 )).toFixed(0)}/-`}</div>
+                                            <div className="font-bold  ml-60">{`₹ ${parseFloat((TotalPayableAmount || 0) + (data.fuelExpense || 0) + (data.otherExpense || 0 )).toFixed(0)}/-`}</div>
+                                            <div className="font-bold"></div>
+                                            <div className="font-bold  ml-40">{data.inWords}</div>
+                                            <div className="font-semibold">Payment Date:</div>
+                                            <div className="font-bold  ml-60">{data.salDate}</div>
                                         </div>
                                     </div>
                                 </div>

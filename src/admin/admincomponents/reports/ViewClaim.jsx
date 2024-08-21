@@ -49,7 +49,7 @@ const ViewClaim = () => {
               Back
             </NavLink> */}
             <h1 className="flex justify-center font-semibold  text-3xl w-full mb-8">
-              All Claim List&apos;s
+               Claim List&apos;s
             </h1>
             <hr />
           </div>

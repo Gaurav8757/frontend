@@ -77,7 +77,7 @@ function DashboardEmp() {
   ];
 
   const userRole = getUserRole();
-  if (userRole === "branch manager" || userRole === "executive marketing") {
+  if (userRole === "branch manager" || userRole === "executive marketing" || userRole === "ops executive") {
     dashboardRouted.push({
       title: "Visit Reports",
       path: "#",

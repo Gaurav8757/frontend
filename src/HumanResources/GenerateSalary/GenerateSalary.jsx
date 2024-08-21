@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, getDaysInMonth } from 'date-fns';
+import { ToWords } from "to-words";
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  getDaysInMonth,
+} from "date-fns";
 import VITE_DATA from "../../config/config.jsx";
 function GenerateSalary() {
   const [empList, setEmployeeList] = useState([]);
@@ -47,6 +54,11 @@ function GenerateSalary() {
   const [finalDeduction, setFinalDeduction] = useState();
   const [otherExpense, setOtherExpense] = useState();
   const [fuelExpense, setFuelExpense] = useState();
+  const [bankNamed, setBankName] = useState();
+  const [salDate, setSalDate] = useState("");
+  const [dateInput, setDateInput] = useState("");
+  const [inWords, setInWords] = useState("");
+
   useEffect(() => {
     // Fetch the list of employees when the component mounts
     axios.get(`${VITE_DATA}/api/employee-list`).then((response) => {
@@ -58,12 +70,10 @@ function GenerateSalary() {
     });
   }, []);
 
-
-  
   // Function to format a Date object to dd/mm/yyyy
   function formatDate(date) {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   }
@@ -77,7 +87,6 @@ function GenerateSalary() {
     const selectedMonth = parseInt(e.target.value);
     setMonths(selectedMonth);
   };
-
 
   useEffect(() => {
     // Calculate total days in the selected month
@@ -99,13 +108,18 @@ function GenerateSalary() {
     setAccNo(selectedEmp.accNumber);
     setEmail(selectedEmp.empemail);
     setMobile(selectedEmp.empmobile);
+    setBankName(selectedEmp.bankName);
+
     setMonthLeave(selectedEmp ? selectedEmp.leavemonth : "");
     setMonthSalary(selectedEmp ? selectedEmp.salary : "");
     filterEmployeeDetailsByMonthAndYear(selectedEmp, year, months);
-
   };
 
-  const filterEmployeeDetailsByMonthAndYear = (employee, selectedYear, selectedMonth) => {
+  const filterEmployeeDetailsByMonthAndYear = (
+    employee,
+    selectedYear,
+    selectedMonth
+  ) => {
     if (!employee) return;
 
     const startDate = startOfMonth(new Date(selectedYear, selectedMonth - 1));
@@ -114,31 +128,28 @@ function GenerateSalary() {
     const formattedDays = daysOfMonth.map((day) => day.getDay());
 
     const filteredDetails = employee.employeeDetails.filter((detail) => {
-      console.log(detail);
       // eslint-disable-next-line no-unused-vars
       const [day, month, year] = detail.date.split("/").map(Number);
       return year === selectedYear && month === selectedMonth;
     });
-
 
     // Calculate total present, absent, and half days
     let totalPresentDays = 0;
     let totalAbsentDays = 0;
     let totalHalfDays = 0;
     let holiDayCount = 0;
-    let sundayCount = 0
+    let sundayCount = 0;
     let workingDaysCount = 0;
 
     filteredDetails.forEach((detail) => {
-
       switch (detail.status) {
-        case 'present':
+        case "present":
           totalPresentDays++;
           break;
-        case 'absent':
+        case "absent":
           totalAbsentDays++;
           break;
-        case 'halfday':
+        case "halfday":
           totalHalfDays++;
           break;
         default:
@@ -151,21 +162,30 @@ function GenerateSalary() {
     daysOfMonth.map((date, dateIndex) => {
       // Convert date to dd/mm/yyyy format
       const formattedDate = formatDate(date);
-      const holiday = holidayData.find(holiday => holiday.hdate === formattedDate);
+      const holiday = holidayData.find(
+        (holiday) => holiday.hdate === formattedDate
+      );
       const isHoliday = !!holiday;
       if (isHoliday) {
         holiDayCount++;
       }
       if (formattedDays[dateIndex] !== 0) {
         workingDaysCount++;
-      }else if(formattedDays[dateIndex] === 0){
+      } else if (formattedDays[dateIndex] === 0) {
         sundayCount++;
       }
     });
     const workday = workingDaysCount - holiDayCount;
 
-    console.log("Working Days: " + workday + " sunday: " + sundayCount + " P-days: " + totalPresentDays);
-    
+    console.log(
+      "Working Days: " +
+        workday +
+        " sunday: " +
+        sundayCount +
+        " P-days: " +
+        totalPresentDays
+    );
+
     setPresentDay(totalPresentDays);
     setTotal(formattedDays.length);
     setTotalDays(workday);
@@ -179,7 +199,11 @@ function GenerateSalary() {
     const currentYear = new Date().getFullYear();
     const years = [];
     for (let y = currentYear; y >= 2000; y--) {
-      years.push(<option key={y} value={y}>{y}</option>);
+      years.push(
+        <option key={y} value={y}>
+          {y}
+        </option>
+      );
     }
     return years;
   };
@@ -188,8 +212,12 @@ function GenerateSalary() {
     const months = [];
     for (let m = 1; m <= 12; m++) {
       const date = new Date(year, m - 1, 1);
-      const monthName = format(date, 'MMMM');
-      months.push(<option key={m} value={m}>{monthName}</option>);
+      const monthName = format(date, "MMMM");
+      months.push(
+        <option key={m} value={m}>
+          {monthName}
+        </option>
+      );
     }
     return months;
   };
@@ -205,7 +233,7 @@ function GenerateSalary() {
   useEffect(() => {
     const handleSalary = () => {
       let salary = (monthSalary / total) * (presentDay + sundays);
-      const halfSalary = (monthSalary / 30.5) * 0.5 * halfDay;  
+      const halfSalary = (monthSalary / 30.5) * 0.5 * halfDay;
       salary = parseFloat(salary) + parseFloat(halfSalary);
       setSalaries(salary.toFixed(2));
     };
@@ -229,7 +257,7 @@ function GenerateSalary() {
       const basic = parseFloat(empGrossSalary) || 0;
       const final_basic = basic / 2;
       setBasicEmpSalary(final_basic);
-    }
+    };
     handleBasic();
   }, [empGrossSalary]);
 
@@ -239,7 +267,7 @@ function GenerateSalary() {
       const calculateHra = parseFloat(empGrossSalary) || 0;
       const finalHra = (calculateHra * 30) / 100;
       setEmpHra(finalHra);
-    }
+    };
     handleHra();
   }, [empGrossSalary]);
 
@@ -249,7 +277,7 @@ function GenerateSalary() {
       const calculateCa = parseFloat(empGrossSalary) || 0;
       const finalCa = (calculateCa * 5) / 100;
       setEmpCa(finalCa);
-    }
+    };
     handleCa();
   }, [empGrossSalary]);
 
@@ -259,7 +287,7 @@ function GenerateSalary() {
       const calculateMedical = parseFloat(empGrossSalary) || 0;
       const finalMedical = (calculateMedical * 5) / 100;
       setEmpMedical(finalMedical);
-    }
+    };
     handleMedical();
   }, [empGrossSalary]);
 
@@ -279,7 +307,7 @@ function GenerateSalary() {
       const calculateKit = parseFloat(empGrossSalary) || 0;
       const finalTiffin = (calculateKit * 5) / 100;
       setKit(finalTiffin);
-    }
+    };
     handleKit();
   }, [empGrossSalary]);
 
@@ -289,47 +317,55 @@ function GenerateSalary() {
       const calculateAdditional = parseFloat(empGrossSalary) || 0;
       const finalTiffin = (calculateAdditional * 5) / 100;
       setAdditional(finalTiffin);
-    }
+    };
     handleAdditional();
   }, [empGrossSalary]);
 
-
   // handleFinalSalaryAmount
- useEffect(() => {
-  const handleFinalSalaryAmount = () => {
-    const salariesValue = parseFloat(salaries) || 0;
-    const incentiveValue = parseFloat(incentive) || 0;
-    const prevSalary =  parseFloat(arrear) || 0;
-    const fuelValue = parseFloat(fuelExpense)|| 0;
-    const otherValue = parseFloat(otherExpense)|| 0;
-    const esi =  parseFloat(empEsi) || 0;
-    // const hraValue = parseFloat(empHra) || 0;
-    // const daValue = parseFloat(empCa) || 0;
-    // const ma = parseFloat(empMedical) || 0;
-    // const tfinValue = parseFloat(empTiffin) || 0;
-    // const kitValue = parseFloat(kit) || 0;
-    // const adds = parseFloat(additional) || 0;
-    // const loanemis = parseFloat(empLoanemi) || 0;
-    // const emppf = parseFloat(empPf) || 0;
-    // const esi =  parseFloat(empEsi) || 0;
-    // const otherDeductionValue =  parseFloat(otherDeduction) || 0;
-    const incent = parseFloat(salariesValue + incentiveValue +  prevSalary + fuelValue + otherValue+ esi).toFixed(1);
-    setFinalAmountSalary(incent);
-  };
-  handleFinalSalaryAmount(); // Call the function when the component mounts or when 'absent' state changes
-}, [salaries, incentive, arrear, fuelExpense,empEsi, otherExpense]);
+  useEffect(() => {
+    const handleFinalSalaryAmount = () => {
+      const salariesValue = parseFloat(salaries) || 0;
+      const incentiveValue = parseFloat(incentive) || 0;
+      const prevSalary = parseFloat(arrear) || 0;
+      const fuelValue = parseFloat(fuelExpense) || 0;
+      const otherValue = parseFloat(otherExpense) || 0;
+      const esi = parseFloat(empEsi) || 0;
+      // const hraValue = parseFloat(empHra) || 0;
+      // const daValue = parseFloat(empCa) || 0;
+      // const ma = parseFloat(empMedical) || 0;
+      // const tfinValue = parseFloat(empTiffin) || 0;
+      // const kitValue = parseFloat(kit) || 0;
+      // const adds = parseFloat(additional) || 0;
+      // const loanemis = parseFloat(empLoanemi) || 0;
+      // const emppf = parseFloat(empPf) || 0;
+      // const esi =  parseFloat(empEsi) || 0;
+      // const otherDeductionValue =  parseFloat(otherDeduction) || 0;
+      const incent = parseFloat(
+        salariesValue +
+          incentiveValue +
+          prevSalary +
+          fuelValue +
+          otherValue +
+          esi
+      ).toFixed(0);
+      setFinalAmountSalary(incent);
+    };
+    handleFinalSalaryAmount(); // Call the function when the component mounts or when 'absent' state changes
+  }, [salaries, incentive, arrear, fuelExpense, empEsi, otherExpense]);
 
-useEffect(() => {
-  const handleDeductionAmount = () => {
-    const loanemis = parseFloat(empLoanemi) || 0;
-    const emppf = parseFloat(empPf) || 0;
-    const otherDeductionValue =  parseFloat(otherDeduction) || 0;
+  useEffect(() => {
+    const handleDeductionAmount = () => {
+      const loanemis = parseFloat(empLoanemi) || 0;
+      const emppf = parseFloat(empPf) || 0;
+      const otherDeductionValue = parseFloat(otherDeduction) || 0;
 
-    const deduct = parseFloat((loanemis + emppf + otherDeductionValue)).toFixed(1);
-    setFinalDeduction(deduct);
-  }
+      const deduct = parseFloat(loanemis + emppf + otherDeductionValue).toFixed(
+        1
+      );
+      setFinalDeduction(deduct);
+    };
     handleDeductionAmount();
-  }, [empLoanemi,empPf, otherDeduction, otherExpense]);
+  }, [empLoanemi, empPf, otherDeduction, otherExpense]);
 
   // HANDLE COMPANY
   // useEffect(() => {
@@ -371,20 +407,75 @@ useEffect(() => {
   //   handleLoanEmi();
   // }, [empGrossSalary]);
 
-  
- 
+  useEffect(() => {
+    const currSalDate = () => {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+
+    setSalDate(currSalDate());
+  }, []);
+
+  // const handleDateChange = (event) => {
+  //   console.log(event.target.value);
+
+  //   setSalDate(event.target.value);
+  // };
+  const convertDateFormat = (dateStr) => {
+    const [year, month, day] = dateStr.split("-");
+    return `${day}-${month}-${year}`;
+  };
+
+  const handleDateChange = (event) => {
+    const input = event.target.value;
+    if (input) {
+      const formattedDate = convertDateFormat(input);
+      setDateInput(formattedDate);
+    } else {
+      setDateInput(""); // Clear the converted date if the format is invalid
+    }
+    setSalDate(input);
+  };
 
   let genSalary = months + "/" + year;
+
+  console.log(inWords);
+  
+
+  const toWords = new ToWords({
+    localeCode: "en-IN",
+    converterOptions: {
+      currency: true,
+      ignoreDecimal: false,
+      ignoreZeroCurrency: false,
+      doNotAddOnly: false,
+      currencyOptions: {
+        // can be used to override defaults for the selected locale
+        name: "Rupee",
+        plural: "Rupees",
+        symbol: "₹",
+        fractionalUnit: {
+          name: "Paisa",
+          plural: "Paise",
+          symbol: "",
+        },
+      },
+    },
+  });
+
   // post data
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
-      console.log(typeof empUniqueId);
       // Proceed with the rest of the submission logic
       const response = await axios.post(`${VITE_DATA}/dashboard/gensalary`, {
         empUniqueId,
+        salDate: dateInput,
         empName,
         presentDays: presentDay,
         totalHalfDays: halfDay,
@@ -419,19 +510,23 @@ useEffect(() => {
         location: branchName,
         accNum: accNo,
         arrear,
+        bankNamed,
         finalAmountSalary,
         otherDeduction,
         finalDeduction,
         fuelExpense,
-        otherExpense
+        inWords: toWords.convert(finalAmountSalary || 0),
+        otherExpense,
       });
       if (response.data) {
         toast.success("Added Successfully!");
         // Reset the form and loading state on successful submission
         setTotal("");
+        setSalDate("");
+        setDateInput("");
         setempUniqueId("");
         setFuelExpense("");
-        setOtherExpense('');
+        setOtherExpense("");
         setIncentive("");
         setFinalDeduction("");
         setTotalDays("");
@@ -463,6 +558,7 @@ useEffect(() => {
         setEmpESI("");
         setEmpLoanemi("");
         setFinalDeduction("");
+        setInWords("");
         setOtherDeduction("");
         setLoading(false);
       } else {
@@ -477,33 +573,52 @@ useEffect(() => {
 
   return (
     <section className="container-fluid h-screen relative p-0 sm:ml-64 bg-white">
-      <div className="container-fluid flex w-full lg:w-full px-2   flex-col justify-center  border-gray-200 border-dashed rounded-lg bg-white">
-        <h1 className="font-semibold text-3xl text-orange-700 py-2 ">Generate Employee Salary</h1>
+      <div className="container-fluid flex w-full lg:w-full px-2   flex-col justify-center  border-gray-200 border-dashed rounded bg-white">
+        <h1 className="font-semibold text-3xl text-orange-700 py-2 ">
+          Generate Employee Salary
+        </h1>
         <div className="relative  p-0  rounded-xl shadow-xl text-2xl  items-center bg-slate-200">
-
           <div className="flex flex-wrap justify-between">
-            <div className="flex flex-col   p-2 text-start w-full lg:w-1/5 ">
+            <div className="flex flex-col p-2 text-start w-full lg:w-1/6">
+              <label className="text-base mx-1">Salary Payment Date:</label>
+              <input
+                className="input-style p-1 rounded"
+                type="date"
+                value={salDate}
+                onChange={handleDateChange}
+                name="salDate"
+              />
+            </div>
+
+            <div className="flex flex-col   p-2 text-start w-full lg:w-1/6 ">
               <label className="text-base mx-1">Employee Name</label>
               <select
-                className="input-style text-base rounded-lg  p-1"
+                className="input-style text-base rounded  p-1"
                 value={empName}
                 onChange={(e) => handleEmployeeChange(e.target.value)}
-                name="empName">
+                name="empName"
+              >
                 <option value="" className="text-base">
-                  -------- Select Employee ----------
+                  ------ Select Employee --------
                 </option>
-                {empList.filter(employee => employee.flags === true).map((emp) => (
-                  <option key={emp.empid} value={emp.empname} className="text-base">
-                    {`${emp.empid}  -  ${emp.empname}`}
-                  </option>
-                ))}
+                {empList
+                  .filter((employee) => employee.flags === true)
+                  .map((emp) => (
+                    <option
+                      key={emp.empid}
+                      value={emp.empname}
+                      className="text-base"
+                    >
+                      {`${emp.empid}  -  ${emp.empname}`}
+                    </option>
+                  ))}
               </select>
             </div>
 
-            <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
+            <div className="flex flex-col p-2 text-start w-full lg:w-1/6">
               <label className="text-base mx-1">Monthly Salary:</label>
               <input
-                className="input-style p-1 bg-red-100 rounded-lg"
+                className="input-style p-1 bg-red-100 rounded"
                 type="number"
                 min="0"
                 value={monthSalary}
@@ -513,10 +628,10 @@ useEffect(() => {
               />
             </div>
 
-            <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
+            <div className="flex flex-col p-2 text-start w-full lg:w-1/6">
               <label className="text-base mx-1">Monthly Leave:</label>
               <input
-                className="input-style p-1 bg-red-100 rounded-lg"
+                className="input-style p-1 bg-red-100 rounded"
                 type="number"
                 min="0"
                 max="12"
@@ -527,19 +642,29 @@ useEffect(() => {
                 disabled
               />
             </div>
-            <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
-              <label htmlFor="year" className="text-base mx-1">Year:</label>
-              <select id="year" value={year} onChange={handleYearChange} className="input-style p-1 text-base rounded-lg text-black" disabled={!empName}>
-                <option value="" >------------- Select Year ----------</option>
+            <div className="flex flex-col p-2 text-start w-full lg:w-1/6">
+              <label htmlFor="year" className="text-base mx-1">
+                Year:
+              </label>
+              <select
+                id="year"
+                value={year}
+                onChange={handleYearChange}
+                className="input-style p-1 text-base rounded text-black"
+                disabled={!empName}
+              >
+                <option value="">--------- Select Year --------</option>
                 {renderYears()}
               </select>
             </div>
 
-            <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
-              <label htmlFor="month" className="text-base mx-1">Months:</label>
+            <div className="flex flex-col p-2 text-start w-full lg:w-1/6">
+              <label htmlFor="month" className="text-base mx-1">
+                Months:
+              </label>
 
               <select
-                className="input-style p-1 text-base rounded-lg text-black"
+                className="input-style p-1 text-base rounded text-black"
                 type="text"
                 id="month"
                 value={months}
@@ -548,7 +673,7 @@ useEffect(() => {
                 name="genMonths"
                 disabled={!year}
               >
-                <option value="" >------------- Select Month ----------</option>
+                <option value="">------ Select Month ----------</option>
                 {renderMonths()}
               </select>
             </div>
@@ -556,7 +681,7 @@ useEffect(() => {
             <div className="flex flex-col p-2  mt-4 text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Total Days:</label>
               <input
-                className="input-style p-1 bg-red-100 rounded-lg"
+                className="input-style p-1 bg-red-100 rounded"
                 type="number"
                 min="0"
                 value={total}
@@ -568,7 +693,7 @@ useEffect(() => {
             <div className="flex flex-col p-2  mt-4 text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Total Working Days:</label>
               <input
-                className="input-style p-1 bg-red-100 rounded-lg"
+                className="input-style p-1 bg-red-100 rounded"
                 type="number"
                 min="0"
                 value={totalDays}
@@ -580,7 +705,7 @@ useEffect(() => {
             <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Present Days:</label>
               <input
-                className="input-style bg-red-100 p-1 rounded-lg"
+                className="input-style bg-red-100 p-1 rounded"
                 type="number"
                 min="0"
                 value={presentDay}
@@ -592,7 +717,7 @@ useEffect(() => {
             <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Total Absent:</label>
               <input
-                className="input-style p-1 bg-red-100 rounded-lg"
+                className="input-style p-1 bg-red-100 rounded"
                 type="number"
                 min="0"
                 value={totalAbsentDays}
@@ -604,7 +729,7 @@ useEffect(() => {
             <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Total Half Days:</label>
               <input
-                className="input-style p-1 bg-red-100 rounded-lg"
+                className="input-style p-1 bg-red-100 rounded"
                 type="number"
                 min="0"
                 value={halfDay}
@@ -615,10 +740,10 @@ useEffect(() => {
               />
             </div>
 
-            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
+            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/6">
               <label className="text-base mx-1">Salary:</label>
               <input
-                className="input-style p-1 bg-red-100 rounded-lg"
+                className="input-style p-1 bg-red-100 rounded"
                 type="number"
                 min="0"
                 value={salaries}
@@ -626,10 +751,10 @@ useEffect(() => {
                 placeholder="₹ 0"
               />
             </div>
-            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
+            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/6">
               <label className="text-base mx-1">Incentive:</label>
               <input
-                className="input-style p-1 rounded-lg"
+                className="input-style p-1 rounded"
                 type="number"
                 min="0"
                 value={incentive}
@@ -639,10 +764,10 @@ useEffect(() => {
               />
             </div>
 
-            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
+            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/6">
               <label className="text-base mx-1">Total Amount:</label>
               <input
-                className="input-style p-1 bg-red-100 rounded-lg"
+                className="input-style p-1 bg-red-100 rounded"
                 type="number"
                 min="0"
                 value={amount}
@@ -651,10 +776,10 @@ useEffect(() => {
               />
             </div>
 
-            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
+            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/6">
               <label className="text-base mx-1">Arrear:</label>
               <input
-                className="input-style p-1 rounded-lg"
+                className="input-style p-1 rounded"
                 type="number"
                 min="0"
                 value={arrear}
@@ -663,10 +788,29 @@ useEffect(() => {
                 placeholder="₹ 0"
               />
             </div>
-            <div className="flex flex-col p-2  text-start w-full lg:w-1/5"></div>
+            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/6">
+              <label className="text-base mx-1">Bank Name:</label>
+              <input
+                className="input-style bg-red-100 p-1 rounded"
+                type="text"
+                min="0"
+                value={bankNamed}
+                name="bankedName"
+                placeholder="Bank Name"
+              />
+            </div>
+            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/6">
+              <label className="text-base mx-1">Account No:</label>
+              <input
+                className="input-style bg-red-100 p-1 rounded"
+                type="text"
+                min="0"
+                value={accNo}
+                name="accNo"
+                placeholder="Please Added by Emp"
+              />
+            </div>
           </div>
-
-
 
           <div className="w-full col-span-4 mt-5 mb-4 text-white border-b border border-orange-700 bg-orange-700"></div>
           <div className="flex flex-wrap justify-between">
@@ -674,7 +818,7 @@ useEffect(() => {
             <div className="flex flex-col p-2  text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Gross Salary:</label>
               <input
-                className="input-style p-1 bg-red-100 rounded-lg"
+                className="input-style p-1 bg-red-100 rounded"
                 type="text"
                 rows={2}
                 name="empGrossSalary"
@@ -685,7 +829,7 @@ useEffect(() => {
             <div className="flex flex-col p-2  text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Basic Salary:</label>
               <input
-                className="input-style p-1 bg-red-100 rounded-lg"
+                className="input-style p-1 bg-red-100 rounded"
                 type="text"
                 rows={2}
                 name="empbasicSalary"
@@ -698,7 +842,7 @@ useEffect(() => {
             <div className="flex flex-col p-2  text-start w-full lg:w-1/5">
               <label className="text-base mx-1">HRA:</label>
               <input
-                className="input-style p-1 bg-red-100 rounded-lg"
+                className="input-style p-1 bg-red-100 rounded"
                 type="text"
                 rows={2}
                 name="empHra"
@@ -712,7 +856,7 @@ useEffect(() => {
             <div className="flex flex-col p-2  text-start w-full lg:w-1/5">
               <label className="text-base mx-1">DA:</label>
               <input
-                className="input-style p-1  bg-red-100 rounded-lg"
+                className="input-style p-1  bg-red-100 rounded"
                 type="text"
                 rows={2}
                 name="empCa"
@@ -725,7 +869,7 @@ useEffect(() => {
             <div className="flex flex-col p-2  text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Medical Allowance:</label>
               <input
-                className="input-style bg-red-100 p-1 rounded-lg"
+                className="input-style bg-red-100 p-1 rounded"
                 type="text"
                 rows={2}
                 name="empMedical"
@@ -738,7 +882,7 @@ useEffect(() => {
             <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Tiffin/DAS Allowance:</label>
               <input
-                className="input-style bg-red-100 p-1 rounded-lg"
+                className="input-style bg-red-100 p-1 rounded"
                 type="text"
                 rows={2}
                 name="empTiffin"
@@ -752,7 +896,7 @@ useEffect(() => {
             <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Kit Allowance:</label>
               <input
-                className="input-style bg-red-100 p-1 rounded-lg"
+                className="input-style bg-red-100 p-1 rounded"
                 type="text"
                 rows={2}
                 name="kit"
@@ -765,7 +909,7 @@ useEffect(() => {
             <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Additional Allowance:</label>
               <input
-                className="input-style bg-red-100 p-1 rounded-lg"
+                className="input-style bg-red-100 p-1 rounded"
                 type="text"
                 rows={2}
                 name="additional"
@@ -778,7 +922,7 @@ useEffect(() => {
             <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Company PF:</label>
               <input
-                className="input-style p-1 bg-red-100 rounded-lg"
+                className="input-style p-1 bg-red-100 rounded"
                 type="text"
                 rows={2}
                 name="empCompanyPf"
@@ -787,12 +931,12 @@ useEffect(() => {
                 placeholder="PF"
                 disabled
               />
-                <span className="text-xs text-red-700">DISABLED</span>
+              <span className="text-xs text-red-700">DISABLED</span>
             </div>
             <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
-            <label className="text-base mx-1">Final Salary Amount:</label>
+              <label className="text-base mx-1">Final Salary Amount:</label>
               <input
-                className="input-style bg-green-100  p-1 rounded-lg"
+                className="input-style bg-green-100  p-1 rounded"
                 type="number"
                 rows={2}
                 name="finalAmountSalary"
@@ -802,14 +946,29 @@ useEffect(() => {
                 disabled
               />
             </div>
-            <div className="flex flex-col p-2  text-start w-full lg:w-1/5"></div>
+
+            <div className="flex flex-col p-2  text-start w-full lg:w-1/3">
+            <label className="text-base mx-1">Salary in Words:</label>
+            <input
+                className="input-style bg-green-100  p-1 rounded"
+                type="text"
+                name=""
+                value={toWords.convert(finalAmountSalary || 0)}
+                onChange={(e) => setInWords(e.target.value)}
+                placeholder="₹ 0"
+                disabled
+              />
+              
+            </div>
             <div className="flex flex-col p-2  text-start w-full lg:w-1/5"></div>
             {/* part-3 */}
-            <div className="w-full col-span-4 my-4 text-white border-b border border-orange-500 bg-orange-700">Employee Contribution/Deduction</div>
+            <div className="w-full col-span-4 my-4 text-white border-b border border-orange-500 bg-orange-700">
+              Employee Contribution/Deduction
+            </div>
             <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
               <label className="text-base mx-1">PF:</label>
               <input
-                className="input-style bg-red-100  p-1 rounded-lg"
+                className="input-style bg-red-100  p-1 rounded"
                 type="text"
                 rows={2}
                 name="empPf"
@@ -818,12 +977,12 @@ useEffect(() => {
                 placeholder="PF"
                 disabled
               />
-                <span className="text-xs text-red-700">DISABLED</span>
+              <span className="text-xs text-red-700">DISABLED</span>
             </div>
             <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
               <label className="text-base mx-1">Loan EMI:</label>
               <input
-                className="input-style  p-1 rounded-lg"
+                className="input-style  p-1 rounded"
                 type="number"
                 rows={2}
                 name="empLoanemi"
@@ -836,7 +995,7 @@ useEffect(() => {
             <div className="flex flex-col p-2 text-start w-full lg:w-1/5 border-t">
               <label className="text-base mx-1">ESI:</label>
               <input
-                className="input-style bg-red-100 p-1 rounded-lg"
+                className="input-style bg-red-100 p-1 rounded"
                 type="number"
                 rows={2}
                 name="empEsi"
@@ -847,9 +1006,9 @@ useEffect(() => {
               />
             </div>
             <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
-            <label className="text-base mx-1">TDS:</label>
+              <label className="text-base mx-1">TDS:</label>
               <input
-                className="input-style  p-1 rounded-lg"
+                className="input-style  p-1 rounded"
                 type="number"
                 rows={2}
                 name="otherDeduction"
@@ -859,9 +1018,11 @@ useEffect(() => {
               />
             </div>
             <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
-            <label className="text-base mx-1 font-semibold text-red-700">All Deduction Amount:</label>
+              <label className="text-base mx-1 font-semibold text-red-700">
+                All Deduction Amount:
+              </label>
               <input
-                className="input-style  p-1 rounded-lg "
+                className="input-style  p-1 rounded "
                 type="number"
                 rows={2}
                 name="finalDeduction"
@@ -871,13 +1032,15 @@ useEffect(() => {
                 disabled
               />
             </div>
-           
-            <div className="w-full col-span-4 my-4 text-white border-b border border-orange-500 bg-orange-700">Other Expenses</div>
+
+            <div className="w-full col-span-4 my-4 text-white border-b border border-orange-500 bg-orange-700">
+              Other Expenses
+            </div>
 
             <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
-            <label className="text-base mx-1">Fuel Expenses:</label>
+              <label className="text-base mx-1">Fuel Expenses:</label>
               <input
-                className="input-style  p-1 rounded-lg"
+                className="input-style  p-1 rounded"
                 type="number"
                 rows={2}
                 name="fuelExpense"
@@ -887,9 +1050,9 @@ useEffect(() => {
               />
             </div>
             <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
-            <label className="text-base mx-1">Other Expenses:</label>
+              <label className="text-base mx-1">Other Expenses:</label>
               <input
-                className="input-style  p-1 rounded-lg"
+                className="input-style  p-1 rounded"
                 type="number"
                 rows={2}
                 name="otherExpense"
@@ -898,7 +1061,7 @@ useEffect(() => {
                 placeholder="₹ 0"
               />
             </div>
-           
+
             <div className="flex flex-col p-2 text-start w-full lg:w-1/5"></div>
             <div className="flex flex-col p-2 text-start w-full lg:w-1/5"></div>
             <div className="w-full my-10 p-2">
@@ -909,13 +1072,10 @@ useEffect(() => {
               >
                 {loading ? "Submitting..." : "Submit"}
               </button>
-
             </div>
-
           </div>
         </div>
       </div>
-
     </section>
   );
 }

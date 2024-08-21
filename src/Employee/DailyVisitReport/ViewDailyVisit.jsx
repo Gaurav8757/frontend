@@ -142,7 +142,7 @@ const exportToExcel = () => {
 
   const isCurrentDate = (dateString) => {
     const today = new Date().toLocaleDateString('en-CA'); // Format: YYYY-MM-DD
-    return dateString === today;
+    return dateString <= today;
   };
 
   return (

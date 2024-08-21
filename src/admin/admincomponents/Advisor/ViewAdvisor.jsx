@@ -167,8 +167,7 @@ function ViewAdvisor() {
                             <h1 className="mr-20"></h1>
                             <span className=" flex justify-center text-center text-blue-700 text-3xl font-semibold">Advisor&apos;s List</span>
                             <div className="flex">
-                                <button className="text-end    text-3xl font-semibold " onClick={handleExportClick}><img src="/excel.png" alt="download" className="w-10 " /></button>
-                               
+                                <button className="text-end text-3xl font-semibold" onClick={handleExportClick}><img src="/excel.png" alt="download" className="w-10 " /></button>   
                             </div>
                         </div>
                         <div className="flex-wrap flex mt-4 my-auto  justify-between  text-blue-500 ">
