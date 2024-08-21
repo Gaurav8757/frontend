@@ -122,7 +122,7 @@ const formatDate = (dateString) => {
   return (<>
     <section className="container-fluid relative pt-2 p-0 sm:ml-48 bg-slate-100">
       <div className="container-fluid  flex flex-col  justify-center p-2 border-gray-200 border-dashed rounded  bg-slate-50">
-        <span className="text-2xl py-1 tracking-wider text-blue-700 font-medium uppercase">Add Indorshment</span>
+        <span className="text-2xl py-1 tracking-wider text-blue-700 font-medium uppercase">Add Endorsment</span>
         <div className="container-fluid flex justify-center p-2  border-dashed rounded-lg  bg-gray-300 shadow-2xl">
           <form className="flex flex-wrap justify-between" onSubmit={handleSubmit}>
 

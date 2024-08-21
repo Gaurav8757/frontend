@@ -29,33 +29,33 @@ const SidebarCIC = () => {
         }]
     },
     {
-      title: "Indorshment",
+      title: "Endorsment",
       path: "#",
       logo: <img src="/indo.png" height={10} width={25} alt="indorshment"/>,
       subRoutes: [
         {
-          title: "Add Indorshment",
+          title: "Add Endorsment",
           path: "/cic/home/indorsh",
           dash: ""
         },
         {
-          title: "Indorshment List's",
+          title: "Endorsment List's",
           path: "/cic/home/indorsh/view",
           dash: ""
         }]
     },
     {
-      title: "Cancelation",
+      title: "Cancellation",
       path: "#",
       logo: <img src="/rejected.png" height={10} width={25} alt="cancelation"/>,
       subRoutes: [
         {
-          title: "Add Cancelation",
+          title: "Add cancellation",
           path: "/cic/home/cancelation",
           dash: ""
         },
         {
-          title: "Cancelation List's",
+          title: "Cancellation List's",
           path: "/cic/home/cancelation/view",
           dash: ""
         }]

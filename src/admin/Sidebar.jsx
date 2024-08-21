@@ -108,7 +108,7 @@ const Sidebar = () => {
       ]
     },
     {
-      title: "CIC",
+      title: "CEC",
       path: "#",
       logo: <img src="/cic.png" height={5} width={25} alt="grid"/>,
       subRoutes: [
@@ -119,12 +119,12 @@ const Sidebar = () => {
           dash: ""
         },
         {
-          title: "Indorshment",
+          title: "Endorsment",
           path: "/dashboard/cic/indorshment",
           dash: ""
         },
         {
-          title: "Cancelation",
+          title: "Cancellation",
           path: "/dashboard/cic/cancelation",
           dash: ""
         },
@@ -137,17 +137,17 @@ const Sidebar = () => {
       logo: <img src="/account.png" height={5} width={25} alt="leger"/>,
       subRoutes: [
 
-        {
-          title: "Daily Leger",
-          path: "/dashboard/ledger1",
-          dash: "/dashboard/daily/view"
-        },
+        // {
+        //   title: "Daily Leger",
+        //   path: "/dashboard/ledger1",
+        //   dash: "/dashboard/daily/view"
+        // },
        
-        {
-          title: "Monthly Leger",
-          path: "/dashboard/ledger2",
-          dash: ""
-        },
+        // {
+        //   title: "Monthly Leger",
+        //   path: "/dashboard/ledger2",
+        //   dash: ""
+        // },
         {
           title: "Company Leger",
           path: "/dashboard/ledger3",

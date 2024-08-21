@@ -53,7 +53,7 @@ const BranchSidebar = () => {
       ]
     },
     {
-      title: "CIC",
+      title: "CEC",
       path: "#",
       // logo: <CgProfile size={25} />,
       logo: <img src="/cic.png" height={5} width={25} alt="cic" />,
@@ -64,12 +64,12 @@ const BranchSidebar = () => {
           dash: ""
         },
         {
-          title: "Indorshment",
+          title: "Endorsment",
           path: "/branches/home/indorsh/lists",
           dash: ""
         },
         {
-          title: "Cancelation",
+          title: "Cancellation",
           path: "/branches/home/cncl/lists",
           dash: ""
         },

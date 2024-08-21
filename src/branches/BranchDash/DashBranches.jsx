@@ -11,8 +11,8 @@ function DashBranches() {
   const [empWiseAttendance, setEmpWiseAttendance] = useState([]);
 
   const [APIData, setAPIData] = useState([]);
-  const [employees, setEmployees] = useState([]);
-  const [employeePolicyCounts, setEmployeePolicyCounts] = useState({});
+  // const [employees, setEmployees] = useState([]);
+  // const [employeePolicyCounts, setEmployeePolicyCounts] = useState({});
   const [yearlyData, setYearlyData] = useState(0);
   const [monthlyData, setMonthlyData] = useState(0);
   const [dailyData, setDailyData] = useState(0);
@@ -680,44 +680,44 @@ function DashBranches() {
         };
 
         // Extract unique employees (case insensitive), excluding empty staffName
-        const uniqueEmployees = [
-          ...new Set(
-            fetchedData
-              .filter((item) => item.staffName.trim() !== "")
-              .map((item) => item.staffName.toLowerCase())
-          ),
-        ];
-        setEmployees(uniqueEmployees);
-        const newEmployeePolicyCounts = uniqueEmployees.reduce(
-          (acc, employee) => {
-            const employeeData = fetchedData.filter(
-              (item) => item.staffName.toLowerCase() === employee
-            );
+        // const uniqueEmployees = [
+        //   ...new Set(
+        //     fetchedData
+        //       .filter((item) => item.staffName.trim() !== "")
+        //       .map((item) => item.staffName.toLowerCase())
+        //   ),
+        // ];
+        // setEmployees(uniqueEmployees);
+        // const newEmployeePolicyCounts = uniqueEmployees.reduce(
+        //   (acc, employee) => {
+        //     const employeeData = fetchedData.filter(
+        //       (item) => item.staffName.toLowerCase() === employee
+        //     );
 
-            acc[employee] = {
-              ytd: employeeData.filter(
-                (item) => new Date(item.entryDate).getFullYear() === currentYear
-              ).length,
-              mtd: employeeData.filter((item) => {
-                const itemDate = new Date(item.entryDate);
-                return (
-                  itemDate.getMonth() + 1 === currentMonth &&
-                  itemDate.getFullYear() === currentYear
-                );
-              }).length,
-              daily: employeeData.filter((item) => {
-                const itemDate = new Date(item.entryDate);
-                return (
-                  itemDate.getDate() === currentDay &&
-                  itemDate.getMonth() + 1 === currentMonth &&
-                  itemDate.getFullYear() === currentYear
-                );
-              }).length,
-            };
-            return acc;
-          },
-          {}
-        );
+        //     acc[employee] = {
+        //       ytd: employeeData.filter(
+        //         (item) => new Date(item.entryDate).getFullYear() === currentYear
+        //       ).length,
+        //       mtd: employeeData.filter((item) => {
+        //         const itemDate = new Date(item.entryDate);
+        //         return (
+        //           itemDate.getMonth() + 1 === currentMonth &&
+        //           itemDate.getFullYear() === currentYear
+        //         );
+        //       }).length,
+        //       daily: employeeData.filter((item) => {
+        //         const itemDate = new Date(item.entryDate);
+        //         return (
+        //           itemDate.getDate() === currentDay &&
+        //           itemDate.getMonth() + 1 === currentMonth &&
+        //           itemDate.getFullYear() === currentYear
+        //         );
+        //       }).length,
+        //     };
+        //     return acc;
+        //   },
+        //   {}
+        // );
 
         const cvYearlyTotals = calculateTotals(filteredYearlyData, "C V");
         const cvMonthlyTotals = calculateTotals(filteredMonthlyData, "C V");
@@ -846,7 +846,7 @@ function DashBranches() {
           setMonthlyNonMotorCount(nonMotorMonthlyTotals.totalCount);
           setDailyNonMotorCount(nonMotorDailyTotals.totalCount);
 
-          setEmployeePolicyCounts(newEmployeePolicyCounts);
+          // setEmployeePolicyCounts(newEmployeePolicyCounts);
         });
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -1033,34 +1033,34 @@ function DashBranches() {
     });
 
     // employee counts policy
-    const newEmployeePolicyCounts = employees.reduce((acc, employee) => {
-      const employeeData = filteredData1.filter(
-        (item) => item.staffName.toLowerCase() === employee
-      );
+    // const newEmployeePolicyCounts = employees.reduce((acc, employee) => {
+    //   const employeeData = filteredData1.filter(
+    //     (item) => item.staffName.toLowerCase() === employee
+    //   );
 
-      acc[employee] = {
-        ytd: employeeData.filter(
-          (item) =>
-            new Date(item.entryDate).getFullYear() === new Date().getFullYear()
-        ).length,
-        mtd: employeeData.filter((item) => {
-          const itemDate = new Date(item.entryDate);
-          return (
-            itemDate.getMonth() + 1 === new Date().getMonth() + 1 &&
-            itemDate.getFullYear() === new Date().getFullYear()
-          );
-        }).length,
-        daily: employeeData.filter((item) => {
-          const itemDate = new Date(item.entryDate);
-          return (
-            itemDate.getDate() === new Date().getDate() &&
-            itemDate.getMonth() + 1 === new Date().getMonth() + 1 &&
-            itemDate.getFullYear() === new Date().getFullYear()
-          );
-        }).length,
-      };
-      return acc;
-    }, {});
+    //   acc[employee] = {
+    //     ytd: employeeData.filter(
+    //       (item) =>
+    //         new Date(item.entryDate).getFullYear() === new Date().getFullYear()
+    //     ).length,
+    //     mtd: employeeData.filter((item) => {
+    //       const itemDate = new Date(item.entryDate);
+    //       return (
+    //         itemDate.getMonth() + 1 === new Date().getMonth() + 1 &&
+    //         itemDate.getFullYear() === new Date().getFullYear()
+    //       );
+    //     }).length,
+    //     daily: employeeData.filter((item) => {
+    //       const itemDate = new Date(item.entryDate);
+    //       return (
+    //         itemDate.getDate() === new Date().getDate() &&
+    //         itemDate.getMonth() + 1 === new Date().getMonth() + 1 &&
+    //         itemDate.getFullYear() === new Date().getFullYear()
+    //       );
+    //     }).length,
+    //   };
+    //   return acc;
+    // }, {});
 
     // total calculates
     const calculateTotals = (filteredData1, segment) => {
@@ -1135,7 +1135,7 @@ function DashBranches() {
       setYearlyData(filteredYearlyData.length);
       setMonthlyData(filteredMonthlyData.length);
       setDailyData(filteredDailyData.length);
-      setEmployeePolicyCounts(newEmployeePolicyCounts);
+      // setEmployeePolicyCounts(newEmployeePolicyCounts);
 
       setBranchesCounts(newBranchesCounts);
 
@@ -1802,7 +1802,7 @@ function DashBranches() {
       </div>
 
       {/* part 2 employee wise data policy */}
-      <div className="block col-span-2 ">
+      {/* <div className="block col-span-2 ">
         <div className="grid grid-cols-6 items-center ">
           <span className="col-span-3 uppercase font-serif text-xs sm:text-sm md:text-sm lg:text-base xl:text-base text-center">
             EMP NAME
@@ -1839,7 +1839,7 @@ function DashBranches() {
             ))}
           </div>
         ))}
-      </div>
+      </div> */}
     </section>
   );
 }

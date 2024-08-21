@@ -97,7 +97,7 @@ function CancelUpdate({ data, update, onClose }) {
             <div className="relative bg-blue-800 p-1 xl:w-10/12 lg:w-10/12 md:w-10/12 sm:w-10/12 w-11/12 max-w-9xl max-h-7xl mx-auto xl:my-40 lg:my-40 md:my-30 sm:my-10 my-10 rounded">
                 <div className="flex items-center justify-between p-1 rounded-lg ">
                     <h3 className="text-xl font-semibold text-gray-100">
-                        Update Cancelation Details
+                        Update Cancellation Details
                     </h3>
                     <button
                         onClick={onClose}

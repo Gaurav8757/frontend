@@ -149,7 +149,7 @@ function BranchCancelation() {
                 <div className="inline-block min-w-full mt-1">
                     <div className="mb-2 flex justify-between text-blue-500">
                         <h1></h1>
-                        <h1 className="text-2xl my-auto font-semibold text-blue-700 uppercase">Cancelation Lists</h1>
+                        <h1 className="text-2xl my-auto font-semibold text-blue-700 uppercase">cancellation Lists</h1>
                         <span className="flex justify-end ">
                             <button className="" onClick={handleExportClick}><img src="/excel.png" alt="download" className="w-10 mr-2" /></button>
                             <NavLink to="/branches/home" className="my-auto text-red-700">

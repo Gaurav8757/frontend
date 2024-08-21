@@ -150,7 +150,7 @@ function BranchIndorshment() {
           <div className="inline-block min-w-full mt-0">
             <div className="mb-2 flex justify-between text-blue-500">
               <h1></h1>
-              <h1 className="text-2xl my-auto font-semibold text-blue-700 uppercase">Indroshment Lists</h1>
+              <h1 className="text-2xl my-auto font-semibold text-blue-700 uppercase">Endorsment Lists</h1>
               <span className="flex justify-end ">
                 <button className="" onClick={handleExportClick}><img src="/excel.png" alt="download" className="w-10 mr-2" /></button>
                 <NavLink to="/branches/home" className="my-auto text-red-700">
@@ -184,7 +184,7 @@ function BranchIndorshment() {
 
             <div className="flex flex-col  p-2 text-start sm:w-44 lg:w-44 w-1/3">
               <label htmlFor='subTypeIndo' className="text-base font-medium mx-1 ">SubType:</label>
-              <input id='subTypeIndo' className="input-style p-1  rounded" type="search" name="subTypeIndo" onChange={(e) => setSubType(e.target.value)} placeholder="SubType Indorshment" required />
+              <input id='subTypeIndo' className="input-style p-1  rounded" type="search" name="subTypeIndo" onChange={(e) => setSubType(e.target.value)} placeholder="SubType Endorsment" required />
             </div>
 
           </div>

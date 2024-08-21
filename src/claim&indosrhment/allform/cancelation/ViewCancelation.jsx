@@ -191,7 +191,7 @@ function ViewCancelation() {
         <div className="inline-block min-w-full mt-2">
           <div className="my-2 flex justify-between text-blue-500">
             <h1></h1>
-            <h1 className="text-2xl my-auto font-semibold text-blue-700 uppercase">Cancelation Lists</h1>
+            <h1 className="text-2xl my-auto font-semibold text-blue-700 uppercase">Cancellation Lists</h1>
             <span className="flex justify-end ">
               <button className="" onClick={handleExportClick}><img src="/excel.png" alt="download" className="w-10 mr-2" /></button>
             </span>
