@@ -71,7 +71,7 @@ function SalaryViewPage({ data, onClosed }) {
                             </button>
                         </div>
 
-                        <div className="max-w-auto rounded-b-xl  p-8 pt-3 relative bg-gradient-to-br from-red-100 to-red-200    bg-white" ref={componentRef}>
+                        <div className="max-w-auto rounded-b-xl  p-8 pt-3 relative    bg-white" ref={componentRef}>
                             <header className="flex  justify-between relative overflow-hidden ">
                                 <div className="relative z-10 p-3 text-white">
                                     <img className="h-32 w-64 shadow shadow-slate-100" src="/logo.webp" alt="logo" />
