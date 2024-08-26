@@ -273,13 +273,7 @@ function ListAdvisor() {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 overflow-y-hidden">
-                                        {filteredData.sort((a, b) => {
-                                            // Extract the numeric part from uniqueId and convert it to a number for comparison
-                                            const idA = parseInt(a.uniqueId.split("-")[1]);
-                                            const idB = parseInt(b.uniqueId.split("-")[1]);
-                                            // Compare the numeric parts
-                                            return idA - idB;
-                                        }).map((data) => {
+                                        {filteredData.map((data) => {
                                             return (
                                                 <tr key={data._id}
                                                     className="border-b  bg-slate-200 text-sm font-medium">

@@ -270,6 +270,78 @@ function ViewFinance() {
     exportToExcel();
   };
 
+  const exportAdvisorWiseReconData = () => {
+    try {
+      const fileType =
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+      const fileExtension = ".xlsx";
+      const fileName = `${name}_executive`;
+      // Map all data without filtering by current date
+      const dataToExports = filteredData.map((row) => {
+        return [
+          row.entryDate,
+          row.company,
+          row.policyNo,
+          row.insuredName,
+          row.vehRegNo,
+          row.makeModel,
+          row.odPremium,
+          row.liabilityPremium,
+          row.netPremium,
+          row.finalEntryFields,
+          row.advisorPayoutAmount,
+          row.cvpercentage,
+          row.advisorPayableAmount,
+        ];
+      });
+
+      // Get all table headers in the same order
+      const tableHeaders = [
+        "Entry Date", // corresponds to row.entryDate
+        "Company Name", // corresponds to row.company
+        "Policy No", // corresponds to row.policyNo
+        "Insured Name", // corresponds to row.insuredName
+        "Vehicle Reg No", // corresponds to row.vehRegNo
+        "Make & Model", // corresponds to row.makeModel
+        "OD Premium", // corresponds to row.odPremium
+        "Liability Premium", // corresponds to row.liabilityPremium
+        "Net Premium", // corresponds to row.netPremium
+        "Final Amount", // corresponds to row.finalEntryFields
+        "Advisor Payout",
+        "Advisor Payout %",
+        "Advisor Payable Amount",
+        "CR",
+        "R.Balance",
+        "Payment Date",
+        "Payment Mode",
+        "CHQ/REF. NO.",
+        "Bank Name",
+      ];
+
+      // Create worksheet
+      const ws = XLSX.utils.aoa_to_sheet([tableHeaders, ...dataToExports]);
+      // Create workbook and export
+      const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+      const excelBuffer = XLSX.write(wb, {
+        bookType: "xlsx",
+        type: "array",
+      });
+      const data = new Blob([excelBuffer], { type: fileType });
+      const url = URL.createObjectURL(data);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", fileName + fileExtension);
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error("Error exporting to Excel:", error);
+      toast.error("Error exporting to Excel");
+    }
+  };
+  const handleAdvisorWiseReconData = () => {
+    exportAdvisorWiseReconData();
+  };
+
 
   const exportMisToExcel = () => {
     try {
@@ -389,6 +461,13 @@ function ViewFinance() {
             <span className=" flex justify-center text-center  text-3xl font-semibold  ">View All Policies</span>
             <div className="flex ">
               <button className="text-end  mr-1 flex justify-end  text-3xl font-semibold " onClick={handleExportClick}><img src="/excel.png" alt="download" height={50} width={40} /></button>
+               {/* button 2 */}
+               <button
+                  className="text-end mx-0 flex justify-end  text-3xl mt-1 font-semibold"
+                  onClick={handleAdvisorWiseReconData}
+                >
+                  <img src="/dwnd.png" alt="download" height={25} width={35} />
+                </button>
               <button className="text-end   mr-1  justify-end  text-xl font-semibold " onClick={handleMisExportClick}>
               <Suspense fallback={<div>Loading...</div>}>
               <img src="/public/xls.png"  className="rounded-xl mx-0 my-0" height={50} width={40} alt="mis "/>

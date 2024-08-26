@@ -11,21 +11,22 @@ function AddAdvisors() {
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
-  const branchname = sessionStorage.getItem('name');
+  const branchname = sessionStorage.getItem("name");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       // Make sure to replace this URL with your actual API endpoint
       const response = await axios.post(`${VITE_DATA}/advisor/register`, {
-        uniqueId: ids,
+        uniqueIDS: ids,
         advisorname: fname,
         advisoremail: email,
         advisormobile: mobile,
         advisorpassword: password,
         advisoraddress: address,
         advisortype: advType,
-        branch: branchname
+        branch: branchname,
       });
 
       if (response.data.status) {
@@ -39,26 +40,26 @@ function AddAdvisors() {
         setAddress("");
         setAdvType("");
         setLoading(false);
-      }
-      else {
+      } else {
         toast.error("Error Occurred. Try again...! ");
       }
     } catch (error) {
-      console.error("Error during advisor registration:", error.response);
-      // setError("Error during branch registration. Please try again.");
+      console.error(
+        "Error during advisor registration:",
+        error.response.data.message
+      );
+      toast.error(`${error.response.data.message}`);
       setLoading(false);
     }
   };
 
-
-
-
   return (
     <section className="container-fluid relative p-0 sm:ml-48 bg-white">
       <div className="container-fluid flex  flex-col justify-center p-2  border-gray-200 border-dashed rounded-lg   bg-white">
-        <h1 className="font-semibold text-3xl my-2 text-orange-700 ">Register Advisor</h1>
+        <h1 className="font-semibold text-3xl my-2 text-orange-700 ">
+          Register Advisor
+        </h1>
         <div className="relative w-full lg:w-full  p-0 lg:p-4 rounded-xl shadow-xl text-2xl  items-center mt-2 bg-slate-200">
-
           <div className="flex flex-wrap justify-between">
             {/* <div className="w-full lg:w-1/2 p-2 text-start"> */}
             <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
@@ -118,7 +119,8 @@ function AddAdvisors() {
                 className="input-style p-1 rounded-lg"
                 type="text"
                 value={advType}
-                onChange={(e) => setAdvType(e.target.value)}>
+                onChange={(e) => setAdvType(e.target.value)}
+              >
                 <option value="">------------ Select Payout -----------</option>
                 <option value="DAILY">Daily Payout</option>
                 <option value="MONTHLY">Monthly Payout</option>
@@ -133,7 +135,7 @@ function AddAdvisors() {
                 type="text"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="***********"
+                placeholder="**********"
               />
             </div>
             <div className="flex flex-col p-2 mt-1  text-start w-full lg:w-1/5"></div>
@@ -150,10 +152,9 @@ function AddAdvisors() {
               {loading ? "Submitting..." : "Submit"}
             </button>
           </div>
-
         </div>
       </div>
     </section>
-  )
+  );
 }
 export default AddAdvisors;

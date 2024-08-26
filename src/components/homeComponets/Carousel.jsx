@@ -38,7 +38,7 @@ const Carousel = () => {
             delay: 4000,
             disableOnInteraction: false,
           }}
-          className="container-fluid mb-3 w-full mt-3 xs:w-2/3 sm:w-3/4 md:w-3/4 lg:w-full xl:w-full"
+          className="container-fluid mb-3 border-8 border-black w-full mt-3 xs:w-2/3 sm:w-3/4 md:w-3/4 lg:w-full xl:w-full"
         >
           {APIData.map((obj, idx) => (
             <SwiperSlide key={idx}>

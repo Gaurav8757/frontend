@@ -9,7 +9,7 @@ function AddAdvisor() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
- 
+  const [ids, setIds] = useState("");
 
   const handleSubmit = async(e) => {
       e.preventDefault();
@@ -17,6 +17,7 @@ function AddAdvisor() {
       try {
         // Make sure to replace this URL with your actual API endpoint
         const response = await axios.post(`${VITE_DATA}/advisor/register`, {
+          uniqueIDS: ids,
          advisorname: name,
           advisoremail: email,
           advisormobile: mobile,
@@ -27,6 +28,7 @@ function AddAdvisor() {
     toast.success(`${response.data.status}`);
         // Reset the form and loading state on successful submission
         setEmail("");
+        setIds("");
         setMobile("");
         setPassword("");
         setName("");
@@ -52,6 +54,16 @@ function AddAdvisor() {
       <h1 className="font-semibold text-3xl mb-8 text-white dark:text-black ">Add Advisor</h1>
         <form className="flex flex-wrap ">
           <div className="w-full lg:w-1/2 p-2 text-start">
+          <div className="flex flex-col p-2 text-start w-full lg:w-1/5">
+              <label className="text-base mx-1">ID:</label>
+              <input
+                className="input-style p-1 rounded-lg"
+                type="text"
+                value={ids}
+                onChange={(e) => setIds(e.target.value.toUpperCase())}
+                placeholder="HJP, WB, PAT, MUZ"
+              />
+            </div>
           <div className="flex flex-col ">
               <label className="text-base mx-1">Name:</label>
               <input
