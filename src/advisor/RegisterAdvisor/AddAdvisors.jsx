@@ -19,7 +19,7 @@ function AddAdvisors() {
     try {
       // Make sure to replace this URL with your actual API endpoint
       const response = await axios.post(`${VITE_DATA}/advisor/register`, {
-        uniqueIDS: ids,
+        uniqueId: ids,
         advisorname: fname,
         advisoremail: email,
         advisormobile: mobile,

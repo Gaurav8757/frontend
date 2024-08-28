@@ -64,12 +64,12 @@ const HomeSection = ({ homesection }) => {
   };
 
   return (
-    <section className="container-fluid flex flex-col lg:flex-row justify-between  sm:w-full     bg-slate-100">
-      <div className="grid grid-cols-3 xs:grid-cols-2 sm:grid-cols-3  md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-2 justify-items-center w-full sm:w-full  md:w-full lg:w-full xl:w-full pb-0  bg-slate-100">
+    <section className="container-fluid flex flex-col lg:flex-row justify-between  sm:w-full     bg-slate-50">
+      <div className="grid grid-cols-3 xs:grid-cols-2 sm:grid-cols-3  md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-1 justify-items-center w-full sm:w-full  md:w-full lg:w-full xl:w-full pb-0  bg-slate-50 my-4">
         {homesection.map((item, index) => (
-          <NavLink key={index} to={item.links} className="text-center transition-transform transform hover:translate-y-[-15px] hover:shadow-2xl  shadow-slate-900/50   p-2  sm:w-52 w-32  rounded mx-8 mt-8">
-            <img src={item.images} alt={item.name} className="w-full mt-3 xs:w-2/3 sm:w-3/4 md:w-3/4 lg:w-full xl:w-full" />
-            <h5 className=" text-xl font-semibold tracking-tight align-text-bottom my-2 text-gray-900">
+          <NavLink key={index} to={item.links} className="text-center m-2 flex-col justify-center  bg-red-800 transition-transform transform hover:translate-y-[-15px] hover:shadow-2xl  shadow-slate-900/50   p-2  lg:w-52 md:w-48  sm:w-32 w-24  rounded  ">
+            <img src={item.images} alt={item.name} className="w-full xs:w-2/3 sm:w-3/4 md:w-3/4 lg:w-full xl:w-full  mx-auto" />
+            <h5 className=" xl:text-base lg:text-base md:text-base text-sm  font-semibold tracking-loose align-text-bottom my-0 text-gray-100 font-serif">
               {item.title}
             </h5>
           </NavLink>
@@ -77,11 +77,11 @@ const HomeSection = ({ homesection }) => {
       </div>
       {/* part-2 ui update bcha hai*/}
 
-      <div className="container-fluid  w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/3 bg-slate-100 flex border border-gray-300	 justify-center items-center">
-        <div className="bg-slate-100  text-start w-11/12 h-4/5 rounded-md">
-          <span className="text-2xl mx-5 font-semibold block">Enter Vehicle Number:</span>
+      <div className="container-fluid  w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/3 bg-slate-50 flex border-none border-gray-300	 justify-center items-center">
+        <div className="bg-slate-50  text-start w-11/12 h-4/5 rounded-md">
+          <span className="text-xl mx-1 font-semibold block font-serif">Enter Vehicle Number:</span>
           {/* input */}
-          <div className="relative flex mx-5 sm:mx-12 md:mx-12 lg:mx-5 xl:mx-6 justify-center mt-8 items-center">
+          <div className="relative flex mx-5 sm:mx-12 md:mx-12 lg:mx-5 xl:mx-6 justify-center mt-6 items-center">
             <input type="text" className={`relative w-full sm:w-full md:w-full lg:w-full xl:w-auto text-center flex justify-center text-3xl font-bold rounded-lg  
               `}
               value={vehicleNo}

@@ -23,12 +23,12 @@ const FourthCarousel = () => {
 
     return (
         <section className="container-fluid  bg-gradient-to-r from-white to-slate-100">
-            <div className="pt-10 p-2 pb-4 text-start  bg-gradient-to-r from-white to-slate-100">
+            <div className="xl:pt-4 p-2 pb-4 text-start  bg-gradient-to-r from-slate-100 to-slate-100">
                 <div className="col">
-                    <div className="text-3xl mx-6 font-medium">What Our Customers
+                    <div className="ml-2 text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-medium">What Our Customers
                         Are Saying
-                        <svg width="70" height="70" xmlns="http://www.w3.org/2000/svg" className="-mt-10 -ml-3">
-                            <line x1="10" y1="50" x2="90" y2="50" stroke="red" strokeWidth="4" />
+                        <svg width="70" height="70" xmlns="http://www.w3.org/2000/svg" className="-mt-10 -ml-2">
+                            <line x1="10" y1="40" x2="30" y2="40" stroke="red" strokeWidth="4" />
                         </svg>
                     </div>
                     <Swiper

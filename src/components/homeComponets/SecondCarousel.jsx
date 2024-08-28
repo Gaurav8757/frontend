@@ -11,13 +11,13 @@ import { NavLink } from 'react-router-dom';
 
 const SecondCarousel = ({ homesecondslider }) => {
   return (
-    <section className="container-fluid bg-slate-100 ">
-      <div className='pt-10 ml-2 mr-2 pb-10 items-center bg-slate-100'>
+    <section className="container-fluid bg-slate-50 ">
+      <div className='pt-10 ml-2 mr-2 pb-10 items-center bg-slate-50'>
         <Swiper
           // install Swiper modules
           modules={[Navigation, Pagination, Scrollbar, Autoplay]}
-          spaceBetween={5}
-          slidesPerView={4} // Adjust the number of slides per view based on screen size
+          spaceBetween={2}
+          slidesPerView={5} // Adjust the number of slides per view based on screen size
           // navigation
           pagination={{ clickable: true }}
           autoplay={{

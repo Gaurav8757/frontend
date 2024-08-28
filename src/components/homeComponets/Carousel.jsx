@@ -27,29 +27,37 @@ const Carousel = () => {
   }, []);
 
   return (
-    <section className="container-fluid max-w-md">
-      <Suspense fallback={null}>
-        <Swiper
-          modules={[Navigation, Pagination, Scrollbar, Autoplay]}
-          spaceBetween={3}
-          slidesPerView={1}
-          pagination={{ clickable: true }}
-          autoplay={{
-            delay: 4000,
-            disableOnInteraction: false,
-          }}
-          className="container-fluid mb-3 border-8 border-black w-full mt-3 xs:w-2/3 sm:w-3/4 md:w-3/4 lg:w-full xl:w-full"
-        >
-          {APIData.map((obj, idx) => (
-            <SwiperSlide key={idx}>
-              <NavLink to="#">
-                <img src={obj.usercarousel_upload} className="w-full" alt={`slide-${idx}`} loading="lazy" />
-              </NavLink>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Suspense>
-    </section>
+    <section className="flex justify-center container min-h-96">
+    <Suspense fallback={null}>
+      <Swiper
+        modules={[Navigation, Pagination, Scrollbar, Autoplay]}
+        spaceBetween={10}
+        slidesPerView={1}
+        pagination={{ clickable: true }}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
+        }}
+        className="container border-0 border-black max-h-fit  "
+      >
+        {APIData.map((obj, idx) => (
+          <SwiperSlide key={idx} className="flex justify-center min-w-screen-2xl">
+            <NavLink to="#" className="container-fluid  min-h-fit min-w-screen-2xl bg-contain bg-clip-border">
+              <img 
+                src={obj.usercarousel_upload}
+                // srcSet={`${obj.usercarousel_upload} 420w, ${obj.usercarousel_upload} 768w, ${obj.usercarousel_upload} 1200w`}
+                // sizes="(max-width: 420px) 280px, (max-width: 768px) 680px, (max-width: 1200px) 500px, 100vw"
+                className="brightness-100 contrast-125 bg-contain" 
+                alt={`slide-${idx}`}
+                loading="lazy" 
+              />
+            </NavLink>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </Suspense>
+  </section>
+  
   );
 };
 

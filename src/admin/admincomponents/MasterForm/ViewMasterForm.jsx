@@ -631,77 +631,178 @@ function ViewMasterForm() {
     exportMisToExcel();
   };
 
+  // const exportAdvisorWiseReconData = () => {
+  //   try {
+  //     const fileType =
+  //       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  //     const fileExtension = ".xlsx";
+  //     const fileName = `${name}_executive`;
+
+  //     // Map all data without filtering by current date
+  //     const dataToExports = filteredData.map((row) => {
+  //       return [
+  //         row.entryDate,
+  //         row.company,
+  //         row.policyNo,
+  //         row.insuredName,
+  //         row.vehRegNo,
+  //         row.makeModel,
+  //         row.odPremium,
+  //         row.liabilityPremium,
+  //         row.netPremium,
+  //         row.finalEntryFields,
+  //         row.advisorPayoutAmount,
+  //         row.cvpercentage,
+  //         row.advisorPayableAmount,
+  //       ];
+  //     });
+
+  //     // Get all table headers in the same order
+  //     const tableHeaders = [
+       
+  //       "Entry Date", // corresponds to row.entryDate
+  //       "Company Name", // corresponds to row.company
+  //       "Policy No", // corresponds to row.policyNo
+  //       "Insured Name", // corresponds to row.insuredName
+  //       "Vehicle Reg No", // corresponds to row.vehRegNo
+  //       "Make & Model", // corresponds to row.makeModel
+  //       "OD Premium", // corresponds to row.odPremium
+  //       "Liability Premium", // corresponds to row.liabilityPremium
+  //       "Net Premium", // corresponds to row.netPremium
+  //       "Final Amount", // corresponds to row.finalEntryFields
+  //       "Advisor Payout",
+  //       "Advisor Payout %",
+  //       "Advisor Payable Amount",
+  //       "CR",
+  //       "R.Balance",
+  //       "Payment Date",
+  //       "Payment Mode",
+  //       "CHQ/REF. NO.",
+  //       "Bank Name",
+  //     ];
+
+  //     // Create worksheet
+  //     const ws = XLSX.utils.aoa_to_sheet([tableHeaders, ...dataToExports]);
+  //     // Create workbook and export
+  //     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+  //     const excelBuffer = XLSX.write(wb, {
+  //       bookType: "xlsx",
+  //       type: "array",
+  //     });
+  //     const data = new Blob([excelBuffer], { type: fileType });
+  //     const url = URL.createObjectURL(data);
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.setAttribute("download", fileName + fileExtension);
+  //     document.body.appendChild(link);
+  //     link.click();
+  //   } catch (error) {
+  //     console.error("Error exporting to Excel:", error);
+  //     toast.error("Error exporting to Excel");
+  //   }
+  // };
+  // const handleAdvisorWiseReconData = () => {
+  //   exportAdvisorWiseReconData();
+  // };
+
   const exportAdvisorWiseReconData = () => {
     try {
-      const fileType =
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-      const fileExtension = ".xlsx";
-      const fileName = `${name}_executive`;
-      // Map all data without filtering by current date
-      const dataToExports = filteredData.map((row) => {
-        return [
-          row.entryDate,
-          row.company,
-          row.policyNo,
-          row.insuredName,
-          row.vehRegNo,
-          row.makeModel,
-          row.odPremium,
-          row.liabilityPremium,
-          row.netPremium,
-          row.finalEntryFields,
-          row.advisorPayoutAmount,
-          row.cvpercentage,
-          row.advisorPayableAmount,
+        const fileType =
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+        const fileExtension = ".xlsx";
+        const fileName = `${name}_executive`;
+
+        // Assuming you have a single row or consistent values for these fields
+        const advisorCode = filteredData[0]?.uniqueId || ""; // Get the Advisor Code from the data
+        const advisorName = filteredData[0]?.advisorName || ""; // Get the Advisor Name from the data
+        const branch = filteredData[0]?.branch || ""; // Get the Branch from the data
+        const month = filteredData[0]?.months || ""; // Get the Month from the data
+
+        // Map all data including the columns with their respective values
+        const dataToExports = filteredData.map((row) => {
+            return [
+                row.entryDate,
+                row.company,
+                row.policyNo,
+                row.insuredName,
+                row.vehRegNo,
+                row.makeModel,
+                row.odPremium,
+                row.liabilityPremium,
+                row.netPremium,
+                row.finalEntryFields,
+                row.advisorPayoutAmount,
+                row.cvpercentage,
+                row.advisorPayableAmount,
+            ];
+        });
+
+        // Include dynamic values in the headers
+        const tableHeaders = [
+            [
+                `Advisor Code: ${advisorCode}`,
+                "",
+                "",
+              
+                `Advisor Name: ${advisorName}`,
+                "",
+                "",
+               
+                `Month: ${month}`,
+                "",
+                `Branch: ${branch}`,
+            ],
+            [
+                "Entry Date",
+                "Company Name",
+                "Policy No",
+                "Insured Name",
+                "Vehicle Reg No",
+                "Make & Model",
+                "OD Premium",
+                "Liability Premium",
+                "Net Premium",
+                "Final Amount",
+                "Advisor Payout",
+                "Advisor Payout %",
+                "Advisor Payable Amount",
+            ]
         ];
-      });
 
-      // Get all table headers in the same order
-      const tableHeaders = [
-        "Entry Date", // corresponds to row.entryDate
-        "Company Name", // corresponds to row.company
-        "Policy No", // corresponds to row.policyNo
-        "Insured Name", // corresponds to row.insuredName
-        "Vehicle Reg No", // corresponds to row.vehRegNo
-        "Make & Model", // corresponds to row.makeModel
-        "OD Premium", // corresponds to row.odPremium
-        "Liability Premium", // corresponds to row.liabilityPremium
-        "Net Premium", // corresponds to row.netPremium
-        "Final Amount", // corresponds to row.finalEntryFields
-        "Advisor Payout",
-        "Advisor Payout %",
-        "Advisor Payable Amount",
-        "CR",
-        "R.Balance",
-        "Payment Date",
-        "Payment Mode",
-        "CHQ/REF. NO.",
-        "Bank Name",
-      ];
+        // Create worksheet
+        const ws = XLSX.utils.aoa_to_sheet([...tableHeaders, ...dataToExports]);
 
-      // Create worksheet
-      const ws = XLSX.utils.aoa_to_sheet([tableHeaders, ...dataToExports]);
-      // Create workbook and export
-      const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-      const excelBuffer = XLSX.write(wb, {
-        bookType: "xlsx",
-        type: "array",
-      });
-      const data = new Blob([excelBuffer], { type: fileType });
-      const url = URL.createObjectURL(data);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", fileName + fileExtension);
-      document.body.appendChild(link);
-      link.click();
+        // Adjust cell merging for header rows
+        ws["!merges"] = [
+            { s: { r: 0, c: 0 }, e: { r: 0, c: 4 } }, // Merge for "Advisor Code :"
+            { s: { r: 0, c: 5 }, e: { r: 0, c: 9 } }, // Merge for "Advisor Name :"
+            { s: { r: 0, c: 10 }, e: { r: 0, c: 11 } }, // Merge for "Month:"
+            { s: { r: 0, c: 12 }, e: { r: 0, c: 13 } } // Merge for "Branch:"
+        ];
+
+        // Create workbook and export
+        const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+        const excelBuffer = XLSX.write(wb, {
+            bookType: "xlsx",
+            type: "array",
+        });
+        const data = new Blob([excelBuffer], { type: fileType });
+        const url = URL.createObjectURL(data);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", fileName + fileExtension);
+        document.body.appendChild(link);
+        link.click();
     } catch (error) {
-      console.error("Error exporting to Excel:", error);
-      toast.error("Error exporting to Excel");
+        console.error("Error exporting to Excel:", error);
+        toast.error("Error exporting to Excel");
     }
-  };
-  const handleAdvisorWiseReconData = () => {
+};
+
+const handleAdvisorWiseReconData = () => {
     exportAdvisorWiseReconData();
-  };
+};
+
 
   // delete function
   const onDeleteAllData = async (_id) => {

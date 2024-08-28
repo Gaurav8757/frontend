@@ -6,12 +6,12 @@ const AdvantageModals = () => {
                 data-modal-target="static-modal1"
                 data-modal-toggle="static-modal1"
                 type="button"
-                className="relative inline-flex items-center justify-center sm:text-md text-lg overflow-hidden font-medium text-blue-500 rounded-full "
+                className="relative inline-flex items-center justify-center sm:text-md text-lg overflow-hidden font-medium text-red-800 rounded-full "
             >
                 <span className="relative text-lg w-24 my-1 ">
                     Know more
                     <svg width="30" height="70" xmlns="http://www.w3.org/2000/svg" className="-mt-14 -ml-2">
-            <line x1="10" y1="50" x2="90" y2="50" stroke="red" strokeWidth="2" />
+            <line x1="10" y1="55" x2="20" y2="55" stroke="red" strokeWidth="2" />
           </svg>
                 </span>
             </button>
@@ -24,18 +24,18 @@ const AdvantageModals = () => {
                 aria-hidden="true"
                 className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 inset-0 z-50 justify-center items-center w-full h-full bg-black bg-opacity-50"
             >
-                <div className="relative p-4 w-full max-w-6xl max-h-5xl mx-auto">
+                <div className="relative p-2 w-full max-w-6xl max-h-5xl mx-auto">
                     {/* <!-- Modal content --> */}
-                    <div className="relative bg-gradient-to-r from-blue-200 to-cyan-200 rounded-lg shadow dark:bg-slate-100">
+                    <div className="relative bg-red-800 rounded-lg shadow ">
                         {/* <!-- Modal header --> */}
-                        <div className="flex items-center justify-between p-2 md:p-3 rounded-t dark:border-gray-600">
-                            <h3 className="text-2xl font-semibold text-gray-800 dark:text-black">
+                        <div className="flex items-center justify-between p-2 rounded-t dark:border-gray-600">
+                            <h3 className="text-xl font-semibold text-white">
                             Buy Insurance at ELLEDOM IMF PVT LTD
                             </h3>
 
                             <button
                                 type="button"
-                                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                className="text-gray-900 bg-white hover:bg-red-200 hover:text-black rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-red-600 "
                                 data-modal-hide="static-modal1"
                             >
                                 <svg
@@ -46,7 +46,7 @@ const AdvantageModals = () => {
                                     viewBox="0 0 14 14"
                                 >
                                     <path
-                                        stroke="red"
+                                        stroke="black"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                         strokeWidth="2"
@@ -57,9 +57,9 @@ const AdvantageModals = () => {
                             </button>
                         </div>
                         {/* <!-- Modal body --> */}
-                        <section className="p-4 md:p-3 scroll-smooth hs-scroll-inside-viewport-modal max-h-auto text-justify   overflow-y-auto bg-gradient-to-r from-slate-100 to-white">
+                        <section className="m-2 rounded-md scroll-smooth hs-scroll-inside-viewport-modal max-h-auto text-justify   o bg-slate-200">
                           
-                            <p className="overflow-y-auto  pl-10 pr-10 pb-10">
+                            <p className="overflow-y-auto  px-5 py-4">
                                 Based out of Gurgaon, Haryana, ELLEDOM IMF PVT LTD is an insurance broker approved by IRDA of India. We offer an online platform for insurance buyers where they can easily compare different insurance policies such as car insurance, life insurance, two-wheeler insurance, term insurance, pension plans etc. They can make an informed choice in a matter of a single click that too from the comfort of their home.
 
                                 As the insurance sector has taken proactive measures upon the outbreak of COVID-19, ELLEDOM IMF PVT LTD is also offering Coronavirus term insurance and coronavirus health insurance.

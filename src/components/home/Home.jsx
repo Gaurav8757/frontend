@@ -9,10 +9,11 @@ import HomeSection5 from "../homeComponets/HomeSection5";
 import HomeSection6 from "../homeComponets/HomeSection6";
 import FourthCarousel from "../homeComponets/FourthCarousel";
 import OurPartners from "../homeComponets/OurPartners";
+// import Notice from "../notice/Notice";
 let homesection = [
     {
       title: "Health Insurance",
-      images: "/health.png",
+      images: "/h.png",
       links: "/healthinsurance",
       subItems: [
         {
@@ -30,12 +31,12 @@ let homesection = [
     },
     {
       title: "Motor Insurance",
-      images: "/Motor-Insurance.png",
+      images: "/m.png",
       links: "/motorinsurance",
     },
     {
       title: "Non-motor Insurance",
-      images: "/nonmotor.png",
+      images: "/nm.png",
       links: "/nonmotorinsurance",
     },
 
@@ -45,55 +46,66 @@ let homesection = [
 const buyalso = [{
     title: "Investment",
     name: "LIC Plans",
+    image: "/al1.png",
 },
 
 {
     title: "Term Life",
     name: "Return of Premium",
+    image: "/al2.png",
 },
 
 {
     title: "Term Life",
     name: "Life Insurance for Housewives",
+    image: "/al3.png",
 },
 {
     title: "Health Insurance",
     name: "Day 1 Coverage",
+    image: "/al4.png",
 },
 
 {
     title: "Health Insurance",
     name: "1 Cr Health Insurance",
+    image: "/al5.png",
 },
 
 {
     title: "Health Insurance",
     name: "Unlimited Restoration of Cover",
+    image: "/al6.png",
 },
 
 {
     title: "Business Insurance",
     name: "Marine Insurance",
+    image: "/al7.png",
 },
 
 {
     title: "Business Insurance",
     name: "Professional Indemnity for Doctors",
+    image: "/al8.png",
 },
 
 {
     title: "Business Insurance",
     name: "Directors & Officers Liability",
+    image: "/al9.png",
 },
 
 {
     title: "Business Insurance",
     name: "Workmen Compensation",
+    image: "/al10.png",
 },
 
 {
     title: "Others",
     name: "Pet Insurance",
+    image: "/al11.png",
 },
 ]
 
@@ -196,7 +208,9 @@ const Home = () => {
     return (<>
         
         <HomeHeading/>
+        {/* <Notice/> */}
         <HomeSection homesection={homesection} modal={listOfInsurance} homesecondslider={homesecondslider}/>
+        
         <Buyalso buyalso={buyalso} />
         <SecondCarousel homesecondslider={homesecondslider} />
         <HomeSection4/>
