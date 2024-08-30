@@ -134,10 +134,7 @@ const homesecondslider = [
         img: "/chalan.png",
         link:"https://echallan.parivahan.gov.in/index/accused-challan"
     },
-    // {
-    //     img: "/carousel1.png",
-    //     link:""
-    // }, 
+ 
     {
         img: "/carousel2.png",
         link:""
@@ -163,13 +160,13 @@ const homesecondslider = [
 
 const homethirdslider = [
     {
-        img: "/banner.avif"
+        img: "/b1.svg"
     }, 
     {
-        img: "/beware-of-fraudsters.avif"
+        img: "/b2.svg"
     },
     {
-        img: "/fraud_detection_policy.avif"
+        img: "/b3.svg"
     }, 
     {
         img: "/homepage-g20-banner.avif"
