@@ -129,7 +129,7 @@ function ViewCarousel() {
 
                                     return (
                                         <tr
-                                            className="border border-black text-sm font-medium"
+                                            className="border border-black text-sm font-medium "
                                             key={data._id}>
                                             <td className="whitespace-nowrap px-1 py-1 ">
                                                 {data.usercarousel_title}
@@ -141,7 +141,7 @@ function ViewCarousel() {
                                                 {data.usercarousel_link}
                                             </td>
 
-                                            <td className="whitespace-nowrap px-1 py-0.5">
+                                            <td className="whitespace-nowrap px-1 py-0.5 flex justify-center">
                                                 <img width={80} src={data.usercarousel_upload} alt="file" />
                                             </td>
 

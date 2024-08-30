@@ -8,9 +8,9 @@ const AdvantageModals = () => {
                 type="button"
                 className="relative inline-flex items-center justify-center sm:text-md text-lg overflow-hidden font-medium text-red-800 rounded-full "
             >
-                <span className="relative text-lg w-24 my-1 ">
+                <span className="relative sm:text-base text-sm  w-24 my-1 ">
                     Know more
-                    <svg width="30" height="70" xmlns="http://www.w3.org/2000/svg" className="-mt-14 -ml-2">
+                    <svg width="30" height="70" xmlns="http://www.w3.org/2000/svg" className="-mt-14 -ml-1">
             <line x1="10" y1="55" x2="20" y2="55" stroke="red" strokeWidth="2" />
           </svg>
                 </span>

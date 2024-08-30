@@ -36,7 +36,7 @@ const HomeHeading = () => {
     }, [fullText]);
 
     return <>
-            <div className="container-fluid flex justify-center items-center  bg-black  ">
+            <div className="container-fluid flex justify-center items-center  bg-black">
                 {/* part-1 */}
                 {/* <div className=" justify-center hidden sm:flex md:flex lg:flex xl:flex relative  ">
                     <div className='flex flex-col'>

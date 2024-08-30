@@ -27,7 +27,7 @@ const Carousel = () => {
   }, []);
 
   return (
-    <section className="flex justify-center container min-h-96">
+    <section className="flex justify-self-stretch container md:container-fluid min-h-auto min-w-7xl ">
     <Suspense fallback={null}>
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, Autoplay]}
@@ -38,16 +38,16 @@ const Carousel = () => {
           delay: 4000,
           disableOnInteraction: false,
         }}
-        className="container border-0 border-black max-h-fit  "
+        className="container-fluid border-0 border-black max-h-auto "
       >
         {APIData.map((obj, idx) => (
-          <SwiperSlide key={idx} className="flex justify-center min-w-screen-2xl">
-            <NavLink to="#" className="container-fluid  min-h-fit min-w-screen-2xl bg-contain bg-clip-border">
+          <SwiperSlide key={idx} className="flex justify-self-stretch  container-fluid">
+            <NavLink to="#" className="  container-fluid justify-self-stretch  ">
               <img 
                 src={obj.usercarousel_upload}
                 // srcSet={`${obj.usercarousel_upload} 420w, ${obj.usercarousel_upload} 768w, ${obj.usercarousel_upload} 1200w`}
                 // sizes="(max-width: 420px) 280px, (max-width: 768px) 680px, (max-width: 1200px) 500px, 100vw"
-                className="brightness-100 contrast-125 bg-contain" 
+                className="brightness-100 flex justify-items-stretch justify-self-stretch contrast-125 object-fill " 
                 alt={`slide-${idx}`}
                 loading="lazy" 
               />

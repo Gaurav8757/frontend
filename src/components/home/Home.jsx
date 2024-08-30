@@ -12,7 +12,7 @@ import OurPartners from "../homeComponets/OurPartners";
 // import Notice from "../notice/Notice";
 let homesection = [
     {
-      title: "Health Insurance",
+      title: "Health",
       images: "/h.png",
       links: "/healthinsurance",
       subItems: [
@@ -30,12 +30,12 @@ let homesection = [
       ],
     },
     {
-      title: "Motor Insurance",
+      title: "Motor",
       images: "/m.png",
       links: "/motorinsurance",
     },
     {
-      title: "Non-motor Insurance",
+      title: "Non-motor",
       images: "/nm.png",
       links: "/nonmotorinsurance",
     },
@@ -107,6 +107,11 @@ const buyalso = [{
     name: "Pet Insurance",
     image: "/al11.png",
 },
+{
+    title: "Commercial Insurance",
+    name: "Commercial Insurance",
+    image: "/al12.png",
+},
 ]
 
 const listOfInsurance = [
@@ -126,23 +131,31 @@ const homesecondslider = [
         link:"https://vahan.parivahan.gov.in/nrservices/faces/user/citizen/citizenlogin.xhtml"
     }, 
     {
-        img: "/chalan.jpg",
+        img: "/chalan.png",
         link:"https://echallan.parivahan.gov.in/index/accused-challan"
     },
     // {
-    //     img: "/carousel1.jpg",
+    //     img: "/carousel1.png",
     //     link:""
     // }, 
     {
-        img: "/carousel2.jpg",
+        img: "/carousel2.png",
         link:""
     },
     {
-        img: "/carousel3.jpg",
+        img: "/carousel3.png",
         link:""
     }, 
     {
-        img: "/carousel4.jpg",
+        img: "/carousel4.png",
+        link:""
+    },
+    {
+        img: "/carousel5.png",
+        link:""
+    }, 
+    {
+        img: "/carousel6.png",
         link:""
     }
 ]
@@ -186,16 +199,16 @@ const general = [{
     img: "/3.png"
 },
 {
-    img: "/4.jpg"
+    img: "/4.png"
 },
 {
     img: "/5.png"
 },{
-    img: "/8.png"
+    img: "/6.png"
 },{
     img: "/7.png"
 },{
-    img: "/9.png"
+    img: "/8.png"
 },
 
 

@@ -1,4 +1,4 @@
-// import { useState } from "react";
+
 import Footers from "../footer/Footers.jsx";
 import Footer from "../footer/Footer2.jsx";
 import PaymentFooter from "../footer/PaymentFooter.jsx";
@@ -52,11 +52,12 @@ function App() {
     
     
   ];
-
+  
 
   return (
     <>
-      <Navbar navigation = {navigation} />
+      <Navbar 
+        navigation = {navigation} />
       <Outlet/>
       <Footers/>
       <Footer footer = {navigation}/>

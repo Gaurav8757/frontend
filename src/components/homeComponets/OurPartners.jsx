@@ -30,7 +30,7 @@ const OurPartners = ({ general, health }) => {
               }}
               className='container-fluid px-4 hidden md:block xl:hidden'>
               {health.map((obj, idx) => (
-                <SwiperSlide className='border-4 border-red-800' key={idx}>
+                <SwiperSlide className='border-1 border-red-800' key={idx}>
                   <NavLink to="#">
                     <img src={obj.img} className='w-full rounded-xl' alt={`slide-${idx}`} />
                   </NavLink>
@@ -49,7 +49,7 @@ const OurPartners = ({ general, health }) => {
               }}
               className='container-fluid hidden lg:block xl:block px-4'>
               {health.map((obj, idx) => (
-                <SwiperSlide className='border-4 border-red-800' key={idx}>
+                <SwiperSlide className='border-1 border-red-800' key={idx}>
                   <NavLink to="#">
                     <img src={obj.img} className='w-full rounded-xl' alt={`slide-${idx}`} />
                   </NavLink>
@@ -68,7 +68,7 @@ const OurPartners = ({ general, health }) => {
               }}
               className='container-fluid px-4 block sm:block md:hidden lg:hidden xl:hidden'>
               {health.map((obj, idx) => (
-                <SwiperSlide className='border-4 border-red-800' key={idx}>
+                <SwiperSlide className='border-1 border-red-800' key={idx}>
                   <NavLink to="#">
                     <img src={obj.img} className='w-full rounded-xl' alt={`slide-${idx}`} />
                   </NavLink>
