@@ -179,12 +179,12 @@ const homethirdslider = [
 
 
 const Health = [{
-    img: "/h1.png"
+    img: "/h1.svg"
 },{
-    img: "/h3.png"
+    img: "/h3.svg"
 },
 {
-    img: "/h2.png"
+    img: "/h2.svg"
 }]
 
 

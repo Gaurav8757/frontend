@@ -6,19 +6,19 @@ function HealthInsurance() {
   const sublinks = [
     {
       subtitle: "Health Insurance",
-      image: "/heart.png",
+      image: "/he1.svg",
       link: "/healthinsurance",
       sublink: "/healthinsurance/health"
     },
       {
         subtitle: "Family Health Insurance",
-        image: "/family.png",
+        image: "/he2.svg",
         link: "/familyhealthinsurance",
         sublink: "/healthinsurance/health2"
       },
       {
         subtitle: "Employee Group Health Insurance",
-        image: "/group.png",
+        image: "/he3.svg",
         link: "/grouphealthinsurance",
         sublink: "/healthinsurance/health3"
       },
