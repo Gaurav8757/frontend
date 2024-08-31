@@ -707,50 +707,48 @@ function ViewMasterForm() {
 
   const exportAdvisorWiseReconData = () => {
     try {
-        const fileType =
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+        const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
         const fileExtension = ".xlsx";
         const fileName = `${name}_executive`;
 
-        // Assuming you have a single row or consistent values for these fields
-        const advisorCode = filteredData[0]?.uniqueId || ""; // Get the Advisor Code from the data
-        const advisorName = filteredData[0]?.advisorName || ""; // Get the Advisor Name from the data
-        const branch = filteredData[0]?.branch || ""; // Get the Branch from the data
-        const month = filteredData[0]?.months || ""; // Get the Month from the data
+        // Check if filteredData is not empty
+        if (!filteredData.length) {
+            throw new Error("No data available to export.");
+        }
 
-        // Map all data including the columns with their respective values
-        const dataToExports = filteredData.map((row) => {
-            return [
-                row.entryDate,
-                row.company,
-                row.policyNo,
-                row.insuredName,
-                row.vehRegNo,
-                row.makeModel,
-                row.odPremium,
-                row.liabilityPremium,
-                row.netPremium,
-                row.finalEntryFields,
-                row.advisorPayoutAmount,
-                row.cvpercentage,
-                row.advisorPayableAmount,
-            ];
-        });
+        // Get the Advisor details from the first data item
+        const advisorCode = filteredData[0]?.advId || ""; // Advisor Code
+        const advisorNames = filteredData[0]?.advisorName || ""; // Advisor Name
+        const branch = filteredData[0]?.branch || ""; // Branch
 
-        // Include dynamic values in the headers
+        // Prepare data to export
+        const dataToExports = filteredData.map((row) => [
+            row.entryDate,
+            row.company,
+            row.policyNo,
+            row.insuredName,
+            row.vehRegNo,
+            row.makeModel,
+            row.productCode,
+            row.odPremium,
+            row.liabilityPremium,
+            row.netPremium,
+            row.finalEntryFields,
+            row.advisorPayoutAmount,
+            row.cvpercentage,
+            row.advisorPayableAmount,
+        ]);
+
+        // Define table headers
         const tableHeaders = [
             [
                 `Advisor Code: ${advisorCode}`,
-                "",
-                "",
-              
-                `Advisor Name: ${advisorName}`,
-                "",
-                "",
-               
-                `Month: ${month}`,
-                "",
+                 // Placeholder cells to ensure merging spans correctly
+                `Advisor Name: ${advisorNames}`,
+                // Placeholder cells to ensure merging spans correctly
                 `Branch: ${branch}`,
+                 // Placeholder cells to ensure merging spans correctly
+                 ""
             ],
             [
                 "Entry Date",
@@ -759,6 +757,7 @@ function ViewMasterForm() {
                 "Insured Name",
                 "Vehicle Reg No",
                 "Make & Model",
+                "Product Code",
                 "OD Premium",
                 "Liability Premium",
                 "Net Premium",
@@ -766,6 +765,10 @@ function ViewMasterForm() {
                 "Advisor Payout",
                 "Advisor Payout %",
                 "Advisor Payable Amount",
+                "Link Payment",
+                "DR",
+                "CR",
+                "Running Balance"
             ]
         ];
 
@@ -774,18 +777,36 @@ function ViewMasterForm() {
 
         // Adjust cell merging for header rows
         ws["!merges"] = [
-            { s: { r: 0, c: 0 }, e: { r: 0, c: 4 } }, // Merge for "Advisor Code :"
-            { s: { r: 0, c: 5 }, e: { r: 0, c: 9 } }, // Merge for "Advisor Name :"
-            { s: { r: 0, c: 10 }, e: { r: 0, c: 11 } }, // Merge for "Month:"
-            { s: { r: 0, c: 12 }, e: { r: 0, c: 13 } } // Merge for "Branch:"
+            { s: { r: 0, c: 0 }, e: { r: 0, c: 0 } }, // Merge for "Advisor Code:"
+            { s: { r: 0, c: 0 }, e: { r: 0, c: 6 } }, // Merge for "Advisor Name:"
+            { s: { r: 0, c: 6 }, e: { r: 0, c: 8 } }, // Merge for "Branch:"
+        ];
+
+        // Optional: Adjust column widths to make sure all content is visible
+        ws["!cols"] = [
+            { wpx: 150 }, // Adjust as needed
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
         ];
 
         // Create workbook and export
         const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-        const excelBuffer = XLSX.write(wb, {
-            bookType: "xlsx",
-            type: "array",
-        });
+        const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
         const data = new Blob([excelBuffer], { type: fileType });
         const url = URL.createObjectURL(data);
         const link = document.createElement("a");
@@ -793,6 +814,7 @@ function ViewMasterForm() {
         link.setAttribute("download", fileName + fileExtension);
         document.body.appendChild(link);
         link.click();
+        document.body.removeChild(link); // Clean up
     } catch (error) {
         console.error("Error exporting to Excel:", error);
         toast.error("Error exporting to Excel");

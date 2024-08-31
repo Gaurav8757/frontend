@@ -102,7 +102,7 @@ const SidebarFinance = () => {
                   </button>
                 </div>
                 <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
-                  <div className="px-4 py-3" role="none">
+                  <div className="px- py-3" role="none">
                     <p className="text-sm text-gray-900 dark:text-white" role="none">
                       {name}
                     </p>
@@ -148,11 +148,11 @@ const SidebarFinance = () => {
                     <NavLink
                       to={route.path}
                       onClick={() => toggleSubmenu(idx)}
-                      className={`flex items-center p-2  rounded-lg text-white hover:bg-slate-800 group ${openSubmenu === idx ? "bg-gray-700" : ""}`}
+                      className={`flex items-center py-1  rounded text-white hover:bg-slate-800 group ${openSubmenu === idx ? "bg-gray-700" : ""}`}
                     >
                       <span className="">{route.logo}</span>
                       <span className="ms-2 text-sm flex whitespace-nowrap">{route.title}
-                      <img src="/chivron.png" height={1} width={8} className="my-auto mx-2" alt="dropdown"/>
+                      <img src="/chivron.png" height={1} width={8} className="my-auto ml-2" alt="dropdown"/>
                       </span>
                     </NavLink>
                     <ul
@@ -164,7 +164,7 @@ const SidebarFinance = () => {
                         <li key={subIdx}>
                           <NavLink
                             to={subRoute.path}
-                            className="flex p-2 text-white text-start  text-sm hover:rounded-xl hover:bg-slate-800"
+                            className="flex py-2 text-white text-start  text-sm hover:rounded-xl hover:bg-slate-800"
                           >
                              <img src="/chivron1.png" height={1} width={8} className="my-auto mx-2" alt="right"/>
                             {subRoute.title}
@@ -175,7 +175,7 @@ const SidebarFinance = () => {
                   </div>
                 ) : (
                   // Render regular route without sub-routes
-                  <NavLink to={route.path} className="flex items-center p-2 rounded-lg text-white  hover:bg-slate-800 group">
+                  <NavLink to={route.path} className="flex items-center py-1 rounded-lg text-white  hover:bg-slate-800 group">
                     <span className="">{route.logo}</span>
                     <span className="ms-2 text-sm">{route.title}</span>
                   </NavLink>

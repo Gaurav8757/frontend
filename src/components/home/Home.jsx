@@ -169,10 +169,10 @@ const homethirdslider = [
         img: "/b3.svg"
     }, 
     {
-        img: "/homepage-g20-banner.avif"
+        img: "/b4.svg"
     }, 
     {
-        img: "/pbaskci_banner_1.avif"
+        img: "/b5.svg"
     }
 ]
 
