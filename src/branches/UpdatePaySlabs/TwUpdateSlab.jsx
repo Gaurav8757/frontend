@@ -324,10 +324,12 @@ function TwUpdateSlab({ slab, update, onClose, onClicks }) {
   };
 
   const renderOptions = () => {
-    if (["GCCV 12><20", "GCCV 20><45", "GCCV >45"].includes(slab.pcodes)) {
+    if (["GCCV 12><20", "GCCV 20><45", "GCCV >43", "GCCV >45", "GCCV 20><40"].includes(slab.pcodes)) {
       return (
         <>
           <option value="NEW">NEW</option>
+          <option value=" LESS THAN 5 YEARS">{"<5 Years"}</option>
+          <option value="MORE THAN 5 YEARS">{">5 Years"}</option>
           <option value="1-7 YEARS">1-7 Years</option>
           <option value="MORE THAN 7 YEARS">{">7 Years"}</option>
         </>
@@ -378,7 +380,7 @@ else{
               {/* <!-- Modal header --> */}
               <div className="flex items-center justify-between p-2 md:p-3 rounded-lg dark:border-gray-600">
                 <h3 className="text-xl font-semibold text-gray-100">
-                  Update Payout Slab
+                  Update Payout Grid
                 </h3>
                 <button
                   onClick={onClose}

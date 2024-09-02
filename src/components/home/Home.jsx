@@ -35,11 +35,15 @@ let homesection = [
       links: "/motorinsurance",
     },
     {
-      title: "Non-motor",
+      title: "Non-Motor",
       images: "/nm.png",
       links: "/nonmotorinsurance",
     },
-
+    {
+        title: "Life ",
+        images: "/li.png",
+        links: "#",
+      },
 ]
 
 // buyalso

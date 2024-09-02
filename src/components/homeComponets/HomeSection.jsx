@@ -65,9 +65,9 @@ const HomeSection = ({ homesection }) => {
 
   return (
     <section className="container-fluid flex flex-col lg:flex-row justify-between  sm:w-full     bg-slate-50">
-      <div className="grid grid-cols-3 xs:grid-cols-2 sm:grid-cols-3  md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-1 justify-items-center w-full sm:w-full  md:w-full lg:w-full xl:w-full pb-0  bg-slate-50 my-4">
+      <div className="grid grid-cols-4 xs:grid-cols-2 gap-1 justify-items-center w-full sm:w-full  md:w-full lg:w-full xl:w-full pb-0  bg-slate-50 my-4">
         {homesection.map((item, index) => (
-          <NavLink key={index} to={item.links} className="text-center m-2 flex-col justify-center  bg-red-800 transition-transform transform hover:translate-y-[-15px] hover:shadow-2xl  shadow-slate-900/50   p-2  lg:w-52 md:w-48  sm:w-32 w-24  rounded  ">
+          <NavLink key={index} to={item.links} className="text-center m-1  flex-col justify-center  bg-red-800 transition-transform transform hover:translate-y-[-15px] hover:shadow-2xl  shadow-slate-900/50   p-2  lg:w-52 md:w-48  sm:w-32 w-24  rounded  ">
             <img src={item.images} alt={item.name} className="w-full xs:w-2/3 sm:w-3/4 md:w-3/4 lg:w-full xl:w-full  mx-auto" />
             <h5 className=" xl:text-base lg:text-base md:text-base text-sm  font-semibold tracking-loose align-text-bottom my-0 text-gray-100 font-serif">
               {item.title}
