@@ -270,22 +270,16 @@ function ViewFinance() {
     exportToExcel();
   };
 
+ 
   const exportAdvisorWiseReconData = () => {
     try {
         const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
         const fileExtension = ".xlsx";
         const fileName = `${name}_executive`;
-
         // Check if filteredData is not empty
         if (!filteredData.length) {
             throw new Error("No data available to export.");
         }
-
-        // Get the Advisor details from the first data item
-        const advisorCode = filteredData[0]?.advId || ""; // Advisor Code
-        const advisorNames = filteredData[0]?.advisorName || ""; // Advisor Name
-        const branch = filteredData[0]?.branch || ""; // Branch
-
         // Prepare data to export
         const dataToExports = filteredData.map((row) => [
             row.entryDate,
@@ -295,27 +289,26 @@ function ViewFinance() {
             row.vehRegNo,
             row.makeModel,
             row.productCode,
+            row.branch,
+            row.advId,
+            row.advisorName,
             row.odPremium,
             row.liabilityPremium,
             row.netPremium,
             row.finalEntryFields,
-            row.advisorPayoutAmount,
             row.cvpercentage,
+            row.advisorPayoutAmount,
             row.advisorPayableAmount,
+            row.dr || "",
+            row.cr || "",
+            row.runningBalance || "",
+            row.policyPaymentMode,
+            row.payDate || "",
+            row.remarks || ""
         ]);
 
         // Define table headers
         const tableHeaders = [
-            [
-            
-                `Advisor Code: ${advisorCode}`,
-                 // Placeholder cells to ensure merging spans correctly
-                `Advisor Name: ${advisorNames}`,
-                // Placeholder cells to ensure merging spans correctly
-                `Branch: ${branch}`,
-                 // Placeholder cells to ensure merging spans correctly
-                 ""
-            ],
             [
                 "Entry Date",
                 "Company Name",
@@ -324,31 +317,26 @@ function ViewFinance() {
                 "Vehicle Reg No",
                 "Make & Model",
                 "Product Code",
+                "Branch",
+                "Advisor ID",
+                "Advisor Name",
                 "OD Premium",
                 "Liability Premium",
                 "Net Premium",
                 "Final Amount",
-                "Advisor Payout",
                 "Advisor Payout %",
+                "Advisor Payout",
                 "Advisor Payable Amount",
-                "Link Payment",
                 "DR",
                 "CR",
-                "Running Balance"
+                "Running Balance",
+                "Payment Mode",
+                "Payment Date",
+                "Remarks"
             ]
         ];
-
         // Create worksheet
         const ws = XLSX.utils.aoa_to_sheet([...tableHeaders, ...dataToExports]);
-
-        // Adjust cell merging for header rows
-        ws["!merges"] = [
-            { s: { r: 0, c: 0 }, e: { r: 0, c: 0 } }, // Merge for "Advisor Code:"
-            { s: { r: 0, c: 0 }, e: { r: 0, c: 6 } }, // Merge for "Advisor Name:"
-            { s: { r: 0, c: 6 }, e: { r: 0, c: 8 } }, // Merge for "Branch:"
-        ];
-
-        // Optional: Adjust column widths to make sure all content is visible
         ws["!cols"] = [
             { wpx: 150 }, // Adjust as needed
             { wpx: 150 },
@@ -368,8 +356,12 @@ function ViewFinance() {
             { wpx: 150 },
             { wpx: 150 },
             { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
         ];
-
         // Create workbook and export
         const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
         const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
@@ -386,7 +378,6 @@ function ViewFinance() {
         toast.error("Error exporting to Excel");
     }
 };
-
 const handleAdvisorWiseReconData = () => {
     exportAdvisorWiseReconData();
 };

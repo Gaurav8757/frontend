@@ -631,96 +631,15 @@ function ViewMasterForm() {
     exportMisToExcel();
   };
 
-  // const exportAdvisorWiseReconData = () => {
-  //   try {
-  //     const fileType =
-  //       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-  //     const fileExtension = ".xlsx";
-  //     const fileName = `${name}_executive`;
-
-  //     // Map all data without filtering by current date
-  //     const dataToExports = filteredData.map((row) => {
-  //       return [
-  //         row.entryDate,
-  //         row.company,
-  //         row.policyNo,
-  //         row.insuredName,
-  //         row.vehRegNo,
-  //         row.makeModel,
-  //         row.odPremium,
-  //         row.liabilityPremium,
-  //         row.netPremium,
-  //         row.finalEntryFields,
-  //         row.advisorPayoutAmount,
-  //         row.cvpercentage,
-  //         row.advisorPayableAmount,
-  //       ];
-  //     });
-
-  //     // Get all table headers in the same order
-  //     const tableHeaders = [
-       
-  //       "Entry Date", // corresponds to row.entryDate
-  //       "Company Name", // corresponds to row.company
-  //       "Policy No", // corresponds to row.policyNo
-  //       "Insured Name", // corresponds to row.insuredName
-  //       "Vehicle Reg No", // corresponds to row.vehRegNo
-  //       "Make & Model", // corresponds to row.makeModel
-  //       "OD Premium", // corresponds to row.odPremium
-  //       "Liability Premium", // corresponds to row.liabilityPremium
-  //       "Net Premium", // corresponds to row.netPremium
-  //       "Final Amount", // corresponds to row.finalEntryFields
-  //       "Advisor Payout",
-  //       "Advisor Payout %",
-  //       "Advisor Payable Amount",
-  //       "CR",
-  //       "R.Balance",
-  //       "Payment Date",
-  //       "Payment Mode",
-  //       "CHQ/REF. NO.",
-  //       "Bank Name",
-  //     ];
-
-  //     // Create worksheet
-  //     const ws = XLSX.utils.aoa_to_sheet([tableHeaders, ...dataToExports]);
-  //     // Create workbook and export
-  //     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-  //     const excelBuffer = XLSX.write(wb, {
-  //       bookType: "xlsx",
-  //       type: "array",
-  //     });
-  //     const data = new Blob([excelBuffer], { type: fileType });
-  //     const url = URL.createObjectURL(data);
-  //     const link = document.createElement("a");
-  //     link.href = url;
-  //     link.setAttribute("download", fileName + fileExtension);
-  //     document.body.appendChild(link);
-  //     link.click();
-  //   } catch (error) {
-  //     console.error("Error exporting to Excel:", error);
-  //     toast.error("Error exporting to Excel");
-  //   }
-  // };
-  // const handleAdvisorWiseReconData = () => {
-  //   exportAdvisorWiseReconData();
-  // };
-
   const exportAdvisorWiseReconData = () => {
     try {
         const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
         const fileExtension = ".xlsx";
         const fileName = `${name}_executive`;
-
         // Check if filteredData is not empty
         if (!filteredData.length) {
             throw new Error("No data available to export.");
         }
-
-        // Get the Advisor details from the first data item
-        const advisorCode = filteredData[0]?.advId || ""; // Advisor Code
-        const advisorNames = filteredData[0]?.advisorName || ""; // Advisor Name
-        const branch = filteredData[0]?.branch || ""; // Branch
-
         // Prepare data to export
         const dataToExports = filteredData.map((row) => [
             row.entryDate,
@@ -730,26 +649,26 @@ function ViewMasterForm() {
             row.vehRegNo,
             row.makeModel,
             row.productCode,
+            row.branch,
+            row.advId,
+            row.advisorName,
             row.odPremium,
             row.liabilityPremium,
             row.netPremium,
             row.finalEntryFields,
-            row.advisorPayoutAmount,
             row.cvpercentage,
+            row.advisorPayoutAmount,
             row.advisorPayableAmount,
+            row.dr || "",
+            row.cr || "",
+            row.runningBalance || "",
+            row.policyPaymentMode,
+            row.payDate || "",
+            row.remarks || ""
         ]);
 
         // Define table headers
         const tableHeaders = [
-            [
-                `Advisor Code: ${advisorCode}`,
-                 // Placeholder cells to ensure merging spans correctly
-                `Advisor Name: ${advisorNames}`,
-                // Placeholder cells to ensure merging spans correctly
-                `Branch: ${branch}`,
-                 // Placeholder cells to ensure merging spans correctly
-                 ""
-            ],
             [
                 "Entry Date",
                 "Company Name",
@@ -758,31 +677,26 @@ function ViewMasterForm() {
                 "Vehicle Reg No",
                 "Make & Model",
                 "Product Code",
+                "Branch",
+                "Advisor ID",
+                "Advisor Name",
                 "OD Premium",
                 "Liability Premium",
                 "Net Premium",
                 "Final Amount",
-                "Advisor Payout",
                 "Advisor Payout %",
+                "Advisor Payout",
                 "Advisor Payable Amount",
-                "Link Payment",
                 "DR",
                 "CR",
-                "Running Balance"
+                "Running Balance",
+                "Payment Mode",
+                "Payment Date",
+                "Remarks"
             ]
         ];
-
         // Create worksheet
         const ws = XLSX.utils.aoa_to_sheet([...tableHeaders, ...dataToExports]);
-
-        // Adjust cell merging for header rows
-        ws["!merges"] = [
-            { s: { r: 0, c: 0 }, e: { r: 0, c: 0 } }, // Merge for "Advisor Code:"
-            { s: { r: 0, c: 0 }, e: { r: 0, c: 6 } }, // Merge for "Advisor Name:"
-            { s: { r: 0, c: 6 }, e: { r: 0, c: 8 } }, // Merge for "Branch:"
-        ];
-
-        // Optional: Adjust column widths to make sure all content is visible
         ws["!cols"] = [
             { wpx: 150 }, // Adjust as needed
             { wpx: 150 },
@@ -802,8 +716,12 @@ function ViewMasterForm() {
             { wpx: 150 },
             { wpx: 150 },
             { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
+            { wpx: 150 },
         ];
-
         // Create workbook and export
         const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
         const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
@@ -820,7 +738,6 @@ function ViewMasterForm() {
         toast.error("Error exporting to Excel");
     }
 };
-
 const handleAdvisorWiseReconData = () => {
     exportAdvisorWiseReconData();
 };
