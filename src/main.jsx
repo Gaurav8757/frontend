@@ -204,6 +204,7 @@ import VisitDaily from "./Employee/DailyVisitReport/VisitDaily.jsx";
 import ViewDailyVisit from "./Employee/DailyVisitReport/ViewDailyVisit.jsx";
 import VisitReport from "./admin/admincomponents/VisitReport/VisitReport.jsx";
 import Dvr from "./branches/DVR/Dvr.jsx";
+import ReconAdvisor from "./admin/admincomponents/MasterForm/ReconAdvisor/ReconAdvisor.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -325,7 +326,7 @@ const router = createBrowserRouter(
           <Route path="/dashboard/cic/indorshment" element={<ViewIndorsh/>} />
           <Route path="/dashboard/cic/cancelation" element={<ViewCancelation/>} />
           <Route path="/dashboard/daily/visits/view" element={<VisitReport/>} />
-          
+          <Route path="/dashboard/recon/adv/advis" element={<ReconAdvisor/>} />
         </Route>
       </Route>
 

@@ -270,8 +270,13 @@ function ViewFinance() {
     exportToExcel();
   };
 
- 
-  const exportAdvisorWiseReconData = () => {
+
+
+
+  
+
+
+const exportAdvisorWiseReconData = () => {
     try {
         const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
         const fileExtension = ".xlsx";
@@ -280,8 +285,9 @@ function ViewFinance() {
         if (!filteredData.length) {
             throw new Error("No data available to export.");
         }
+
         // Prepare data to export
-        const dataToExports = filteredData.map((row) => [
+        const dataToExports = filteredData.map(row => [
             row.entryDate,
             row.company,
             row.policyNo,
@@ -337,33 +343,13 @@ function ViewFinance() {
         ];
         // Create worksheet
         const ws = XLSX.utils.aoa_to_sheet([...tableHeaders, ...dataToExports]);
-        ws["!cols"] = [
-            { wpx: 150 }, // Adjust as needed
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-            { wpx: 150 },
-        ];
+        // Auto-size columns based on content
+        const colWidths = tableHeaders[0].map((_, i) => ({ wpx: Math.max(...dataToExports.map(row => row[i] ? row[i].toString().length : 0)) * 8 + 50 }));
+        ws["!cols"] = colWidths;
+
         // Create workbook and export
-        const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Data");
         const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
         const data = new Blob([excelBuffer], { type: fileType });
         const url = URL.createObjectURL(data);
@@ -378,9 +364,14 @@ function ViewFinance() {
         toast.error("Error exporting to Excel");
     }
 };
+
 const handleAdvisorWiseReconData = () => {
     exportAdvisorWiseReconData();
 };
+
+
+
+
 
 
 

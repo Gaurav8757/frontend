@@ -136,7 +136,6 @@ const Sidebar = () => {
       // logo: <FaMoneyBill size={25} />,
       logo: <img src="/account.png" height={5} width={25} alt="leger"/>,
       subRoutes: [
-
         // {
         //   title: "Daily Leger",
         //   path: "/dashboard/ledger1",
@@ -158,6 +157,12 @@ const Sidebar = () => {
     {
       title: "View DVR",
       path: "/dashboard/daily/visits/view",
+      // logo: <CgProfile size={24} />,
+      logo: <img src="/tablet.png" height={5} width={25} alt="tablet"/>
+    },
+    {
+      title: "Recon Data",
+      path: "/dashboard/recon/adv/advis",
       // logo: <CgProfile size={24} />,
       logo: <img src="/tablet.png" height={5} width={25} alt="tablet"/>
     },
