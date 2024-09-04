@@ -152,7 +152,7 @@ function IndorshUpdate({ data, update, onClose }) {
                                     {/* FIELD - 6 */}
                                     <div className="flex flex-col  p-1 text-start  lg:w-1/6 w-1/2">
                                         <label htmlFor='regNo' className="text-base  mx-1 ">Reg. No:</label>
-                                        <input id='regNo' className="input-style p-1  rounded" type="number" name="regNo" value={formData.regNo} onChange={handleChange} placeholder="Reg. No" />
+                                        <input id='regNo' className="input-style p-1  rounded" type="text" name="regNo" value={formData.regNo} onChange={handleChange} placeholder="Reg. No" />
                                     </div>
                                     {/* FIELD - 7 */}
                                     <div className="flex flex-col  p-1 text-start  lg:w-1/6 w-1/2">
@@ -168,19 +168,20 @@ function IndorshUpdate({ data, update, onClose }) {
                                         <label htmlFor='subTypeIndo' className="text-base  mx-1 ">SubType Indorshment:</label>
                                         <select id='subTypeIndo' className="input-style p-1 ps-2 rounded" type="text" name="subTypeIndo" value={formData.subTypeIndo} onChange={handleChange} placeholder="SubType Indorshment">
                                             <option value=""> Select SubType Indorshment </option>
-                                            <option value="HYPOTHICATION">HYPOTHICATION</option>
-                                            <option value="ENGINE">ENGINE</option>
-                                            <option value="CHASSIS">CHASSIS</option>
-                                            <option value="INSURED NAME">INSURED NAME</option>
                                             <option value="ADDRESS CORRECTION">ADDRESS CORRECTION</option>
                                             <option value="CC">CC</option>
-                                            <option value="MAKE MODEL">MAKE MODEL</option>
-                                            <option value="REG. NO CORRECTION">REG. NO CORRECTION</option>
-                                            <option value="NOMINEE">NOMINEE</option>
-                                            <option value="MOBILE">MOBILE</option>
-                                            <option value="EMAIL ID">EMAIL ID</option>
-                                            <option value="IDV">IDV</option>
+                                            <option value="CHASSIS">CHASSIS</option>
                                             <option value="COVARAGE INCLUSION">COVARAGE INCLUSION</option>
+                                            <option value="ENGINE">ENGINE</option>
+                                            <option value="EMAIL ID">EMAIL ID</option>
+                                            <option value="HYPOTHICATION">HYPOTHICATION</option>
+                                            <option value="INSURED NAME">INSURED NAME</option>
+                                            <option value="IDV">IDV</option>
+                                            <option value="MAKE MODEL">MAKE MODEL</option>
+                                            <option value="MOBILE">MOBILE</option>
+                                            <option value="NAME TRANSFER">NAME TRANSFER</option>
+                                            <option value="NOMINEE">NOMINEE</option>
+                                            <option value="REG. NO CORRECTION">REG. NO CORRECTION</option> 
                                         </select>
                                     </div>
                                     {/* FIELD - 9 */}
