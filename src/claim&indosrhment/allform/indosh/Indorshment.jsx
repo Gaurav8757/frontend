@@ -183,6 +183,7 @@ const formatDate = (dateString) => {
                 <option value="MAKE MODEL">MAKE MODEL</option>
                 <option value="MOBILE">MOBILE</option>
                 <option value="NAME TRANSFER">NAME TRANSFER</option>
+                <option value="NCB RECOVERY">NCB RECOVERY</option>
                 <option value="NOMINEE">NOMINEE</option>
                 <option value="REG. NO CORRECTION">REG. NO CORRECTION</option> 
               </select>
