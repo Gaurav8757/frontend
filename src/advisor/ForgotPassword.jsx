@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 function ForgotPassword() {
   return (
     <>
-    <section className="container-fluid h-screen relative bg-orange-500">
-      <div className="container-fluid pt-5 flex flex-col md:flex-row items-center  justify-between bg-orange-500">
+    <section className="container-fluid h-screen relative bg-blue-600">
+      <div className="container-fluid pt-5 flex flex-col md:flex-row items-center  justify-between bg-blue-600">
         <div className="flex-shrink-4  mx-20 mt-16  md:h-full h-full pb-40">
           <img
             src="/forgot.webp"

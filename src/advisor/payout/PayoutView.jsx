@@ -111,12 +111,12 @@ function PayoutView() {
     // exportToPDF();
   };
   return (
-    <section className="container-fluid relative flex flex-wrap p-0 sm:ml-64 bg-slate-200">
-      <div className="container-fluid  p-2  w-full sm:w-full md:w-full lg:w-full xl:w-full border-dashed rounded-lg  bg-slate-200">
-        <div className="flex justify-between text-orange-700 mt-2 ">
+    <section className="container-fluid relative flex flex-wrap p-0 sm:ml-48 bg-slate-200">
+      <div className="container-fluid    w-full sm:w-full md:w-full lg:w-full xl:w-full border-dashed rounded-lg  bg-slate-200">
+        <div className="flex justify-between text-blue-700">
           <h1></h1>
-          <span className=" flex justify-center text-center  text-3xl font-semibold">Payout Grid List&apos;s</span>
-          <button className="text-end    text-3xl font-semibold " onClick={handleExportClick}><img src="/excel.png" alt="download" className="w-10 my-2" /></button>
+          <span className=" flex justify-center text-center  text-2xl font-semibold">Payout&apos;s Grid List</span>
+          <button className="text-end    text-3xl font-semibold " onClick={handleExportClick}><img src="/excel.png" alt="download" className="w-10" /></button>
         </div>
       </div>
       <table className="min-w-full text-center text-sm font-light table bg-slate-200 ">
@@ -125,7 +125,7 @@ function PayoutView() {
         ) : (
           <div className="min-w-full  border text-center bg-slate-200 text-sm font-light table">
             {APIData.length === 0 ? ( // Conditional rendering when there are no policies
-              <p className='mt-20 text-2xl font-bold flex  justify-center text-center'>No Policies Found.</p>
+              <p className='mt-20 text-xl font-bold flex  justify-center text-center'>No Policies Found.</p>
             ) : (<>
               <thead className="border-b min-w-full text-center text-sm  table font-medium bg-slate-200  sticky top-16">
                 <tr className="text-blue-700 sticky top-16">

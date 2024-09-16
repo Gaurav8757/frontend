@@ -1,5 +1,5 @@
 import {Outlet} from "react-router-dom";
-import DashboardAdvisor from "./DashboardAdvisor.jsx";
+import DashboardAdvisor from "./Dashboard/DashboardAdvisor.jsx";
 function LayoutAdvisor() {
   return (
     <>

@@ -70,7 +70,7 @@ import Careers from "./components/careers/Careers.jsx";
 import MasterForm from "./admin/admincomponents/MasterForm/MasterForm.jsx";
 import ViewMasterForm from "./admin/admincomponents/MasterForm/ViewMasterForm.jsx";
 import MasterView from "./branches/showInsuranceData/MasterView.jsx";
-import ProtectedAdvisor from "./advisor/ProtectedAdvisor.jsx";
+import ProtectedAdvisor from "./advisor/Dashboard/ProtectedAdvisor.jsx";
 import InsuranceLists from "./advisor/showInsurance/InsuranceLists.jsx";
 import LayoutAdvisor from "./advisor/LayoutAdvisor.jsx";
 import AddAdvisor from "./admin/admincomponents/Advisor/AddAdvisor.jsx";
@@ -205,6 +205,8 @@ import ViewDailyVisit from "./Employee/DailyVisitReport/ViewDailyVisit.jsx";
 import VisitReport from "./admin/admincomponents/VisitReport/VisitReport.jsx";
 import Dvr from "./branches/DVR/Dvr.jsx";
 import ReconAdvisor from "./admin/admincomponents/MasterForm/ReconAdvisor/ReconAdvisor.jsx";
+import AllCompanyName from "./advisor/API/Companies/AllCompanyName.jsx";
+import AllMotorInsurances from "./advisor/Motor/AllMotorInsurances.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -365,9 +367,12 @@ const router = createBrowserRouter(
       <Route element={<ProtectedAdvisor />}>
         <Route path="/advisor/home" element={<LayoutAdvisor />}>
           <Route path="/advisor/home" element={<HomepageAdvisor />} />
+          <Route path="/advisor/home/insurance" element={<AllCompanyName/>} />
           <Route path="/advisor/home/viewinsurance" element={<InsuranceLists />} />
           <Route path="/advisor/home/payout/view" element={<PayoutView />} />
         </Route>
+        {/* apis calls */}
+        <Route path="/advisor/:insuranceName/:category"  element = {<AllMotorInsurances/>}/>
       </Route>
 
       {/* Employee Routes */}

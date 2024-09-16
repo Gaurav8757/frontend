@@ -39,7 +39,6 @@ function ListAdvisor() {
         if (!token) {
             toast.error("Not Authorized yet.. Try again! ");
         } else {
-            // The user is authenticated, so you can make your API request here.
             axios
                 .get(`${VITE_DATA}/advisor/all/lists`, {
                     headers: {
@@ -60,7 +59,6 @@ function ListAdvisor() {
     const onUpdateAdvisor = async () => {
         try {
             const token = sessionStorage.getItem("token");
-
             if (!token) {
                 toast.error("Not Authorized yet.. Try again!");
             } else {
@@ -72,7 +70,6 @@ function ListAdvisor() {
                         }, params: { branch: name }
                     }
                 );
-
                 setAPIData(response.data);
             }
         } catch (error) {
@@ -85,7 +82,6 @@ function ListAdvisor() {
         setCurrentPage(page);
     };
 
-
     const filteredData = APIData.filter(data => {
         // Check if data is defined
         if (!data) return false;
@@ -94,7 +90,6 @@ function ListAdvisor() {
         const advNameLower = data.advisorname?.toLowerCase() || "";
         const advLower = data.advisoraddress?.toLowerCase() || "";
         const policyLower = data.advisoremail?.toLowerCase() || "";
-
         return (
             // Filter conditions using optional chaining and nullish coalescing
             (idLower.includes(searchId.toLowerCase()) || searchId === '') &&
@@ -106,18 +101,13 @@ function ListAdvisor() {
     });
 
     const totalItems = APIData.length;
-    const totalPages = Math.ceil(totalItems / itemsPerPage)
-    // const startIndex = (currentPage - 1) * itemsPerPage;
-    // const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
-
-
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     const exportToExcel = () => {
         try {
             const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
             const fileExtension = ".xlsx";
             const fileName = `${name}_Advisor_Lists`;
-
             // Map all data without filtering by current date
             const dataToExport = APIData.map(row => {
                 return [
@@ -177,15 +167,15 @@ function ListAdvisor() {
     };
 
     return (
-        <section className="container-fluid relative   p-0 sm:ml-48 bg-slate-200">
+        <section className="container-fluid relative   bg-slate-200">
             <div className="container-fluid flex justify-center p-1  border-gray-200 border-dashed rounded-lg   bg-slate-200">
                 <div className="inline-block min-w-full w-full py-0 ">
-                    {/* <div className=" mb-4 mt-2 flex flex-col justify-between text-blue-500 "> */}
+                    
                     <div className="flex justify-between">
                         <h1 className="mr-20"></h1>
                         <span className=" flex justify-center text-center text-orange-700 text-3xl font-semibold">Advisor&apos;s List</span>
                         <div className="flex">
-                            <button className="text-end    text-3xl font-semibold " onClick={handleExportClick}><img src="/excel.png" alt="download" className="w-10 " /></button>
+                            <button className="text-end    font-semibold " onClick={handleExportClick}><img src="/excel.png" alt="download" className="w-10 " /></button>
                             <NavLink to="/branches/home/advisor/register" className="my-auto">
                                 <button type="button" className="text-white  justify-end bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded text-sm px-2 py-1 text-center ">Go Back</button>
                             </NavLink>
