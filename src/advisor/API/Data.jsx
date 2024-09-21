@@ -1,3 +1,4 @@
+import VITE_DATA from "../../config/config.jsx";
 const Data = {
   GeneralInsurance: [
     {
@@ -8,7 +9,7 @@ const Data = {
         motor: {
 
           "Pvt-Car": {
-            new: { name: "New", apiLink: "/api/tata_aig/pvt_car/new" },
+            new: { name: "New", authLink: `${VITE_DATA}/tataaig/auth/details`, quoteLink: "https://uatapigw.tataaig.com/motor/v1/quote" },
             rollover: {
               name: "Rollover",
               apiLink: "/api/tata_aig/pvt_car/rollover",

@@ -109,7 +109,6 @@ function GenerateSalary() {
     setEmail(selectedEmp.empemail);
     setMobile(selectedEmp.empmobile);
     setBankName(selectedEmp.bankName);
-
     setMonthLeave(selectedEmp ? selectedEmp.leavemonth : "");
     setMonthSalary(selectedEmp ? selectedEmp.salary : "");
     filterEmployeeDetailsByMonthAndYear(selectedEmp, year, months);
@@ -121,7 +120,6 @@ function GenerateSalary() {
     selectedMonth
   ) => {
     if (!employee) return;
-
     const startDate = startOfMonth(new Date(selectedYear, selectedMonth - 1));
     const endDate = endOfMonth(new Date(selectedYear, selectedMonth - 1));
     const daysOfMonth = eachDayOfInterval({ start: startDate, end: endDate });
@@ -178,12 +176,14 @@ function GenerateSalary() {
     const workday = workingDaysCount - holiDayCount;
 
     console.log(
-      "Working Days: " +
+      "Working Days:(workingDaysCount + holiDayCount) " +
         workday +
         " sunday: " +
         sundayCount +
         " P-days: " +
-        totalPresentDays
+        totalPresentDays +
+        " Holidays: " + 
+        holiDayCount
     );
 
     setPresentDay(totalPresentDays);
@@ -232,13 +232,13 @@ function GenerateSalary() {
 
   useEffect(() => {
     const handleSalary = () => {
-      let salary = (monthSalary / total) * (presentDay + sundays);
+      let salary = (monthSalary / total) * (presentDay + sundays + holidayCount);
       const halfSalary = (monthSalary / 30.5) * 0.5 * halfDay;
       salary = parseFloat(salary) + parseFloat(halfSalary);
       setSalaries(salary.toFixed(2));
     };
     handleSalary();
-  }, [monthSalary, presentDay, halfDay, sundays, total]);
+  }, [monthSalary, presentDay, halfDay, sundays, total, holidayCount]);
 
   // incentive
   useEffect(() => {
@@ -678,7 +678,7 @@ function GenerateSalary() {
               </select>
             </div>
 
-            <div className="flex flex-col p-2  mt-4 text-start w-full lg:w-1/5">
+            <div className="flex flex-col p-2  mt-4 text-start w-full lg:w-1/6">
               <label className="text-base mx-1">Total Days:</label>
               <input
                 className="input-style p-1 bg-red-100 rounded"
@@ -690,7 +690,7 @@ function GenerateSalary() {
                 disabled
               />
             </div>
-            <div className="flex flex-col p-2  mt-4 text-start w-full lg:w-1/5">
+            <div className="flex flex-col p-2  mt-4 text-start w-full lg:w-1/6">
               <label className="text-base mx-1">Total Working Days:</label>
               <input
                 className="input-style p-1 bg-red-100 rounded"
@@ -702,7 +702,7 @@ function GenerateSalary() {
                 disabled
               />
             </div>
-            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
+            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/6">
               <label className="text-base mx-1">Present Days:</label>
               <input
                 className="input-style bg-red-100 p-1 rounded"
@@ -714,7 +714,7 @@ function GenerateSalary() {
               />
             </div>
 
-            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
+            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/6">
               <label className="text-base mx-1">Total Absent:</label>
               <input
                 className="input-style p-1 bg-red-100 rounded"
@@ -726,7 +726,7 @@ function GenerateSalary() {
               />
             </div>
 
-            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/5">
+            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/6">
               <label className="text-base mx-1">Total Half Days:</label>
               <input
                 className="input-style p-1 bg-red-100 rounded"
@@ -739,7 +739,19 @@ function GenerateSalary() {
                 disabled
               />
             </div>
-
+            <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/6">
+              <label className="text-base mx-1">Holidays:</label>
+              <input
+                className="input-style p-1 bg-red-100 rounded"
+                type="number"
+                min="0"
+                value={holidayCount}
+                onChange={(e) => setHolidayCount(e.target.value)}
+                name="holidayCount"
+                placeholder="0"
+                disabled
+              />
+            </div>
             <div className="flex flex-col p-2 mt-4 text-start w-full lg:w-1/6">
               <label className="text-base mx-1">Salary:</label>
               <input
