@@ -1,82 +1,3 @@
-// import { useState } from "react";
-// import { useLocation } from "react-router-dom";
-// import TimerForAllUser from "../Timer/TimerForAllUser.jsx";
-// import axios from "axios";
-// import { toast } from "react-toastify";
-// function AllMotorInsurances() {
-//   const location = useLocation();
-//   const { subCategories, logos, insuranceName } = location.state || {};
-//   const [selectedOption, setSelectedOption] = useState("");
-//   const [menuItems, setMenuItems] = useState([]);
-//   const [selectedSubOption, setSelectedSubOption] = useState("");
-//   const [quoteResponses, setQuoteResponses] = useState("");
-
-//   console.log(quoteResponses);
-  
-
-//   const handleSelectChange = (event) => {
-//     const selectedCategory = event.target.value;
-//     setSelectedOption(selectedCategory);
-//     // Update menuItems based on the selected category
-//     if (subCategories && subCategories[selectedCategory]) {
-//       const items = Object.values(subCategories[selectedCategory]);
-//       setMenuItems(items);
-//     } else {
-//       setMenuItems([]);
-//     }
-//   };
-
-//   const handleSubOptionChange = (index) => {
-//     const selectedOption = menuItems[index];
-//     // selected names
-//     setSelectedSubOption(selectedOption.name);
-//     const authLink = selectedOption.authLink;
-
-//     if (authLink) {
-//       // Trigger the API call using fetch
-//       fetch(authLink)
-//         .then((response) => response.json())
-//         .then((data) => {
-//           // Check if auth or uatLists exist in the response and handle separately
-//           const auth = data.auth || {}; // assuming auth is part of the response
-//           const uatLists = data.uatLists || {}; // if uatLists is available in the response
-//           if (auth || uatLists) {
-//             const currentTime = Date.now(); // Get current time in millisecond
-//             // Store access_token and expires_in separately for auth
-//             if (auth.access_token && auth.expires_in) {
-//               sessionStorage.setItem("auth_access_token", auth.access_token);
-//               sessionStorage.setItem("auth_expires_in", auth.expires_in);
-//               sessionStorage.setItem("auth_token_received_at", currentTime);
-//               sessionStorage.setItem("timer", data.token_refresh_timer);
-//             }
-//             // Store access_token and expires_in separately for uatLists (if exists)
-//             if (uatLists.access_token && uatLists.expires_in) {
-//               sessionStorage.setItem("uat_access_token", uatLists.access_token);
-//               sessionStorage.setItem("uat_expires_in", uatLists.expires_in);
-//               sessionStorage.setItem("uat_token_received_at", currentTime); // Store the current time
-//             }
-//             // set auth token to quote
-//             handleSetAuthTokenToQuote();
-//             toast.success(`${data.message}`);
-
-//             console.log("Data stored in sessionStorage:", {
-//               auth: {
-//                 access_token: auth.access_token,
-//                 expires_in: auth.expires_in,
-//               },
-//               uatLists: {
-//                 access_token: uatLists.access_token,
-//                 expires_in: uatLists.expires_in,
-//               },
-//             });
-//           }
-//         })
-//         .catch((error) => {
-//           console.error("Error fetching data:", error);
-//         });
-//     }
-//   };
-
 //   const handleSetAuthTokenToQuote = async () => {
 //     // Retrieve tokens from sessionStorage
 //     const authTokens = sessionStorage.getItem("auth_access_token");
@@ -201,102 +122,25 @@
 //       __finalize: "1",
 //     };
 
-//     try {
-//       // Make the POST request using axios
-//       const response = await axios.post(
-//         import.meta.env.VITE_TATA_AIG_4_WHEELER_QUOTE_URL,
-//         requestBody,
-//         { headers }
-//       );
-//       if (response.data.status === 200) {
-//         setQuoteResponses(response.data);
-//         toast.success(`${response.data.message_txt}`);
-//       } else {
-//         toast.error(`${response.data.message_txt}`);
-//       }
-
-//       // Further actions based on response
-//     } catch (error) {
-//       // Handle error
-//       if (error.response) {
-//         console.error("Error response:", error.response.data);
-//       } else {
-//         console.error("Request error:", error.message);
-//       }
-//     }
-//   };
-
-//   return (
-//     <nav className="bg-white shadow-md fixed w-full top-0 z-10">
-//       <div className="container mx-auto flex sm:justify-between justify-evenly flex-wrap items-center p-2">
-//         {/* Logo */}
-//         <div className="text-xl font-bold">
-//           <img
-//             className="md:w-20 md:h-20 w-12 h-12 shadow-inner shadow-gray-300"
-//             src={logos}
-//             alt={insuranceName}
-//           />
-//         </div>
-//         <div className="container-flex flex justify-center">
-//           {/* Select Menu */}
-//           {subCategories ? (
-//             <select
-//               value={selectedOption}
-//               onChange={handleSelectChange}
-//               className="block appearance-none my-auto bg-white border-gray-300 py-2 ps-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-//             >
-//               <option value="">Select Insurance</option>
-//               {Object.keys(subCategories).map((subCat, index) => (
-//                 <option className="capitalize" key={index} value={subCat}>
-//                   {subCat}
-//                 </option>
-//               ))}
-//             </select>
-//           ) : (
-//             <p>Not Able to Select</p>
-//           )}
-//         </div>
-//         {/* Selected Menu List */}
-//         <ul className="flex space-x-4">
-//           {menuItems.map((option, index) => (
-//             <li key={index}>
-//               <input
-//                 type="radio"
-//                 id={`hosting-${index}`}
-//                 name="hosting"
-//                 value={selectedSubOption}
-//                 className="hidden peer"
-//                 checked={selectedSubOption === option.name}
-//                 onChange={() => handleSubOptionChange(index)}
-//               />
-//               <label
-//                 htmlFor={`hosting-${index}`}
-//                 className={`inline-flex items-center justify-between w-full p-1 px-4 text-gray-500 bg-white border border-gray-200 rounded cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 
-//                   dark:peer-checked:text-blue-500 peer-checked:border-green-600 peer-checked:bg-green-100 peer-checked:text-green-700 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700`}
-//               >
-//                 <div className="block my-auto">
-//                   <div className="w-auto text-base font-semibold">
-//                     {option.name}
-//                   </div>
-//                 </div>
-//               </label>
-//             </li>
-//           ))}
-//         </ul>
-//         <TimerForAllUser  currentTime/>
-//       </div>
-//     </nav>
-//   );
-// }
-
-// export default AllMotorInsurances;
-
-
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import TimerForAllUser from "../Timer/TimerForAllUser.jsx";
 import axios from "axios";
 import { toast } from "react-toastify";
+import VehicleRegistrationNo from "../vehicleNumber/VehicleRegistrationNo.jsx";
+import {
+  Home,
+  MessageSquare,
+  BarChart2,
+  Settings,
+  ShoppingCart,
+  Package,
+  Heart,
+  Archive,
+  User,
+  Check,
+  MoveRight,
+} from "lucide-react";
 
 function AllMotorInsurances() {
   const location = useLocation();
@@ -304,19 +148,36 @@ function AllMotorInsurances() {
   const [selectedOption, setSelectedOption] = useState("");
   const [menuItems, setMenuItems] = useState([]);
   const [selectedSubOption, setSelectedSubOption] = useState("");
+  const [subCustType, setSubCustType] = useState("");
+  const [customerType, setCutomerType] = useState([]);
   const [quoteResponses, setQuoteResponses] = useState("");
   const [timer, setTimer] = useState(1800); // 30 minutes in seconds
   const intervalRef = useRef(null); // To keep track of interval
 
   // console.log(quoteResponses);
 
+  const sidebarItems = [
+    { icon: Home, label: "Home" },
+    { icon: MessageSquare, label: "Messages" },
+    { icon: BarChart2, label: "Analytics" },
+    { icon: ShoppingCart, label: "Orders" },
+    { icon: Package, label: "Products" },
+    { icon: Heart, label: "Favorites" },
+    { icon: Archive, label: "Archive" },
+    { icon: Settings, label: "Settings" },
+  ];
+
   useEffect(() => {
-    const auth_token_received_at = sessionStorage.getItem("auth_token_received_at");
+    const auth_token_received_at = sessionStorage.getItem(
+      "auth_token_received_at"
+    );
     const auth_expires_in = sessionStorage.getItem("auth_expires_in");
 
     if (auth_token_received_at && auth_expires_in) {
       const currentTime = Date.now();
-      const tokenAge = Math.floor((currentTime - parseInt(auth_token_received_at, 10)) / 1000); // in seconds
+      const tokenAge = Math.floor(
+        (currentTime - parseInt(auth_token_received_at, 10)) / 1000
+      ); // in seconds
       const remainingTime = Math.max(1800 - tokenAge, 0); // 1800 is 30 minutes in seconds
 
       setTimer(remainingTime);
@@ -341,11 +202,10 @@ function AllMotorInsurances() {
           toast.error("Session expired. Please re-authenticate.");
           return 0;
         }
-        return prevTimer ;
+        return prevTimer;
       });
     }, 1000);
   };
-  
 
   const handleSelectChange = (event) => {
     const selectedCategory = event.target.value;
@@ -364,6 +224,8 @@ function AllMotorInsurances() {
     const selectedOption = menuItems[index];
     setSelectedSubOption(selectedOption.name);
     const authLink = selectedOption.authLink;
+    const custType = selectedOption.custType;
+    setCutomerType(custType);
 
     if (authLink) {
       // Trigger the API call using fetch
@@ -430,62 +292,153 @@ function AllMotorInsurances() {
   };
 
   return (
-    <nav className="bg-white shadow-md fixed w-full top-0 z-10">
-      <div className="container mx-auto flex sm:justify-between justify-evenly flex-wrap items-center p-2">
-        {/* Logo */}
-        <div className="text-xl font-bold">
-          <img
-            className="md:w-20 md:h-20 w-12 h-12 shadow-inner shadow-gray-300"
-            src={logos}
-            alt={insuranceName}
-          />
+    <>
+      {/* NAVBAR */}
+      <nav className="bg-white shadow-md fixed w-full top-0 z-10">
+        <div className="container mx-auto flex justify-between flex-wrap items-center p-2">
+          {/* Logo */}
+          <div className="text-xl font-bold">
+            <img
+              className="md:w-20 md:h-20 w-16 h-16 shadow-inner shadow-gray-300"
+              src={logos}
+              alt={insuranceName}
+            />
+          </div>
+          <div className="container-flex flex justify-between">
+            {/* Select Menu */}
+            {subCategories ? (
+              <select
+                value={selectedOption}
+                onChange={handleSelectChange}
+                className="block appearance-none my-auto bg-white border-gray-300 py-2 ps-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              >
+                <option value="">Select Insurance</option>
+                {Object.keys(subCategories).map((subCat, index) => (
+                  <option className="capitalize" key={index} value={subCat}>
+                    {subCat}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <p>N/A</p>
+            )}
+          </div>
+          {/* Timer Component */}
+          <TimerForAllUser currentTime={timer} />
         </div>
-        <div className="container-flex flex justify-center">
-          {/* Select Menu */}
-          {subCategories ? (
-            <select
-              value={selectedOption}
-              onChange={handleSelectChange}
-              className="block appearance-none my-auto bg-white border-gray-300 py-2 ps-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-              <option value="">Select Insurance</option>
-              {Object.keys(subCategories).map((subCat, index) => (
-                <option className="capitalize" key={index} value={subCat}>
-                  {subCat}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <p>Not Able to Select</p>
-          )}
-        </div>
-        {/* Selected Menu List */}
-        <ul className="flex space-x-4">
-          {menuItems.map((option, index) => (
-            <li key={index}>
-              <input
-                type="radio"
-                id={`hosting-${index}`}
-                name="hosting"
-                value={selectedSubOption}
-                className="hidden peer"
-                checked={selectedSubOption === option.name}
-                onChange={() => handleSubOptionChange(index)}
-              />
-              <label
-                htmlFor={`hosting-${index}`}
-                className={`inline-flex items-center justify-between w-full p-1 px-4 text-gray-500 bg-white border border-gray-200 rounded cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 
-                  dark:peer-checked:text-blue-500 peer-checked:border-green-600 peer-checked:bg-green-100 peer-checked:text-green-700 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700`}>
-                <div className="block my-auto">
-                  <div className="w-auto text-base font-semibold">{option.name}</div>
+      </nav>
+
+      {/* sidebar */}
+      <aside className=" mt-20 fixed left-2 top-2 md:top-6 bottom-2 w-16 flex flex-col items-center justify-between bg-blue-700 rounded-md shadow-lg">
+        <div className="flex flex-col justify-between items-end">
+          <div className="w-full pt-6 flex flex-col items-center space-y-6">
+            {sidebarItems.map((item, index) => (
+              <div key={index} className="relative group">
+                <button
+                  data-tooltip-target={`tooltip-${index} tooltip-right`}
+                  data-tooltip-placement="right"
+                  className="text-white hover:bg-slate-900 shadow-inner rounded-full p-3"
+                  aria-label={item.label}
+                >
+                  <item.icon className="h-6 w-6" />
+                </button>
+                {/* Tooltip */}
+                <div
+                  id={`tooltip-${index} tooltip-right`}
+                  role="tooltip"
+                  className="absolute left-0 -top-8 z-10 hidden group-hover:block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded- shadow-sm"
+                >
+                  {item.label}
                 </div>
-              </label>
-            </li>
-          ))}
-        </ul>
-        {/* Timer Component */}
-        <TimerForAllUser currentTime={timer} />
-      </div>
-    </nav>
+              </div>
+            ))}
+          </div>
+          <div className="w-full pt-6 bottom-5 ">
+            <button
+              className="text-white hover:bg-slate-900 rounded-full p-2"
+              aria-label="User profile">
+              <User className="h-6 w-6" />
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* MAIN/DYANAMIC SCREEN */}
+      <main className="md:mt-20 mt-20 flex flex-col ml-20 mr-5">
+        <VehicleRegistrationNo
+          Check={<Check className="font-bold" />}
+          MoveRight={<MoveRight width={20} />}
+        />
+        {/* <div className="flex justify-between flex-wrap"> */}
+        {/* Selected Menu List */}
+        {/* part-1 */}
+        <div className="flex flex-col mt-4 md:mt-16 text-start">
+          <h1 className="text-xl font-semibold space-x-5 p-4 ">
+            Business Type
+            <span className="text-red-500 font-extrabold"> *</span>
+          </h1>
+          <ul className="flex space-x-4 px-5">
+            {menuItems.map((option, index) => (
+              <li key={index}>
+                <input
+                  type="radio"
+                  id={`hosting-${index}`}
+                  name="hosting"
+                  value={selectedSubOption}
+                  className="hidden peer"
+                  checked={selectedSubOption === option.name}
+                  onChange={() => handleSubOptionChange(index)}
+                />
+                <label
+                  htmlFor={`hosting-${index}`}
+                  className={`inline-flex items-center justify-between w-full p-1 px-4 shadow-inner text-gray-500 bg-slate-100 border border-gray-200 rounded cursor-pointer peer-checked:border-blue-600 peer-checked:bg-gradient-to-t from-blue-700 to-blue-600 peer-checked:text-white hover:text-gray-600 hover:bg-gray-100`}
+                >
+                  <div className="block my-auto">
+                    <div className="w-auto text-lg md:text-xl font-semibold">
+                      {option.name}
+                    </div>
+                  </div>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {/* part-2 */}
+        <div className="flex flex-col mt-4 md:mt-10 text-start">
+          <h1 className="text-xl font-semibold space-x-5 p-4 ">
+            Customer Type
+            <span className="text-red-500 font-extrabold"> *</span>
+          </h1>
+
+          <ul className="flex space-x-4 px-5">
+            {customerType.map((cust, index) => (
+              <li key={index}>
+                <input
+                  type="radio"
+                  id={`h-${index}`}
+                  name="h"
+                  value={subCustType}
+                  className="hidden peer"
+                  checked={subCustType === cust}
+                  onChange={() => setSubCustType(index)}
+                />
+                <label
+                  htmlFor={`h-${index}`}
+                  className={`inline-flex items-center justify-between w-full p-1 px-4 shadow-inner text-gray-500 bg-slate-100 border border-gray-200 rounded cursor-pointer peer-checked:border-blue-600 peer-checked:bg-gradient-to-t from-blue-700 to-blue-600 peer-checked:text-white hover:text-gray-600 hover:bg-gray-100`}
+                >
+                  <div className="block my-auto">
+                    <div className="w-auto text-lg md:text-xl font-semibold">
+                      {cust}
+                    </div>
+                  </div>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {/* </div> */}
+      </main>
+    </>
   );
 }
 

@@ -18,8 +18,8 @@ function TimerForAllUser({ currentTime }) {
     return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   };
 
-  return (
-    <div>
+  return (<>
+    <div className="hidden md:block">
       {/* Timer Countdown */}
       <CountdownCircleTimer
         key={currentTime}
@@ -41,9 +41,34 @@ function TimerForAllUser({ currentTime }) {
             )}
           </>
         )}
-      </CountdownCircleTimer>
+      </CountdownCircleTimer> 
     </div>
-  );
+
+    <div className="md:hidden">
+      {/* Timer Countdown */}
+      <CountdownCircleTimer
+        key={currentTime}
+        isPlaying={isTokenAvailable}
+        duration={currentTime} // Convert minutes to seconds
+        size={40}
+        strokeWidth={3}
+        strokeLinecap="round"
+        isSmoothColorTransition={true}
+        colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+        colorsTime={[600, 300, 120, 0]} // Color thresholds based on remaining time in seconds
+      >
+        {({ remainingTime }) => (
+          <>
+            {isTokenAvailable && remainingTime > 0 ? (
+              <div className="text-base font-medium">{formatTime(remainingTime)}</div>
+            ) : (
+              <p>Timeout</p>
+            )}
+          </>
+        )}
+      </CountdownCircleTimer> 
+    </div>
+    </>);
 }
 
 export default TimerForAllUser;

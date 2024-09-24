@@ -9,12 +9,13 @@ const Data = {
         motor: {
 
           "Pvt-Car": {
-            new: { name: "New", authLink: `${VITE_DATA}/tataaig/auth/details`, quoteLink: "https://uatapigw.tataaig.com/motor/v1/quote" },
+            new: { name: "New", authLink: `${VITE_DATA}/tataaig/auth/details`, quoteLink: "https://uatapigw.tataaig.com/motor/v1/quote",   custType: ["Individual", "Organisation"] },
             rollover: {
               name: "Rollover",
               apiLink: "/api/tata_aig/pvt_car/rollover",
+              custType: ["Individual", "Organisation"]
             },
-            satp: { name: "SATP", apiLink: "/api/tata_aig/pvt_car/satp" },
+            satp: { name: "SATP", apiLink: "/api/tata_aig/pvt_car/satp", custType: ["Individual", "Organisation"] },
           },
 
           "2 Wheeler": {
