@@ -38,7 +38,7 @@ export default function VehicleRegistrationNo({ Check, MoveRight }) {
     }
 
     // Simulating data fetch
-    setFetchedData(`Data fetched for ${registrationParts.join("")}`);
+    setFetchedData(`${registrationParts.join("")}`);
   };
 
   const getPlaceholders = () => {
@@ -228,6 +228,7 @@ export default function VehicleRegistrationNo({ Check, MoveRight }) {
                   onChange={(e) => handleInputChange(index, e.target.value)}
                   maxLength={getMaxLengths()[index]}
                   className="text-center bg-slate-100 px-1 py-3 shadow-inner text-2xl font-bold"
+                  required
                 />
               ))}
             </div>
