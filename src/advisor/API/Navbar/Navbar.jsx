@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
+// Navbar component with token handling and session management
 import { useState, useEffect, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom"; // Add useNavigate for redirection
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import TimerForAllUser from "../../Timer/TimerForAllUser.jsx";
-import VITE_DATA from "../../../config/config.jsx";
 
 function Navbar({
   selectedOption,
@@ -11,13 +11,12 @@ function Navbar({
   setMenuItems,
   selectedSubOption,
 }) {
-  const [timer, setTimer] = useState(1800); // 30 minutes in seconds
-  const intervalRef = useRef(null); // To keep track of interval
+  const [timer, setTimer] = useState(1800); // Default to 30 minutes
+  const intervalRef = useRef(null); // To track the timer
   const location = useLocation();
-  const navigate = useNavigate(); // Hook to handle navigation
+  const navigate = useNavigate();
   const { subCategories, logos, insuranceName } = location.state || {};
 
-  // Load selectedOption from sessionStorage on mount
   useEffect(() => {
     const storedOption = sessionStorage.getItem("selectedOption");
     if (storedOption) {
@@ -25,34 +24,15 @@ function Navbar({
     }
   }, [setSelectedOption]);
 
-  const handleSelectChange = (event) => {
-    const selectedCategory = event.target.value;
-    setSelectedOption(selectedCategory);
-    sessionStorage.setItem("selectedOption", selectedCategory); // Store selectedOption in sessionStorage
-    // Update menuItems based on the selected category
-    if (subCategories && subCategories[selectedCategory]) {
-      const items = Object.values(subCategories[selectedCategory]);
-      setMenuItems(items);
-    } else {
-      setMenuItems([]);
-    }
-  };
-
+  // Start and manage the timer when a token is received
   const startTimer = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current); // Clear any previous intervals
-    }
+    if (intervalRef.current) clearInterval(intervalRef.current);
 
     intervalRef.current = setInterval(() => {
       setTimer((prevTimer) => {
         if (prevTimer <= 1) {
           clearInterval(intervalRef.current);
-          sessionStorage.removeItem("auth_access_token");
-          sessionStorage.removeItem("auth_token_received_at");
-          sessionStorage.removeItem("selectedOption"); // Clear selectedOption when session expires
-          sessionStorage.removeItem("selectedSubOption");
-          toast.error("Session Expired..!");
-          navigate("/advisor/home/insurance"); // Redirect to home page
+          // handleSessionExpiry();
           return 0;
         }
         return prevTimer;
@@ -61,66 +41,68 @@ function Navbar({
   };
 
   useEffect(() => {
-    const auth_token_received_at = sessionStorage.getItem(
-      "auth_token_received_at"
-    );
-    const auth_expires_in = sessionStorage.getItem("auth_expires_in");
-    if (auth_token_received_at && auth_expires_in) {
-      const currentTime = Date.now();
-      const tokenAge = Math.floor(
-        (currentTime - parseInt(auth_token_received_at, 10)) / 1000
-      ); // in seconds
-      const remainingTime = Math.max(1800 - tokenAge, 0); // 1800 is 30 minutes in seconds
-      setTimer(remainingTime);
-
-      if (remainingTime > 0) {
-        startTimer();
-      } else {
-        sessionStorage.removeItem("auth_access_token");
-        sessionStorage.removeItem("auth_token_received_at");
-        sessionStorage.removeItem("selectedOption");
-        sessionStorage.removeItem("selectedSubOption");
-        toast.error("Session Expired...!");
-        navigate("/advisor/home/insurance");
+    const checkToken = () => {
+      const auth_token_received_at = sessionStorage.getItem(
+        "auth_token_received_at"
+      );
+      if (auth_token_received_at) {
+        const currentTime = Date.now();
+        const tokenAge = Math.floor(
+          (currentTime - parseInt(auth_token_received_at, 10)) / 1000
+        );
+        const remainingTime = Math.max(1800 - tokenAge, 0); // 30 minutes (1800 seconds)
+        console.log(remainingTime);
+        
+        if (remainingTime > 0) {
+          setTimer(remainingTime);
+          startTimer();
+        } else {
+          handleSessionExpiry();
+        }
       }
-    }
+    };
+     
+    const handleSessionExpiry = () => {
+      // sessionStorage.clear(); // Clear all session data on expiry
+      toast.error("Session Expired...!");
+      navigate("/advisor/home/insurance");
+    };
+
+    checkToken(); // Check token on mount
   }, [navigate]);
 
-  // Handle clearing sessionStorage and resetting states
-  useEffect(() => {
-    // If the user navigates to the '/advisor/home/insurance' route, reset state and clear session
-    if (location.pathname === `${VITE_DATA}/advisor/home/insurance`) {
-      sessionStorage.clear(); // Clear all session data
-      sessionStorage.removeItem("auth_access_token");
-      sessionStorage.removeItem("auth_token_received_at");
-      sessionStorage.removeItem("selectedOption");
-      setSelectedOption(""); // Reset selectedOption
-      setMenuItems([]); // Reset menuItems
+  const handleSelectChange = (event) => {
+    const selectedCategory = event.target.value;
+    setSelectedOption(selectedCategory);
+    sessionStorage.setItem("selectedOption", selectedCategory);
+    if (subCategories && subCategories[selectedCategory]) {
+      const items = Object.values(subCategories[selectedCategory]);
+      setMenuItems(items);
+    } else {
+      setMenuItems([]);
     }
-  }, [location.pathname, setSelectedOption, setMenuItems]);
+  };
 
   return (
     <nav className="bg-white shadow-md fixed w-full top-0 z-10">
-      <div className="container mx-auto flex justify-between flex-wrap items-center p-2">
-        {/* Logo */}
+      <div className="container mx-auto flex justify-between items-center p-2">
         <div className="text-xl font-bold">
           <img
-            className="md:w-20 md:h-20 w-16 h-16 shadow-inner shadow-gray-300"
+            className="md:w-20 md:h-20 w-16 h-16 shadow-inner"
             src={logos}
             alt={insuranceName}
           />
         </div>
         <div className="container-flex flex justify-between">
-          {/* Select Menu */}
           {subCategories ? (
             <select
               value={selectedOption}
               onChange={handleSelectChange}
-              className="block appearance-none my-auto bg-white border-gray-300 py-2 ps-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block appearance-none bg-white border-gray-300 py-2 ps-2 rounded leading-tight focus:outline-none"
             >
               <option value="">Select Insurance</option>
               {Object.keys(subCategories).map((subCat, index) => (
-                <option className="capitalize" key={index} value={subCat}>
+                <option key={index} value={subCat} className="capitalize">
                   {subCat}
                 </option>
               ))}
@@ -129,12 +111,7 @@ function Navbar({
             <p>N/A</p>
           )}
         </div>
-        {/* Timer Component */}
-        {selectedSubOption ? (
-          <TimerForAllUser currentTime={timer} />
-        ) : (
-          <div> </div>
-        )}
+        {selectedSubOption && <TimerForAllUser currentTime={timer} />}
       </div>
     </nav>
   );
