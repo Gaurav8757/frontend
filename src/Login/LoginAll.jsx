@@ -271,12 +271,12 @@ function LoginAll() {
 
           case "hrmanager":
             if (decodedToken.isHr === true) {
-            navigate("/hr/home");
-            toast.success("Logged In Successfully !");
-          } else {
-            toast.error("You are not authorized to access this page.");
-            navigate("/login");
-          }
+              navigate("/hr/home");
+              toast.success("Logged In Successfully !");
+            } else {
+              toast.error("You are not authorized to access this page.");
+              navigate("/login");
+            }
             break;
 
           case "advisor":
@@ -291,12 +291,12 @@ function LoginAll() {
 
           case "ops":
             if (decodedToken.isOps === true) {
-            navigate("/ops/home");
-            toast.success("Logged In Successfully !");
-          } else {
-            toast.error("You are not authorized to access this page.");
-            navigate("/login");
-          }
+              navigate("/ops/home");
+              toast.success("Logged In Successfully !");
+            } else {
+              toast.error("You are not authorized to access this page.");
+              navigate("/login");
+            }
             break;
 
           case "finance":
@@ -312,12 +312,12 @@ function LoginAll() {
 
           case "cic":
             if (decodedToken.isCic === true) {
-            navigate("/cic/home");
-            toast.success("Logged In Successfully !");
-          } else {
-            toast.error("You are not authorized to access this page.");
-            navigate("/login");
-          }
+              navigate("/cic/home");
+              toast.success("Logged In Successfully !");
+            } else {
+              toast.error("You are not authorized to access this page.");
+              navigate("/login");
+            }
             break;
 
           default:
@@ -378,7 +378,7 @@ function LoginAll() {
           {/* <div className="text-4xl font-bold mt-3 w-64 mx-auto  text-black-700 flex justify-center">Login</div> */}
           <div className="flex-shrink-1 mt-10 md:h-1/4 h-full w-full xs:w-full backdrop:bg-transparent  sm:w-full md:1/2 mx-auto lg:w-1/3 xl:w-1/4 xl:py-5">
             <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-900 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+              {/* <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-900 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div> */}
               <div className="w-full max-w-xl p-6 space-y-1  mx-auto  rounded-lg  relative px-4 py-10 bg-slate-100 shadow-lg sm:rounded-3xl sm:p-10">
                 <img
                   src="/logo.webp"

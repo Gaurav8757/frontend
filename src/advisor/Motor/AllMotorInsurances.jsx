@@ -14,6 +14,7 @@ function AllMotorInsurances() {
   const [subCustType, setSubCustType] = useState("");
   const [customerType, setCustomerType] = useState([]);
   const [quoteResponses, setQuoteResponses] = useState("");
+  console.log(quoteResponses);
 
   // Handle SubOption change
   const handleSubOptionChange = (index) => {
@@ -44,7 +45,6 @@ function AllMotorInsurances() {
             sessionStorage.setItem("uat_expires_in", uatLists.expires_in);
             sessionStorage.setItem("uat_token_received_at", currentTime);
           }
-
           handleSetAuthTokenToQuote();
         })
         .catch((error) => {
@@ -90,10 +90,10 @@ function AllMotorInsurances() {
       if (response.data.status === 200) {
         setQuoteResponses(response.data);
         toast.success(`${response.data.message_txt}`);
-        console.log('Data successfully submitted:', response.data);
+        console.log("Data successfully submitted:", response.data);
 
         // Store the response in localStorage
-        localStorage.setItem('formResponse', JSON.stringify(response.data));
+        localStorage.setItem("formResponse", JSON.stringify(response.data));
       } else {
         toast.error(`${response.data.message_txt}`);
       }
@@ -157,7 +157,7 @@ function AllMotorInsurances() {
 
         {selectedSubOption && (
           <div className="flex flex-col my-4 md:my-10 text-start">
-            <h1 className="text-xl font-semibold space-x-5 p-4 ">
+            <h1 className="text-xl font-semibold space-x-5 p-4">
               Customer Type
               <span className="text-red-500 font-extrabold"> *</span>
             </h1>
@@ -188,7 +188,7 @@ function AllMotorInsurances() {
             </ul>
           </div>
         )}
-       {subCustType && <QuoteForm onSubmit={handleSetAuthTokenToQuote} />} 
+        {subCustType && <QuoteForm onSubmit={handleSetAuthTokenToQuote} />}
       </main>
     </>
   );

@@ -11,7 +11,7 @@ function Navbar({
   setMenuItems,
   selectedSubOption,
 }) {
-  const [timer, setTimer] = useState(1800); // Default to 30 minutes
+  const [timer, setTimer] = useState(); // Default to 30 minutes
   const intervalRef = useRef(null); // To track the timer
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,22 +52,21 @@ function Navbar({
         );
         const remainingTime = Math.max(1800 - tokenAge, 0); // 30 minutes (1800 seconds)
         console.log(remainingTime);
-        
+
         if (remainingTime > 0) {
           setTimer(remainingTime);
           startTimer();
-        } else {
+        } 
+        else {
           handleSessionExpiry();
         }
       }
     };
-     
+
     const handleSessionExpiry = () => {
-      // sessionStorage.clear(); // Clear all session data on expiry
       toast.error("Session Expired...!");
       navigate("/advisor/home/insurance");
     };
-
     checkToken(); // Check token on mount
   }, [navigate]);
 

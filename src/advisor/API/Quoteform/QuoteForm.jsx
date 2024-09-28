@@ -130,10 +130,7 @@ function QuoteForm({ onSubmit }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex p-2 flex-wrap justify-between"
-    >
+    <form onSubmit={handleSubmit} className="flex p-2 flex-wrap justify-center">
       {Object.keys(formData).map((key) => (
         <div
           key={key}
@@ -150,9 +147,15 @@ function QuoteForm({ onSubmit }) {
           />
         </div>
       ))}
-      <div className="flex  justify-center">
-        <button type="submit">Submit</button>
-      </div>
+
+      <button
+        type="submit"
+        className="relative cursor-pointer opacity-90 hover:opacity-100 transition-opacity p-[0.5px] bg-black rounded bg-gradient-to-t from-[#6a80ff] to-[#6a80ff] active:scale-95"
+      >
+        <span className="w-full h-full text-xl flex items-center gap-2 px-4 py-1 bg-[blue] text-white rounded bg-gradient-to-t from-blue-700 to-blue-600">
+          Submit
+        </span>
+      </button>
     </form>
   );
 }

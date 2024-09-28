@@ -167,7 +167,7 @@ function ListAdvisor() {
     };
 
     return (
-        <section className="container-fluid relative   bg-slate-200">
+        <section className="container-fluid relative  p-0 sm:ml-48  bg-slate-200">
             <div className="container-fluid flex justify-center p-1  border-gray-200 border-dashed rounded-lg   bg-slate-200">
                 <div className="inline-block min-w-full w-full py-0 ">
                     

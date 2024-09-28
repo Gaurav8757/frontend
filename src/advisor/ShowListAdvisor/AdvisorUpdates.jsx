@@ -25,7 +25,7 @@ function AdvisorUpdates({ advisors, onUpdates, onClose }) {
         const { name, value } = e.target;
         setAdvInfo((prevData) => ({
             ...prevData,
-            [name]: value.toUpperCase(),
+            [name]: value,
         }));
     };
 

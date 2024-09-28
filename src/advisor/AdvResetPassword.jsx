@@ -3,10 +3,11 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import VITE_DATA from "../config/config.jsx";
-function EmpPassUpdate() {
+
+function AdvResetPassword() {
   const navigate = useNavigate();
-  const { empsId, token } = useParams();
-  const [emppassword, setEmpPassword] = useState("");
+  const { advId, token } = useParams();
+  const [advisorpassword, setAdvisorPassword] = useState("");
   const [confirmpass, setConfirmpass] = useState("");
 
   // Update the API endpoint URL to match your backend route
@@ -14,35 +15,36 @@ function EmpPassUpdate() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${VITE_DATA}/emp/pass/${empsId}/${token}`,
+        `${VITE_DATA}/advisor/password/${advId}/${token}`,
         {
-          emppassword,
-          confirmemp_password: confirmpass,
+          advisorpassword,
+          confirm_advisorpassword: confirmpass,
         }
       );
-      if (response) {
+      if (response.status === 200) {
         navigate("/login");
-        toast.success("Password Updated Successfully...!");
+        toast.success("Password Updated Successfully....!");
       } else {
-        navigate("/employee/forget");
+        navigate("/advisor/forget");
         toast.error("Error Occured. Try Again...!");
       }
     } catch (error) {
       console.log(error);
-      toast.warn("Employee Not Registered Yet...! ", error);
+      toast.error("Advisor Not Found....! ", error);
     }
   };
 
   return (
-    <section className="container-fluid h-screen relative bg-blue-700">
-      <div className="container-fluid pt-20 flex flex-col md:flex-row items-center pb-16 justify-between bg-blue-700">
+    <section className="container-fluid h-screen relative bg-blue-600">
+      <div className="container-fluid pt-20 flex flex-col md:flex-row items-center pb-16 justify-between bg-blue-600">
         <div className="flex-shrink-4 px-6 md:h-full h-full py-20">
           <img
             src="/logo.webp"
             className="h-1/4 w-2/5 rounded-md mx-auto "
             alt="Logo"
           />
-          <div className="text-4xl font-bold mt-4 w-80 mx-auto  text-black-700 flex justify-center">
+          <div className="text-4xl flex-col  font-bold mt-4 w-80 mx-auto  text-black-700 flex justify-center">
+            <h1 className="mb-3">ADVISOR</h1>
             RESET PASSWORD
           </div>
         </div>
@@ -68,10 +70,10 @@ function EmpPassUpdate() {
               <div>
                 <input
                   type="password"
-                  id="emppassword"
-                  name="emppassword"
-                  value={emppassword}
-                  onChange={(e) => setEmpPassword(e.target.value)}
+                  id="advisorpassword"
+                  name="advisorpassword"
+                  value={advisorpassword}
+                  onChange={(e) => setAdvisorPassword(e.target.value)}
                   placeholder="New Password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 "
                   required
@@ -80,9 +82,9 @@ function EmpPassUpdate() {
               <div>
                 <input
                   type="password"
-                  id="confirmemp_password"
+                  id="confirm_advisorpassword"
                   value={confirmpass}
-                  name="confirmemp_password"
+                  name="confirm_advisorpassword"
                   placeholder="Confirm New Password"
                   onChange={(e) => setConfirmpass(e.target.value)}
                   autoComplete="current-password"
@@ -105,4 +107,4 @@ function EmpPassUpdate() {
   );
 }
 
-export default EmpPassUpdate;
+export default AdvResetPassword;
