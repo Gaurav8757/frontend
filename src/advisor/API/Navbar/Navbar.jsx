@@ -2,7 +2,7 @@
 // Navbar component with token handling and session management
 import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import TimerForAllUser from "../../Timer/TimerForAllUser.jsx";
 
 function Navbar({
@@ -56,17 +56,23 @@ function Navbar({
         if (remainingTime > 0) {
           setTimer(remainingTime);
           startTimer();
-        } 
-        else {
-          handleSessionExpiry();
         }
+        //  else{
+        //   handleSessionExpiry();
+        // }
       }
     };
 
     const handleSessionExpiry = () => {
-      toast.error("Session Expired...!");
-      navigate("/advisor/home/insurance");
+    sessionStorage.removeItem("auth_access_token");
+    sessionStorage.removeItem("auth_expires_in");
+    sessionStorage.removeItem("auth_token_received_at");
+    sessionStorage.removeItem("uat_access_token");
+    sessionStorage.removeItem("uat_expires_in");
+    sessionStorage.removeItem("uat_token_received_at");
+    navigate("/advisor/home/insurance");
     };
+
     checkToken(); // Check token on mount
   }, [navigate]);
 

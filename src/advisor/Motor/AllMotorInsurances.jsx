@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import VehicleRegistrationNo from "../vehicleNumber/VehicleRegistrationNo.jsx";
@@ -8,12 +9,14 @@ import Navbar from "../API/Navbar/Navbar.jsx";
 import QuoteForm from "../API/Quoteform/QuoteForm.jsx";
 
 function AllMotorInsurances() {
+  
   const [selectedOption, setSelectedOption] = useState("");
   const [menuItems, setMenuItems] = useState([]);
   const [selectedSubOption, setSelectedSubOption] = useState("");
   const [subCustType, setSubCustType] = useState("");
   const [customerType, setCustomerType] = useState([]);
   const [quoteResponses, setQuoteResponses] = useState("");
+  const navigate = useNavigate();
   console.log(quoteResponses);
 
   // Handle SubOption change
@@ -45,7 +48,7 @@ function AllMotorInsurances() {
             sessionStorage.setItem("uat_expires_in", uatLists.expires_in);
             sessionStorage.setItem("uat_token_received_at", currentTime);
           }
-          handleSetAuthTokenToQuote();
+          // handleSetAuthTokenToQuote();
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
@@ -64,7 +67,6 @@ function AllMotorInsurances() {
   useEffect(() => {
     const storedSubOption = sessionStorage.getItem("selectedSubOption");
     const storedCustType = sessionStorage.getItem("subCustType");
-
     if (storedSubOption) {
       setSelectedSubOption(storedSubOption);
     }
@@ -96,12 +98,26 @@ function AllMotorInsurances() {
         localStorage.setItem("formResponse", JSON.stringify(response.data));
       } else {
         toast.error(`${response.data.message_txt}`);
+       
+        
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Error fetching quote");
+      // handleSessionExpiry();
     }
   };
 
+
+  const handleSessionExpiry = () => {
+    sessionStorage.removeItem("auth_access_token");
+    sessionStorage.removeItem("auth_expires_in");
+    sessionStorage.removeItem("auth_token_received_at");
+    sessionStorage.removeItem("uat_access_token");
+    sessionStorage.removeItem("uat_expires_in");
+    sessionStorage.removeItem("uat_token_received_at");
+    navigate("/advisor/home/insurance");
+  };
+   
   return (
     <>
       {/* NAVBAR */}
@@ -155,7 +171,7 @@ function AllMotorInsurances() {
           </>
         )}
 
-        {selectedSubOption && (
+        {/* {selectedSubOption && (
           <div className="flex flex-col my-4 md:my-10 text-start">
             <h1 className="text-xl font-semibold space-x-5 p-4">
               Customer Type
@@ -187,8 +203,9 @@ function AllMotorInsurances() {
               ))}
             </ul>
           </div>
-        )}
-        {subCustType && <QuoteForm onSubmit={handleSetAuthTokenToQuote} />}
+        )} */}
+        {/* {subCustType && <QuoteForm onSubmit={handleSetAuthTokenToQuote} />} */}
+        <QuoteForm onSubmit={handleSetAuthTokenToQuote} />
       </main>
     </>
   );
