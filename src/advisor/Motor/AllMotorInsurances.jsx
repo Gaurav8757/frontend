@@ -138,10 +138,10 @@ function AllMotorInsurances() {
               MoveRight={<MoveRight width={20} />}
             />
             <div className="flex flex-col mt-4 md:mt-16 text-start">
-              <h1 className="text-xl font-semibold space-x-5 p-4 ">
+              {/* <h1 className="text-xl font-semibold space-x-5 p-4 ">
                 Business Type
                 <span className="text-red-500 font-extrabold"> *</span>
-              </h1>
+              </h1> */}
               <ul className="flex space-x-4 px-5">
                 {menuItems?.map((option, index) => (
                   <li key={index}>

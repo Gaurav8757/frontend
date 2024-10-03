@@ -51,7 +51,6 @@ function Navbar({
           (currentTime - parseInt(auth_token_received_at, 10)) / 1000
         );
         const remainingTime = Math.max(1800 - tokenAge, 0); // 30 minutes (1800 seconds)
-        console.log(remainingTime);
 
         if (remainingTime > 0) {
           setTimer(remainingTime);

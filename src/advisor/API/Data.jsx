@@ -1,5 +1,28 @@
 import VITE_DATA from "../../config/config.jsx";
 const Data = {
+  business_types: [
+    { id: 0, name: "New Business", value: "0", authLink: `${VITE_DATA}/tataaig/auth/details` },
+    { id: 1, name: "Rollover", value: "1", authLink: `${VITE_DATA}/tataaig/auth/details` },
+    { id: 3, name: "Used Vehicle", value: "3", authLink: `${VITE_DATA}/tataaig/auth/details` },
+  ],
+
+  policyPlans: [
+    { id: "01", name: "Standalone TP (1 year)" },
+    { id: "02", name: "Package (1 year OD + 1 year TP)" },
+    { id: "03", name: "Standalone TP (3 years)" },
+    { id: "04", name: "Package (1 year OD + 3 years TP)" },
+    { id: "05", name: "Standalone OD (1 year)" },
+  ],
+
+  customerTypes: [
+    { id: "individual", value: "Individual", label: "Individual" },
+    { id: "organisation", value: "Organisation", label: "Organisation" },
+  ],
+  policyTypes: [
+    { id: "package", value: "Package", label: "Package" },
+    { id: "liability", value: "Liability", label: "Liability" },
+  ],
+
   GeneralInsurance: [
     {
       name: "tata_aig",
@@ -7,15 +30,23 @@ const Data = {
       links: "/login",
       categories: {
         motor: {
-
           "Pvt-Car": {
-            new: { name: "New", authLink: `${VITE_DATA}/tataaig/auth/details`, quoteLink: "https://uatapigw.tataaig.com/motor/v1/quote",   custType: ["Individual", "Organisation"] },
+            new: {
+              name: "New",
+              authLink: `${VITE_DATA}/tataaig/auth/details`,
+              quoteLink: "https://uatapigw.tataaig.com/motor/v1/quote",
+              custType: ["Individual", "Organisation"],
+            },
             rollover: {
               name: "Rollover",
               apiLink: "/api/tata_aig/pvt_car/rollover",
-              custType: ["Individual", "Organisation"]
+              custType: ["Individual", "Organisation"],
             },
-            satp: { name: "SATP", apiLink: "/api/tata_aig/pvt_car/satp", custType: ["Individual", "Organisation"] },
+            satp: {
+              name: "SATP",
+              apiLink: "/api/tata_aig/pvt_car/satp",
+              custType: ["Individual", "Organisation"],
+            },
           },
 
           "2 Wheeler": {
@@ -44,7 +75,6 @@ const Data = {
               apiLink: "/api/tata_aig/commercial_vehicle/fleet",
             },
           },
-
         },
         nonmotor: ["Travel", "Home", "Business", "Marine"],
         health: ["Health", "Family Health", "Employee Group"],
@@ -57,7 +87,6 @@ const Data = {
       links: "",
       categories: {
         motor: {
-
           "Pvt-Car": {
             new: { name: "New", apiLink: "/api/magma_hdi/pvt_car/new" },
             rollover: {
@@ -93,7 +122,6 @@ const Data = {
               apiLink: "/api/magma_hdi/commercial_vehicle/fleet",
             },
           },
-
         },
         nonmotor: ["Travel", "Home", "Business", "Marine"],
         health: ["Health", "Family Health", "Employee Group"],
@@ -106,7 +134,6 @@ const Data = {
       links: "",
       categories: {
         motor: {
-
           "Pvt-Car": {
             new: { name: "New", apiLink: "/api/bajaj_allianz/pvt_car/new" },
             rollover: {
@@ -142,7 +169,6 @@ const Data = {
               apiLink: "/api/bajaj_allianz/commercial_vehicle/fleet",
             },
           },
-
         },
         nonmotor: ["Travel", "Home", "Business", "Marine"],
         health: ["Health", "Family Health", "Employee Group"],
@@ -155,7 +181,6 @@ const Data = {
       links: "",
       categories: {
         motor: {
-
           "Pvt-Car": {
             new: { name: "New", apiLink: "/api/hdfc_ergo/pvt_car/new" },
             rollover: {
@@ -191,7 +216,6 @@ const Data = {
               apiLink: "/api/hdfc_ergo/commercial_vehicle/fleet",
             },
           },
-
         },
         nonmotor: ["Travel", "Home", "Business", "Marine"],
         health: ["Health", "Family Health", "Employee Group"],
@@ -204,7 +228,6 @@ const Data = {
       links: "",
       categories: {
         motor: {
-
           "Pvt-Car": {
             new: { name: "New", apiLink: "/api/icici_lombard/pvt_car/new" },
             rollover: {
@@ -240,7 +263,6 @@ const Data = {
               apiLink: "/api/icici_lombard/commercial_vehicle/fleet",
             },
           },
-
         },
         nonmotor: ["Travel", "Home", "Business", "Marine"],
         health: ["Health", "Family Health", "Employee Group"],
@@ -253,7 +275,6 @@ const Data = {
       links: "",
       categories: {
         motor: {
-
           "Pvt-Car": {
             new: { name: "New", apiLink: "/api/iffco_tokio/pvt_car/new" },
             rollover: {
@@ -289,7 +310,6 @@ const Data = {
               apiLink: "/api/iffco_tokio/commercial_vehicle/fleet",
             },
           },
-
         },
         nonmotor: ["Travel", "Home", "Business", "Marine"],
         health: ["Health", "Family Health", "Employee Group"],
@@ -301,7 +321,6 @@ const Data = {
       links: "",
       categories: {
         motor: {
-
           "Pvt-Car": {
             new: { name: "New", apiLink: "/api/future_generali/pvt_car/new" },
             rollover: {
@@ -340,7 +359,6 @@ const Data = {
               apiLink: "/api/future_generali/commercial_vehicle/fleet",
             },
           },
-
         },
         nonmotor: ["Travel", "Home", "Business", "Marine"],
         health: ["Health", "Family Health", "Employee Group"],
@@ -352,7 +370,6 @@ const Data = {
       links: "",
       categories: {
         motor: {
-
           "Pvt-Car": {
             new: { name: "New", apiLink: "/api/liberty/pvt_car/new" },
             rollover: {
@@ -388,18 +405,12 @@ const Data = {
               apiLink: "/api/liberty/commercial_vehicle/fleet",
             },
           },
-
         },
         nonmotor: ["Travel", "Home", "Business", "Marine"],
         health: ["Health", "Family Health", "Employee Group"],
       },
     },
   ],
-
-
-
-
-  
 
   LifeInsurance: [
     // Add life insurance data here

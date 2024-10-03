@@ -70,7 +70,7 @@ export default function VehicleRegistrationNo({ Check, MoveRight }) {
   return (
     <div className="w-full  rounded">
       <div className="md:p-4 p-1">
-        <div className="  flex justify-between flex-wrap md:mb-20 mb-10 ">
+        <div className="  flex justify-between flex-wrap md:mb-8 mb-4 ">
           <div className="flex items-center  py-4">
             <input
               type="radio"
