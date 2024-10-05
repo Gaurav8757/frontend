@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import VehicleRegistrationNo from "../vehicleNumber/VehicleRegistrationNo.jsx";
@@ -9,24 +9,25 @@ import Navbar from "../API/Navbar/Navbar.jsx";
 import QuoteForm from "../API/Quoteform/QuoteForm.jsx";
 
 function AllMotorInsurances() {
-  
   const [selectedOption, setSelectedOption] = useState("");
   const [menuItems, setMenuItems] = useState([]);
   const [selectedSubOption, setSelectedSubOption] = useState("");
-  const [subCustType, setSubCustType] = useState("");
-  const [customerType, setCustomerType] = useState([]);
+  // const [subCustType, setSubCustType] = useState("");
+  // const [customerType, setCustomerType] = useState([]);
   const [quoteResponses, setQuoteResponses] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   console.log(quoteResponses);
 
   // Handle SubOption change
   const handleSubOptionChange = (index) => {
+    console.log(index);
+
     const selectedOption = menuItems[index];
     sessionStorage.setItem("selectedSubOption", selectedOption.name);
     setSelectedSubOption(selectedOption.name);
     const authLink = selectedOption.authLink;
-    const custType = selectedOption.custType;
-    setCustomerType(custType);
+    // const custType = selectedOption.custType;
+    // setCustomerType(custType);
 
     // Make API call if needed
     if (authLink) {
@@ -49,6 +50,7 @@ function AllMotorInsurances() {
             sessionStorage.setItem("uat_token_received_at", currentTime);
           }
           // handleSetAuthTokenToQuote();
+          toast.success(`${data.message}`);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
@@ -57,23 +59,23 @@ function AllMotorInsurances() {
   };
 
   // Handle Customer Type change
-  const handleCustomerTypeChange = (index) => {
-    const selectedCustomer = customerType[index];
-    sessionStorage.setItem("subCustType", selectedCustomer);
-    setSubCustType(selectedCustomer);
-  };
+  // const handleCustomerTypeChange = (index) => {
+  //   const selectedCustomer = customerType[index];
+  //   sessionStorage.setItem("subCustType", selectedCustomer);
+  //   setSubCustType(selectedCustomer);
+  // };
 
   // Fetch data and handle sessionStorage for state persistence
   useEffect(() => {
     const storedSubOption = sessionStorage.getItem("selectedSubOption");
-    const storedCustType = sessionStorage.getItem("subCustType");
+    // const storedCustType = sessionStorage.getItem("subCustType");
     if (storedSubOption) {
       setSelectedSubOption(storedSubOption);
     }
 
-    if (storedCustType) {
-      setSubCustType(storedCustType);
-    }
+    // if (storedCustType) {
+    //   setSubCustType(storedCustType);
+    // }
   }, []);
 
   const handleSetAuthTokenToQuote = async (formData) => {
@@ -98,8 +100,6 @@ function AllMotorInsurances() {
         localStorage.setItem("formResponse", JSON.stringify(response.data));
       } else {
         toast.error(`${response.data.message_txt}`);
-       
-        
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Error fetching quote");
@@ -107,17 +107,16 @@ function AllMotorInsurances() {
     }
   };
 
+  // const handleSessionExpiry = () => {
+  //   sessionStorage.removeItem("auth_access_token");
+  //   sessionStorage.removeItem("auth_expires_in");
+  //   sessionStorage.removeItem("auth_token_received_at");
+  //   sessionStorage.removeItem("uat_access_token");
+  //   sessionStorage.removeItem("uat_expires_in");
+  //   sessionStorage.removeItem("uat_token_received_at");
+  //   navigate("/advisor/home/insurance");
+  // };
 
-  const handleSessionExpiry = () => {
-    sessionStorage.removeItem("auth_access_token");
-    sessionStorage.removeItem("auth_expires_in");
-    sessionStorage.removeItem("auth_token_received_at");
-    sessionStorage.removeItem("uat_access_token");
-    sessionStorage.removeItem("uat_expires_in");
-    sessionStorage.removeItem("uat_token_received_at");
-    navigate("/advisor/home/insurance");
-  };
-   
   return (
     <>
       {/* NAVBAR */}
@@ -132,80 +131,18 @@ function AllMotorInsurances() {
       {/* Main */}
       <main className="md:mt-20 mt-20 flex flex-col ml-20 mr-5">
         {selectedOption && (
-          <>
-            <VehicleRegistrationNo
-              Check={<Check className="font-bold" />}
-              MoveRight={<MoveRight width={20} />}
-            />
-            <div className="flex flex-col mt-4 md:mt-16 text-start">
-              {/* <h1 className="text-xl font-semibold space-x-5 p-4 ">
-                Business Type
-                <span className="text-red-500 font-extrabold"> *</span>
-              </h1> */}
-              <ul className="flex space-x-4 px-5">
-                {menuItems?.map((option, index) => (
-                  <li key={index}>
-                    <input
-                      type="radio"
-                      id={`hosting-${index}`}
-                      name="hosting"
-                      value={selectedSubOption}
-                      className="hidden peer"
-                      checked={selectedSubOption === option.name}
-                      onChange={() => handleSubOptionChange(index)}
-                    />
-                    <label
-                      htmlFor={`hosting-${index}`}
-                      className={`inline-flex items-center justify-between w-full p-1 px-4 shadow-inner text-gray-500 bg-slate-100 border border-gray-200 rounded cursor-pointer peer-checked:border-blue-600 peer-checked:bg-gradient-to-t from-blue-700 to-blue-600 peer-checked:text-white hover:text-gray-600 hover:bg-gray-100`}
-                    >
-                      <div className="block my-auto">
-                        <div className="w-auto text-lg md:text-xl font-semibold">
-                          {option.name}
-                        </div>
-                      </div>
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </>
+          <VehicleRegistrationNo
+            Check={<Check className="font-bold" />}
+            MoveRight={<MoveRight width={20} />}
+          />
         )}
-
-        {/* {selectedSubOption && (
-          <div className="flex flex-col my-4 md:my-10 text-start">
-            <h1 className="text-xl font-semibold space-x-5 p-4">
-              Customer Type
-              <span className="text-red-500 font-extrabold"> *</span>
-            </h1>
-            <ul className="flex space-x-4 px-5">
-              {customerType.map((cust, index) => (
-                <li key={index}>
-                  <input
-                    type="radio"
-                    id={`h-${index}`}
-                    name="h"
-                    value={subCustType}
-                    className="hidden peer"
-                    checked={subCustType === cust}
-                    onChange={() => handleCustomerTypeChange(index)}
-                  />
-                  <label
-                    htmlFor={`h-${index}`}
-                    className={`inline-flex items-center justify-between w-full p-1 px-4 shadow-inner text-gray-500 bg-slate-100 border border-gray-200 rounded cursor-pointer peer-checked:border-blue-600 peer-checked:bg-gradient-to-t from-blue-700 to-blue-600 peer-checked:text-white hover:text-gray-600 hover:bg-gray-100`}
-                  >
-                    <div className="block my-auto">
-                      <div className="w-auto text-lg md:text-xl font-semibold">
-                        {cust}
-                      </div>
-                    </div>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )} */}
         {/* {subCustType && <QuoteForm onSubmit={handleSetAuthTokenToQuote} />} */}
-        <QuoteForm onSubmit={handleSetAuthTokenToQuote} />
+        {selectedOption && (
+          <QuoteForm
+            onSubmit={handleSetAuthTokenToQuote}
+            handle={handleSubOptionChange}
+          />
+        )}
       </main>
     </>
   );

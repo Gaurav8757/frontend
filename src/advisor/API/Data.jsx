@@ -1,9 +1,9 @@
 import VITE_DATA from "../../config/config.jsx";
 const Data = {
   business_types: [
-    { id: 0, name: "New Business", value: "0", authLink: `${VITE_DATA}/tataaig/auth/details` },
-    { id: 1, name: "Rollover", value: "1", authLink: `${VITE_DATA}/tataaig/auth/details` },
-    { id: 3, name: "Used Vehicle", value: "3", authLink: `${VITE_DATA}/tataaig/auth/details` },
+    { id: 0, name: "New Business", value: "1", authLink: `${VITE_DATA}/tataaig/auth/details` },
+    { id: 1, name: "Rollover", value: "3", authLink: `${VITE_DATA}/tataaig/auth/details` },
+    { id: 3, name: "Used Vehicle", value: "4", authLink: `${VITE_DATA}/tataaig/auth/details`                                                                                                                                                                  },
   ],
 
   policyPlans: [
@@ -22,6 +22,42 @@ const Data = {
     { id: "package", value: "Package", label: "Package" },
     { id: "liability", value: "Liability", label: "Liability" },
   ],
+
+  
+    titles: [
+      "Adv",
+      "Brig",
+      "Capt",
+      "Col",
+      "Cust",
+      "Dr",
+      "Gen",
+      "Hon",
+      "Justice",
+      "Lady",
+      "Lt",
+      "Maj",
+      "Major",
+      "Mast",
+      "Md",
+      "Mis",
+      "Miss",
+      "M/s.",
+      "Mstr",
+      "Mr",
+      "Mrs",
+      "Ms",
+      "Mst",
+      "Phd",
+      "Prof",
+      "Rev",
+      "Shri",
+      "Sist",
+      "Wing Cdr",
+      "Wing Commander"
+    ],
+  
+  
 
   GeneralInsurance: [
     {

@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Data from "../Data.jsx";
-import { Check, MoveRight } from "lucide-react";
-import VehicleRegistrationNo from "../../vehicleNumber/VehicleRegistrationNo.jsx";
-import { NavLink } from "react-router-dom";
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+// import { Check, MoveRight } from "lucide-react";
+// import VehicleRegistrationNo from "../../vehicleNumber/VehicleRegistrationNo.jsx";
+// import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function QuoteForm({ onSubmit }) {
+function QuoteForm({ onSubmit, handle }) {
   const [formData, setFormData] = useState({
     source: "P",
     q_producer_email: "chitra2@gmail.com",
@@ -121,18 +123,6 @@ function QuoteForm({ onSubmit }) {
   const [registrationParts, setRegistrationParts] = useState(["", "", "", ""]);
   const [registrationType, setRegistrationType] = useState("default"); // default value
 
-  // Update the form data when a radio button is selected
-  const handleRadioChange = (type) => {
-    if (type === "BH_regno") {
-      setFormData({ ...formData, BH_regno: "true", special_regno: "false" });
-    } else if (type === "special_regno") {
-      setFormData({ ...formData, BH_regno: "false", special_regno: "true" });
-    } else {
-      setFormData({ ...formData, BH_regno: "false", special_regno: "false" });
-    }
-    setRegistrationType(type);
-  };
-
   // Input field changes
   const handleInputChange = (index, value) => {
     const updatedParts = [...registrationParts];
@@ -147,6 +137,34 @@ function QuoteForm({ onSubmit }) {
       [keys[index]]: value,
     });
   };
+
+  // Update the form data when a radio button is selected
+  const handleRadioChange = (type) => {
+    let updatedFormData = { ...formData };
+    if (type === "BH_regno") {
+      updatedFormData = {
+        ...updatedFormData,
+        BH_regno: "true",
+        special_regno: "false",
+      };
+    } else if (type === "special_regno") {
+      updatedFormData = {
+        ...updatedFormData,
+        BH_regno: "false",
+        special_regno: "true",
+      };
+    } else {
+      updatedFormData = {
+        ...updatedFormData,
+        BH_regno: "false",
+        special_regno: "false",
+      };
+    }
+    setFormData(updatedFormData);
+    setRegistrationType(type);
+    setRegistrationParts(["", "", "", ""]);
+  };
+
   // Validation logic for registration number
   const validateRegistrationNumber = () => {
     const number = registrationParts.join("");
@@ -199,6 +217,12 @@ function QuoteForm({ onSubmit }) {
         [name]: value,
         claim_last: value ? "true" : "false",
       });
+    } else if (name === "business_type_no") {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+      handle(parseInt(value)); // Assuming handle is a defined function
     } else {
       // For other fields, just update the value
       setFormData({
@@ -208,13 +232,17 @@ function QuoteForm({ onSubmit }) {
     }
   };
 
+  // useEffect(()=>{
+  //   !validateRegistrationNumber();
+  // }, [validateRegistrationNumber])
+
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (!validateRegistrationNumber()) {
-    //   toast.error("Invalid Registration Number");
-    //   return;
-    // }
+    if (!validateRegistrationNumber()) {
+      toast.error("Invalid Registration Number");
+      return;
+    }
     onSubmit(formData); // Pass data to the parent component
   };
 
@@ -229,7 +257,7 @@ function QuoteForm({ onSubmit }) {
           </h1>
           <ul className="flex space-x-2 md:space-x-4 md:px-4 p-1">
             {Data.business_types?.map((business) => (
-              <NavLink key={business.id} to={business.authLink}>
+              <div key={business.id}>
                 <input
                   type="radio"
                   name="business_type_no"
@@ -249,7 +277,7 @@ function QuoteForm({ onSubmit }) {
                     </div>
                   </div>
                 </label>
-              </NavLink>
+              </div>
             ))}
           </ul>
         </div>
@@ -410,7 +438,9 @@ function QuoteForm({ onSubmit }) {
                       placeholder={getPlaceholders()[index]}
                       maxLength={getMaxLengths()[index]}
                       value={part}
-                      onChange={(e) => handleInputChange(index, e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange(index, e.target.value.toUpperCase())
+                      }
                     />
                   ))}
                 </div>
@@ -420,35 +450,113 @@ function QuoteForm({ onSubmit }) {
         </div>
 
         {/*  Prev Policy Type */}
-        <div className="flex flex-col text-start   my-2 md:my-8">
-          <h1 className="text-base md:text-xl font-semibold space-x-2  md:px-4  p-1">
-            Prev Policy Type
+        {formData.business_type_no === "3" && (
+          <div className="flex flex-col text-start my-2 md:my-8">
+            <h1 className="text-base md:text-xl font-semibold space-x-2  md:px-4  p-1">
+              Prev Policy Type
+              <span className="text-red-500 font-extrabold"> *</span>
+            </h1>
+            <div className="flex p-2 md:px-4  space-x-1 md:space-x-4 md:p-1">
+              {Data.policyTypes.map((type) => (
+                <div key={type.id} className="flex items-center">
+                  <input
+                    type="radio"
+                    name="prev_pol_type"
+                    id={type.id}
+                    className="hidden peer"
+                    value={type.value}
+                    onChange={handleChange}
+                    checked={formData.prev_pol_type === type.value}
+                  />
+                  <label
+                    htmlFor={type.id}
+                    className={`inline-flex items-center px-2 justify-between p-1  shadow-inner text-gray-500 bg-slate-100 border border-gray-200 rounded cursor-pointer peer-checked:border-blue-600 peer-checked:bg-gradient-to-t from-blue-700 to-blue-600 peer-checked:text-white hover:text-gray-600 hover:bg-gray-100`}
+                  >
+                    <div className="block my-auto">
+                      <div className="w-auto text-base md:text-xl font-semibold">
+                        {type.label}
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="text-start my-2 md:my-8">
+          <h1 className="text-base md:text-xl font-semibold space-x-2 md:space-x-4 md:px-4 p-1">
+            Title
             <span className="text-red-500 font-extrabold"> *</span>
           </h1>
-          <div className="flex p-2 md:px-4  space-x-1 md:space-x-4 md:p-1">
-            {Data.policyTypes.map((type) => (
-              <div key={type.id} className="flex items-center">
-                <input
-                  type="radio"
-                  name="prev_pol_type"
-                  id={type.id}
-                  className="hidden peer"
-                  value={type.value}
-                  onChange={handleChange}
-                  checked={formData.prev_pol_type === type.value}
-                />
-                <label
-                  htmlFor={type.id}
-                  className={`inline-flex items-center px-2 justify-between p-1  shadow-inner text-gray-500 bg-slate-100 border border-gray-200 rounded cursor-pointer peer-checked:border-blue-600 peer-checked:bg-gradient-to-t from-blue-700 to-blue-600 peer-checked:text-white hover:text-gray-600 hover:bg-gray-100`}
-                >
-                  <div className="block my-auto">
-                    <div className="w-auto text-base md:text-xl font-semibold">
-                      {type.label}
-                    </div>
-                  </div>
-                </label>
-              </div>
-            ))}
+          <div className="flex p-1 md:px-4">
+            <select
+              name="proposer_salutation"
+              value={formData.proposer_salutation}
+              onChange={handleChange}
+              className={`items-center border-none text-base md:text-inherit font-bold md:p-2 p-1.5 shadow-inner text-gray-500 bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+            >
+              <option className="font-semibold" value="">
+                Select Salutation
+              </option>
+              {Data.titles.map((title, idx) => (
+                <option key={idx} value={title}>
+                  {title}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="text-start my-2 md:my-4">
+          <h1 className="text-base md:text-xl font-semibold md:px-4 p-1">
+            Email ID
+            <span className="text-red-500 font-extrabold"> *</span>
+          </h1>
+          <div className="flex p-1 md:px-4">
+            <input
+              name="proposer_email"
+              type="email"
+              value={formData.proposer_email}
+              onChange={handleChange}
+              required
+              className={`items-center border-none text-base md:text-inherit font-bold md:p-2 p-1.5 shadow-inner text-gray-500 bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+            />
+          </div>
+        </div>
+        <div className="text-start my-2 md:my-4">
+          <h1 className="text-base md:text-xl font-semibold md:px-4 p-1">
+            Mobile No.
+            <span className="text-red-500 font-extrabold"> *</span>
+          </h1>
+          <div className="flex p-1 md:px-4">
+            <PhoneInput
+              placeholder="Enter phone number"
+              value={this.state.phone}
+              onChange={phone => this.setState({ phone })}
+              country={'in'}
+              specialLabel={""}
+              autoFormat = {true}
+              inputStyle={{
+                backgroundColor: '#f1f5f9', // Slate-100
+                border: 'none',
+                padding: '2px',
+                borderRadius: '4px'
+              }}
+              buttonClass={{
+                border: 'none',
+                backgroundColor: '#f1f5f9',
+                borderRadius: '4px'
+              }}
+            />
+            {/* <input
+              name="proposer_mobile"
+              type="email"
+              value={formData.proposer_mobile}
+              onChange={handleChange}
+              required
+              className={`items-center border-none text-base md:text-inherit font-bold md:p-2 p-1.5 shadow-inner text-gray-500 bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+            /> */}
           </div>
         </div>
         <div className="text-start my-3 md:my-3">
@@ -602,7 +710,8 @@ function QuoteForm({ onSubmit }) {
               ))} */}
             </select>
           </div>
-
+        </div>
+        {formData.business_type_no === "3" && (
           <div className="text-start my-3 md:my-3">
             <h1 className="text-base md:text-xl font-semibold space-x-2 md:px-4 p-1">
               Prev. Policy NCB
@@ -626,35 +735,7 @@ function QuoteForm({ onSubmit }) {
               </select>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="space-y-2">
-          <label htmlFor="cubic-capacity">Cubic Capacity *</label>
-          <input id="cubic-capacity" defaultValue="2523" />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="fuel-type">Fuel Type *</label>
-          <input id="fuel-type" defaultValue="DIESEL" />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="seating-capacity">
-            Seating Capacity Including Driver *
-          </label>
-          <input id="seating-capacity" defaultValue="7" />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="space-y-2">
-          <label htmlFor="body-type">Body Type *</label>
-          <input id="body-type" defaultValue="MUV" />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="segment">Segment *</label>
-          <input id="segment" defaultValue="MPV SUV" />
-        </div>
+        )}
       </div>
 
       {/* Submit button */}
