@@ -9,6 +9,7 @@ import 'react-phone-input-2/lib/style.css'
 import { toast } from "react-toastify";
 
 function QuoteForm({ onSubmit, handle }) {
+  const [phone, setPhone] = useState();
   const [formData, setFormData] = useState({
     source: "P",
     q_producer_email: "chitra2@gmail.com",
@@ -26,7 +27,7 @@ function QuoteForm({ onSubmit, handle }) {
     proposer_gstin: "",
     proposer_salutation: "",
     proposer_email: "",
-    proposer_mobile: "",
+    proposer_mobile: phone,
     business_type_no: "", // Business Type selection will update this
     dor: "",
     prev_pol_end_date: "",
@@ -122,6 +123,7 @@ function QuoteForm({ onSubmit, handle }) {
 
   const [registrationParts, setRegistrationParts] = useState(["", "", "", ""]);
   const [registrationType, setRegistrationType] = useState("default"); // default value
+ 
 
   // Input field changes
   const handleInputChange = (index, value) => {
@@ -532,8 +534,9 @@ function QuoteForm({ onSubmit, handle }) {
           <div className="flex p-1 md:px-4">
             <PhoneInput
               placeholder="Enter phone number"
-              value={this.state.phone}
-              onChange={phone => this.setState({ phone })}
+              name="proposer_mobile"
+              value={phone}
+              onChange={()=>setPhone()}
               country={'in'}
               specialLabel={""}
               autoFormat = {true}
@@ -550,7 +553,7 @@ function QuoteForm({ onSubmit, handle }) {
               }}
             />
             {/* <input
-              name="proposer_mobile"
+              
               type="email"
               value={formData.proposer_mobile}
               onChange={handleChange}
