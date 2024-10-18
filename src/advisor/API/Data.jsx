@@ -23,6 +23,14 @@ const Data = {
     { id: "liability", value: "Liability", label: "Liability" },
   ],
 
+  paOwner: [
+    {id: "yes", name: "Yes", value: true},
+    {id: "no", name: "No", value: false}
+  ],
+
+  ownerTenure:[
+    1,3
+  ],
   
     titles: [
       "Adv",
@@ -57,7 +65,14 @@ const Data = {
       "Wing Commander"
     ],
   
-  
+    ncbvalues: [
+      { id: "0", ncb: 0 },
+      { id: "1", ncb: 20 },
+      { id: "2", ncb: 25 },
+      { id: "3", ncb: 40},
+      { id: "4", ncb: 80},
+      { id: "5", ncb: 100}
+    ],
 
   GeneralInsurance: [
     {

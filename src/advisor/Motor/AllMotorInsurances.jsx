@@ -129,13 +129,13 @@ function AllMotorInsurances() {
       {/* Sidebar */}
       <Asidebar />
       {/* Main */}
-      <main className="md:mt-20 mt-20 flex flex-col ml-20 mr-5">
-        {selectedOption && (
+      <main className="md:mt-28 mt-20 flex flex-col ml-20 mr-2 ">
+        {/* {selectedOption && (
           <VehicleRegistrationNo
             Check={<Check className="font-bold" />}
             MoveRight={<MoveRight width={20} />}
           />
-        )}
+        )} */}
         {/* {subCustType && <QuoteForm onSubmit={handleSetAuthTokenToQuote} />} */}
         {selectedOption && (
           <QuoteForm
