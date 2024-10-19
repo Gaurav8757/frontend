@@ -12,10 +12,10 @@ function QuoteForm({ onSubmit, handle }) {
   const [selectedBusinessName, setSelectedBusinessName] = useState("");
   const [selectedCustomerType, setSelectedCustomerType] = useState("");
   const [selectedPolicyPlan, setSelectedPolicyPlan] = useState("");
+  const [showConfirmation, setShowConfirmation] = useState(false); // for popup
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
   const [stepsCompleted, setStepsCompleted] = useState([
-    false,
     false,
     false,
     false,
@@ -28,7 +28,7 @@ function QuoteForm({ onSubmit, handle }) {
     q_producer_code: "4984727878",
     is_posp: "N",
     sol_id: "",
-    q_office_location: "PATNA",
+    q_office_location: "",
     pol_plan_id: "",
     place_reg: "",
     vehicle_make: "",
@@ -44,7 +44,7 @@ function QuoteForm({ onSubmit, handle }) {
     dor: "",
     prev_pol_end_date: "",
     man_year: "",
-    pol_start_date: "",
+    pol_start_date: "2024-10-19",
     prev_pol_type: "",
     claim_last: "",
     pre_pol_ncb: "",
@@ -132,7 +132,6 @@ function QuoteForm({ onSubmit, handle }) {
     vehicle_idv: "",
     __finalize: "",
   });
-  console.log(formData.pa_owner);
 
   const [registrationParts, setRegistrationParts] = useState(["", "", "", ""]);
   const [registrationType, setRegistrationType] = useState("default"); // default value
@@ -233,20 +232,13 @@ function QuoteForm({ onSubmit, handle }) {
         isValid = false;
       }
     }
-    else if (stepNumber === 4) {
-      // if (!formData.ncb_no_of_claims) {
-      //   newErrors["ncb_no_of_claims"] = "required";
-      //   isValid = false;
-      // }
-    }
-
     setErrors(newErrors);
     return isValid;
   };
 
   const handleNext = () => {
     if (validateStep(step)) {
-      if (step < 5) {
+      if (step < 4) {
         setStep((prevStep) => prevStep + 1);
         setStepsCompleted((prev) => {
           const newCompleted = [...prev];
@@ -376,7 +368,7 @@ function QuoteForm({ onSubmit, handle }) {
         [name]: value,
         prev_cnglpg: value === "3" ? "Yes" : "No",
       });
-      handle(parseInt(value)); // Assuming handle is a defined function
+      handle(parseInt(value)); // Assuming handle name send to allmotorinsurances data is a defined function
     } else if (name === "proposer_type") {
       const selectedType = Data.customerTypes.find(
         (type) => type.value === value
@@ -396,12 +388,11 @@ function QuoteForm({ onSubmit, handle }) {
 
       // Update selected plan name
       setSelectedPolicyPlan(selectedPlan ? selectedPlan.name : "");
-    }
-    else {
+    } else {
       setFormData({
         ...formData,
         [name]: value,
-        proposer_mobile: value,
+        __finalize: "0",
       });
     }
   };
@@ -461,7 +452,7 @@ function QuoteForm({ onSubmit, handle }) {
       { label: "Prev Consumable", value: formData.prev_consumable }
     );
   }
-  if (step && step === 3) {
+  if (step && (step === 3 || step === 4)) {
     fieldMappings.push(
       {
         label: "Full Name",
@@ -508,10 +499,25 @@ function QuoteForm({ onSubmit, handle }) {
     );
   }
   if (step && step === 4) {
-    fieldMappings.push({
-      label: "Allowance Days Loss",
-      value: formData.allowance_days_loss,
-    });
+    fieldMappings.push(
+      { label: "PA Owner", value: formData.pa_owner },
+      { label: "Onwer Tenure", value: formData.pa_owner_tenure },
+      { label: "Pa Owner Declaration", value: formData.pa_owner_declaration },
+      {
+        label: "Allowance Days Loss",
+        value: formData.allowance_days_loss,
+      },
+      { label: "Franchise Days", value: formData.franchise_days },
+      { label: "Pa Unnamed No", value: formData.pa_unnamed_no },
+      { label: "Pa Unnamed Si", value: formData.pa_unnamed_si },
+      { label: "Pa Named", value: formData.pa_named },
+      { label: "Pa Unnamed Csi", value: formData.pa_unnamed_csi },
+      { label: "Pa Paid No", value: formData.pa_paid_no },
+      { label: "Pa Paid Si", value: formData.pa_paid_si },
+      { label: "Ll Paid No", value: formData.ll_paid_no },
+      { label: "Ll Paid Si", value: formData.ll_paid_si },
+      { label: "Voluntary Amount", value: formData.voluntary_amount }
+    );
   }
 
   const renderStep = () => {
@@ -527,8 +533,6 @@ function QuoteForm({ onSubmit, handle }) {
                 </h1>
                 <ul className="grid grid-cols-2 justify-items-center gap-4">
                   {Data.business_types?.map((business) => (
-                    console.log(formData.business_type_no === business.value),
-                    
                     <div key={business.id}>
                       <input
                         type="radio"
@@ -560,7 +564,6 @@ function QuoteForm({ onSubmit, handle }) {
                   </p>
                 )}
               </div>
-              
 
               <div>
                 <h1 className=" text-sm text-start md:text-base font-semibold space-x-2 md:space-x-5 md:px-4 p-1">
@@ -1237,7 +1240,7 @@ function QuoteForm({ onSubmit, handle }) {
                         errors["proposer_fname"]
                           ? "border-red-500"
                           : "border-none"
-                      } items-center w-4/5 md:w-auto text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+                      } items-cente w-5/6 text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
                     />
                   </div>
                   {errors["proposer_fname"] && (
@@ -1261,7 +1264,7 @@ function QuoteForm({ onSubmit, handle }) {
                         errors["proposer_mname"]
                           ? "border-red-500"
                           : "border-none"
-                      } items-center w-4/5 md:w-auto text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+                      } items-center w-5/6 text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
                     />
                   </div>
                   {errors["proposer_mname"] && (
@@ -1285,7 +1288,7 @@ function QuoteForm({ onSubmit, handle }) {
                         errors["proposer_lname"]
                           ? "border-red-500"
                           : "border-none"
-                      } items-center  w-4/5 md:w-auto  text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+                      } items-center w-5/6 text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
                     />
                   </div>
                   {errors["proposer_lname"] && (
@@ -1311,7 +1314,7 @@ function QuoteForm({ onSubmit, handle }) {
                       errors["proposer_email"]
                         ? "border-red-500"
                         : "border-none"
-                    } items-center  text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+                    } items-center w-5/6 text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
                   />
                 </div>
                 {errors["proposer_email"] && (
@@ -1349,6 +1352,10 @@ function QuoteForm({ onSubmit, handle }) {
                       boxShadow: "inset 2px 0px 4px rgba(0, 0, 0, 0.1)",
                       backgroundColor: "#eceff4",
                       paddingLeft: "4.5rem",
+                      "@media (max-width: 600px)": {
+                        width: "5rem", // Adjust width for small screens
+                        paddingLeft: "2rem", // Adjust padding for small screens
+                      },
                     }}
                     buttonClass={{
                       border: "none",
@@ -1437,7 +1444,7 @@ function QuoteForm({ onSubmit, handle }) {
                       type="text"
                       value={formData[field]}
                       onChange={handleChange}
-                      placeholder= {field
+                      placeholder={field
                         .replace(/_/g, " ")
                         .replace(/\b\w/g, (char) => char.toUpperCase())}
                       className=" items-center border-none text-base md:text-inherit md:p-2 p-1.5 shadow-inner bg-slate-100 rounded hover:text-gray-600 hover:bg-gray-100"
@@ -1464,7 +1471,7 @@ function QuoteForm({ onSubmit, handle }) {
             </div>
 
             <div className="grid md:grid-cols-5 grid-cols-2 gap-4">
-            <div>
+              <div>
                 <h1 className=" text-sm text-start md:text-base font-semibold space-x-2 md:space-x-5 md:px-4 p-1">
                   Pa Owner
                   <span className="text-red-500 font-extrabold"> *</span>
@@ -1503,32 +1510,32 @@ function QuoteForm({ onSubmit, handle }) {
                 )}
               </div>
               {formData.pa_owner === "true" && (
-                 <div>
-                 <h1 className="text-sm text-start md:text-base font-semibold space-x-2 md:space-x-4 md:px-4 p-1">
-                   Owner Tenure
-                   {/* <span className="text-red-500 font-extrabold"> *</span> */}
-                 </h1>
-                 <div className="flex p-1 md:px-3">
-                   <select
-                     name="pa_owner_tenure"
-                     value={formData.pa_owner_tenure}
-                     onChange={handleChange}
-                     className={`items-center border-none text-base md:text-inherit font-semibold md:p-1.5 p-1 shadow-inner text-gray-500 bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
-                   >
-                     <option className="font-semibold" value="">
-                       Select Tenure
-                     </option>
-                     {Data.ownerTenure.map((val, idx) => (
-                       <option key={idx} value={val}>
-                         {val}
-                       </option>
-                     ))}
-                   </select>
-                 </div>
-               </div>
+                <div>
+                  <h1 className="text-sm text-start md:text-base font-semibold space-x-2 md:space-x-4 md:px-4 p-1">
+                    Owner Tenure
+                    {/* <span className="text-red-500 font-extrabold"> *</span> */}
+                  </h1>
+                  <div className="flex p-1 md:px-3">
+                    <select
+                      name="pa_owner_tenure"
+                      value={formData.pa_owner_tenure}
+                      onChange={handleChange}
+                      className={`items-center border-none text-base md:text-inherit font-semibold md:p-1.5 p-1 shadow-inner text-gray-500 bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+                    >
+                      <option className="font-semibold" value="">
+                        Select Tenure
+                      </option>
+                      {Data.ownerTenure.map((val, idx) => (
+                        <option key={idx} value={val}>
+                          {val}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
               )}
 
-              {[ 
+              {[
                 "pa_owner_declaration",
                 "allowance_days_loss",
                 "franchise_days",
@@ -1555,7 +1562,7 @@ function QuoteForm({ onSubmit, handle }) {
                       type="text"
                       value={formData[field]}
                       onChange={handleChange}
-                      placeholder=  {field
+                      placeholder={field
                         .replace(/_/g, " ")
                         .replace(/\b\w/g, (char) => char.toUpperCase())}
                       className=" items-center border-none text-base md:text-inherit md:p-2 p-1.5 shadow-inner bg-slate-100 rounded hover:text-gray-600 hover:bg-gray-100"
@@ -1566,14 +1573,30 @@ function QuoteForm({ onSubmit, handle }) {
             </div>
           </div>
         );
+      case 4:
+        return (
+          <div className="space-y-3">
+            <div className="grid lg:grid-cols-10 grid-cols-4 text-sm md:text-base text-gray-500 bg-blue-100 p-2 gap-8 rounded">
+              {fieldMappings.map((field, index) => (
+                <p key={index} className="flex flex-col">
+                  {field.label}
+                  <span className="text-black font-medium pt-2">
+                    {field.value || "N/A"}
+                  </span>
+                </p>
+              ))}
+            </div>
+            {/* <div className="grid md:grid-cols-5 grid-cols-2 gap-4"></div> */}
+          </div>
+        );
       default:
         return null;
     }
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+    // e.preventDefault();
     if (!validateRegistrationNumber()) {
       toast.error("Invalid Registration Number");
       return;
@@ -1581,17 +1604,34 @@ function QuoteForm({ onSubmit, handle }) {
     onSubmit(formData); // Pass data to the parent component
   };
 
+  const handleConvert = () => {
+    setFormData({ ...formData, __finalize: "1" });
+    setShowConfirmation(true);
+  };
+
+  // SAVE QUOTES
+  const handleSave = () => {
+    handleSubmit(); // Trigger form submission with __finalize = "0"
+  };
+
+  const confirmFinalize = () => {
+    handleSubmit();
+    // Form conversion is confirmed
+    setShowConfirmation(false);
+  };
+
   return (
     <>
+      {/* <form> */}
       <div className="max-w-full border shadow-inner md:p-4 p-2 bg-slate-50  isolation-auto border-none Z-10  relative rounded group">
         <div className={`${step > 1 ? "mb-6" : "mb-8"}`}>
           <div className="flex justify-between items-center">
-            <span className="md:text-lg text-sm">Step {step} of 5</span>
+            <span className="md:text-lg text-sm">Step {step} of 4</span>
             <h2 className="md:text-2xl text-base font-bold">
-              Quote Information
+              {step > 3 ? "Quote Preview" : "Quote Information"}
             </h2>
             <div className="flex space-x-2">
-              {[1, 2, 3, 4, 5].map((s) => (
+              {[1, 2, 3, 4].map((s) => (
                 <div
                   key={s}
                   className={`md:w-6 w-2 md:h-1.5 h-1  ${
@@ -1606,22 +1646,21 @@ function QuoteForm({ onSubmit, handle }) {
             </div>
           </div>
         </div>
-        <form onSubmit={handleSubmit} className="">
-          {renderStep()}
-        </form>
+
+        {renderStep()}
       </div>
       <div className="my-4 flex justify-between">
         <button
           type="button"
           className={`${
             step === 1 && "cursor-not-allowed"
-          } flex justify-center gap-2 items-center shadow-xl text-lg bg-slate-100 backdrop-blur-md lg:font-semibold isolation-auto border-none before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-right-full before:hover:right-0 before:rounded before:bg-red-700 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 md:px-8 md:py-2 px-3 py-1 overflow-hidden rounded group`}
+          } flex justify-center gap-2 items-center shadow-xl text-lg z-0 bg-slate-100 backdrop-blur-md lg:font-semibold isolation-auto border-none before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-right-full before:hover:right-0 before:rounded before:bg-red-700 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 md:px-8 md:py-2 px-3 py-1 overflow-hidden rounded group`}
           onClick={handlePrevious}
           disabled={step === 1}
         >
           Previous
         </button>
-        {step < 5 ? (
+        {step < 4 ? (
           <button
             type="button"
             className="flex justify-center gap-2 items-center shadow-xl text-lg bg-slate-100 backdrop-blur-md lg:font-semibold isolation-auto border-none before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded before:bg-green-800 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 md:px-8 md:py-2 px-3 py-1  overflow-hidden rounded group"
@@ -1630,14 +1669,58 @@ function QuoteForm({ onSubmit, handle }) {
             Next
           </button>
         ) : (
-          <button
-            className="flex justify-center gap-2 items-center shadow-xl text-lg bg-slate-100 backdrop-blur-md lg:font-semibold isolation-auto border-none before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded before:bg-blue-600 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative md:px-8 md:py-2 px-3 py-1  overflow-hidden rounded group"
-            type="submit"
-          >
-            Submit
-          </button>
+          <div className="flex justify-between space-x-5">
+            <button
+              onClick={handleSave}
+              className="flex justify-center gap-2 items-center shadow-xl text-lg bg-slate-100 backdrop-blur-md lg:font-semibold isolation-auto border-none before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded before:bg-blue-700 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative md:px-8 md:py-2 px-3 py-1  overflow-hidden rounded group"
+              type="submit"
+            >
+              Save
+            </button>
+            <button
+              onClick={handleConvert}
+              className="flex justify-center gap-2 items-center shadow-xl text-lg bg-slate-100 backdrop-blur-md lg:font-semibold isolation-auto border-none before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded before:bg-green-800 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative md:px-8 md:py-2 px-3 py-1  overflow-hidden rounded group"
+              type="submit"
+            >
+              Convert to Proposal
+            </button>
+          </div>
         )}
       </div>
+      {/* </form> */}
+
+      {showConfirmation && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+          <div className="bg-white p-4 rounded shadow-lg">
+            <h3
+              className="text-lg font-semibold mb-4"
+            >
+              {`Are you sure you want to submit ${formData.proposer_fname} ${formData.proposer_lname} quote?`}
+            </h3>
+
+            <div className="flex justify-end space-x-4">
+              <button
+                className="bg-gray-300  cursor-pointer transition-all text-black font-mono font-bold px-6 py-1 rounded-lg
+border-gray-400
+border-b-[4px] hover:brightness-110  
+active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                onClick={() => setShowConfirmation(false)} // Close popup
+              >
+                No
+              </button>
+              <button
+                className=" cursor-pointer transition-all bg-green-600 text-black font-mono font-bold px-6 py-1 rounded-lg
+border-green-700
+border-b-[4px] hover:brightness-110 
+active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                onClick={confirmFinalize} // Set formData.__finalize to "1"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

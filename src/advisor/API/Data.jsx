@@ -1,8 +1,8 @@
 import VITE_DATA from "../../config/config.jsx";
 const Data = {
   business_types: [
-    { id: 0, name: "New Business", value: "1", authLink: `${VITE_DATA}/tataaig/auth/details` },
-    { id: 1, name: "Rollover", value: "3", authLink: `${VITE_DATA}/tataaig/auth/details` },
+    { id: 1, name: "New Business", value: "1", authLink: `${VITE_DATA}/tataaig/auth/details` },
+    { id: 2, name: "Rollover", value: "3", authLink: `${VITE_DATA}/tataaig/auth/details` },
     { id: 3, name: "Used Vehicle", value: "4", authLink: `${VITE_DATA}/tataaig/auth/details`                                                                                                                                                                  },
   ],
 
@@ -24,8 +24,8 @@ const Data = {
   ],
 
   paOwner: [
-    {id: "yes", name: "Yes", value: true},
-    {id: "no", name: "No", value: false}
+    {id: "yes", name: "Yes", value: "true"},
+    {id: "no", name: "No", value: "false"}
   ],
 
   ownerTenure:[
@@ -82,6 +82,12 @@ const Data = {
       categories: {
         motor: {
           "Pvt-Car": {
+            zero:{
+              name: "News",
+              authLink: `${VITE_DATA}/tataaig/auth/details`,
+              quoteLink: "https://uatapigw.tataaig.com/motor/v1/quote",
+              custType: ["Individual", "Organisation"],
+            },
             new: {
               name: "New",
               authLink: `${VITE_DATA}/tataaig/auth/details`,
