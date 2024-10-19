@@ -11,18 +11,9 @@ function AllMotorInsurances() {
   const [selectedOption, setSelectedOption] = useState("");
   const [menuItems, setMenuItems] = useState({});
   const [selectedSubOption, setSelectedSubOption] = useState("");
-  // const [subCustType, setSubCustType] = useState("");
-  // const [customerType, setCustomerType] = useState([]);
   const [quoteResponses, setQuoteResponses] = useState("");
-  // const navigate = useNavigate();
-  console.log(menuItems);
-  console.log(selectedSubOption);
-
-
-
-
-
-
+ console.log(quoteResponses);
+ 
   // Handle SubOption change
   const handleSubOptionChange = (index) => {
     const selectedOption = menuItems[index];

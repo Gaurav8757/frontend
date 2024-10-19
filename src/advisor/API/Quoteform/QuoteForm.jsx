@@ -1692,9 +1692,7 @@ function QuoteForm({ onSubmit, handle }) {
       {showConfirmation && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
           <div className="bg-white p-4 rounded shadow-lg">
-            <h3
-              className="text-lg font-semibold mb-4"
-            >
+            <h3 className="text-lg font-semibold mb-4">
               {`Are you sure you want to submit ${formData.proposer_fname} ${formData.proposer_lname} quote?`}
             </h3>
 
