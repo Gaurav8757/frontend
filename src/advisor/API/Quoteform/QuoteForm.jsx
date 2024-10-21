@@ -13,6 +13,7 @@ function QuoteForm({ onSubmit, handle }) {
   const [selectedCustomerType, setSelectedCustomerType] = useState("");
   const [selectedPolicyPlan, setSelectedPolicyPlan] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false); // for popup
+  const [showConfirmSave, setShowConfirmSave] = useState(false);
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
   const [stepsCompleted, setStepsCompleted] = useState([
@@ -21,6 +22,12 @@ function QuoteForm({ onSubmit, handle }) {
     false,
     false,
   ]);
+  
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Adds leading zero
+  const day = String(currentDate.getDate()).padStart(2, "0"); // Adds leading zero
+  const formattedDate = `${year}-${month}-${day}`;
 
   const [formData, setFormData] = useState({
     source: "P",
@@ -44,7 +51,7 @@ function QuoteForm({ onSubmit, handle }) {
     dor: "",
     prev_pol_end_date: "",
     man_year: "",
-    pol_start_date: "2024-10-19",
+    pol_start_date: formattedDate,
     prev_pol_type: "",
     claim_last: "",
     pre_pol_ncb: "",
@@ -1138,7 +1145,7 @@ function QuoteForm({ onSubmit, handle }) {
                       type="text"
                       value={formData[field]}
                       onChange={handleChange}
-                      className="items-center border-none text-base md:text-inherit md:p-2 p-1.5 shadow-inner bg-slate-100 rounded hover:text-gray-600 hover:bg-gray-100"
+                      className="items-center border-none cursor-pointer text-base md:text-inherit md:p-2 p-1.5 shadow-inner bg-slate-100 rounded hover:text-gray-600 hover:bg-gray-100"
                     >
                       <option key={index} value="">
                         Select{" "}
@@ -1610,14 +1617,21 @@ function QuoteForm({ onSubmit, handle }) {
   };
 
   // SAVE QUOTES
-  const handleSave = () => {
-    handleSubmit(); // Trigger form submission with __finalize = "0"
+  const handleSave = async () => {
+    setFormData({ ...formData, __finalize: "0" });
+    setShowConfirmSave(true);
   };
 
   const confirmFinalize = () => {
     handleSubmit();
     // Form conversion is confirmed
     setShowConfirmation(false);
+  };
+
+  const confirmSave = () => {
+    handleSubmit();
+    // Form conversion is confirmed
+    setShowConfirmSave(false);
   };
 
   return (
@@ -1672,14 +1686,14 @@ function QuoteForm({ onSubmit, handle }) {
           <div className="flex justify-between space-x-5">
             <button
               onClick={handleSave}
-              className="flex justify-center gap-2 items-center shadow-xl text-lg bg-slate-100 backdrop-blur-md lg:font-semibold isolation-auto border-none before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded before:bg-blue-700 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative md:px-8 md:py-2 px-3 py-1  overflow-hidden rounded group"
+              className="flex justify-center gap-2 items-center shadow-xl text-lg bg-slate-100 active:translate-y-[2px] backdrop-blur-md lg:font-semibold isolation-auto border-none before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded before:bg-blue-700 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative md:px-8 md:py-2 px-3 py-1  overflow-hidden rounded group"
               type="submit"
             >
               Save
             </button>
             <button
               onClick={handleConvert}
-              className="flex justify-center gap-2 items-center shadow-xl text-lg bg-slate-100 backdrop-blur-md lg:font-semibold isolation-auto border-none before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded before:bg-green-800 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative md:px-8 md:py-2 px-3 py-1  overflow-hidden rounded group"
+              className="flex justify-center gap-2 border-b-[4px] active:border-b-[2px]  active:translate-y-[2px] items-center shadow-xl text-lg bg-slate-100 backdrop-blur-md lg:font-semibold isolation-auto border-none before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded before:bg-green-800 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative md:px-8 md:py-2 px-3 py-1  overflow-hidden rounded group"
               type="submit"
             >
               Convert to Proposal
@@ -1690,28 +1704,61 @@ function QuoteForm({ onSubmit, handle }) {
       {/* </form> */}
 
       {showConfirmation && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 backdrop-blur-md flex items-center justify-center">
           <div className="bg-white p-4 rounded shadow-lg">
-            <h3 className="text-lg font-semibold mb-4">
-              {`Are you sure you want to submit ${formData.proposer_fname} ${formData.proposer_lname} quote?`}
+            <h3 className="text-lg font-semibold mb-8">
+            {`Are you sure you want to `}
+              <span className="text-blue-600 font-medium">_finalize</span>
+              {` ${formData.proposer_fname} ${formData.proposer_lname} quote?`}
             </h3>
-
             <div className="flex justify-end space-x-4">
               <button
                 className="bg-gray-300  cursor-pointer transition-all text-black font-mono font-bold px-6 py-1 rounded-lg
-border-gray-400
-border-b-[4px] hover:brightness-110  
-active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
-                onClick={() => setShowConfirmation(false)} // Close popup
+              border-gray-400
+                border-b-[4px] hover:brightness-110  
+                active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                onClick={() => setShowConfirmation(false)}
               >
                 No
               </button>
               <button
                 className=" cursor-pointer transition-all bg-green-600 text-black font-mono font-bold px-6 py-1 rounded-lg
-border-green-700
-border-b-[4px] hover:brightness-110 
-active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+              border-green-700
+                border-b-[4px] hover:brightness-110 
+                active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
                 onClick={confirmFinalize} // Set formData.__finalize to "1"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showConfirmSave && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 backdrop-blur-md flex items-center justify-center">
+          <div className="bg-white p-4 rounded shadow-lg">
+            <h3 className="text-lg mb-8">
+              {`Are you sure you want to `}
+              <span className="text-blue-600 font-medium">save</span>
+              {` ${formData.proposer_fname} ${formData.proposer_lname} quote?`}
+            </h3>
+            <div className="flex justify-end space-x-4">
+              <button
+                className="bg-gray-300  cursor-pointer transition-all text-black font-mono font-bold px-6 py-1 rounded-lg
+              border-gray-400
+                border-b-[4px] hover:brightness-110  
+                active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                onClick={() => setShowConfirmSave(false)}
+              >
+                No
+              </button>
+              <button
+                className=" cursor-pointer transition-all bg-blue-500 text-white font-mono font-bold px-6 py-1 rounded-lg
+              border-blue-600
+                border-b-[4px] hover:brightness-110 
+                active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                onClick={confirmSave} // Set formData.__finalize to "1"
               >
                 Yes
               </button>

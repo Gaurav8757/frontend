@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import Asidebar from "../API/Asidebar/Asidebar.jsx";
 import Navbar from "../API/Navbar/Navbar.jsx";
 import QuoteForm from "../API/Quoteform/QuoteForm.jsx";
+import Proposer from "../API/Proposer/Proposer.jsx";
 
 function AllMotorInsurances() {
   const [selectedOption, setSelectedOption] = useState("");
@@ -67,8 +68,7 @@ function AllMotorInsurances() {
     console.log(formData);
     
     try {
-      const response = await axios.post(
-        import.meta.env.VITE_TATA_AIG_4_WHEELER_QUOTE_URL,
+      const response = await axios.post("/api/motor/v1/quote",
         formData,
         { headers }
       );
@@ -124,7 +124,9 @@ function AllMotorInsurances() {
             handle={handleSubOptionChange}
           />
         )}
+      
       </main>
+      <Proposer/>
     </>
   );
 }
