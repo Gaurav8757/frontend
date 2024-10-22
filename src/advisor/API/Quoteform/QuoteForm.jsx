@@ -12,8 +12,8 @@ function QuoteForm({ onSubmit, handle }) {
   const [selectedBusinessName, setSelectedBusinessName] = useState("");
   const [selectedCustomerType, setSelectedCustomerType] = useState("");
   const [selectedPolicyPlan, setSelectedPolicyPlan] = useState("");
-  const [showConfirmation, setShowConfirmation] = useState(false); // for popup
   const [showConfirmSave, setShowConfirmSave] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false); // for popup
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
   const [stepsCompleted, setStepsCompleted] = useState([
@@ -22,7 +22,7 @@ function QuoteForm({ onSubmit, handle }) {
     false,
     false,
   ]);
-  
+
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Adds leading zero
@@ -1677,7 +1677,7 @@ function QuoteForm({ onSubmit, handle }) {
         {step < 4 ? (
           <button
             type="button"
-            className="flex justify-center gap-2 items-center shadow-xl text-lg bg-slate-100 backdrop-blur-md lg:font-semibold isolation-auto border-none before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded before:bg-green-800 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 md:px-8 md:py-2 px-3 py-1  overflow-hidden rounded group"
+            className="flex justify-center gap-2 items-center shadow-xl text-lg bg-slate-100 backdrop-blur-md lg:font-semibold isolation-auto border-none before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded before:bg-blue-700 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 md:px-8 md:py-2 px-3 py-1  overflow-hidden rounded group"
             onClick={handleNext}
           >
             Next
@@ -1707,7 +1707,7 @@ function QuoteForm({ onSubmit, handle }) {
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 backdrop-blur-md flex items-center justify-center">
           <div className="bg-white p-4 rounded shadow-lg">
             <h3 className="text-lg font-semibold mb-8">
-            {`Are you sure you want to `}
+              {`Are you sure you want to `}
               <span className="text-blue-600 font-medium">_finalize</span>
               {` ${formData.proposer_fname} ${formData.proposer_lname} quote?`}
             </h3>

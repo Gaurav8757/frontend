@@ -1,9 +1,24 @@
 import VITE_DATA from "../../config/config.jsx";
 const Data = {
   business_types: [
-    { id: 1, name: "New Business", value: "1", authLink: `${VITE_DATA}/tataaig/auth/details` },
-    { id: 2, name: "Rollover", value: "3", authLink: `${VITE_DATA}/tataaig/auth/details` },
-    { id: 3, name: "Used Vehicle", value: "4", authLink: `${VITE_DATA}/tataaig/auth/details`                                                                                                                                                                  },
+    {
+      id: 1,
+      name: "New Business",
+      value: "1",
+      authLink: `${VITE_DATA}/tataaig/auth/details`,
+    },
+    {
+      id: 2,
+      name: "Rollover",
+      value: "3",
+      authLink: `${VITE_DATA}/tataaig/auth/details`,
+    },
+    {
+      id: 3,
+      name: "Used Vehicle",
+      value: "4",
+      authLink: `${VITE_DATA}/tataaig/auth/details`,
+    },
   ],
 
   policyPlans: [
@@ -24,55 +39,128 @@ const Data = {
   ],
 
   paOwner: [
-    {id: "yes", name: "Yes", value: "true"},
-    {id: "no", name: "No", value: "false"}
+    { id: "yes", name: "Yes", value: "true" },
+    { id: "no", name: "No", value: "false" },
   ],
 
-  ownerTenure:[
-    1,3
+  ownerTenure: [1, 3],
+
+  gender: ["Male", "Female", "Others"],
+  occupation: [
+    "Accountant",
+    "Actor",
+    "Astronomer",
+    "Auto Mechanic",
+    "Bartender",
+    "Biologist",
+    "Carpenter",
+    "Chemist",
+    "Chef",
+    "Civil Engineer",
+    "Construction Worker",
+    "Data Scientist",
+    "Dentist",
+    "Electrician",
+    "Event Planner",
+    "Financial Analyst",
+    "Fitness Trainer",
+    "Flight Attendant",
+    "Graphic Designer",
+    "HR Manager",
+    "IT Support Specialist",
+    "Lawyer",
+    "Logistics Manager",
+    "Marketing Manager",
+    "Mechanical Engineer",
+    "Musician",
+    "Nurse",
+    "Pharmacist",
+    "Photographer",
+    "Pilot",
+    "Plumber",
+    "Police Officer",
+    "Real Estate Agent",
+    "Research Scientist",
+    "Social Worker",
+    "Sales Executive",
+    "Teacher",
+    "Translator",
+    "Travel Agent",
+    "Veterinarian",
+    "Waiter/Waitress",
+    "Web Developer",
+    "Environmental Scientist",
+    "Economist",
+    "Firefighter",
+    "Others",
   ],
-  
-    titles: [
-      "Adv",
-      "Brig",
-      "Capt",
-      "Col",
-      "Cust",
-      "Dr",
-      "Gen",
-      "Hon",
-      "Justice",
-      "Lady",
-      "Lt",
-      "Maj",
-      "Major",
-      "Mast",
-      "Md",
-      "Mis",
-      "Miss",
-      "M/s.",
-      "Mstr",
-      "Mr",
-      "Mrs",
-      "Ms",
-      "Mst",
-      "Phd",
-      "Prof",
-      "Rev",
-      "Shri",
-      "Sist",
-      "Wing Cdr",
-      "Wing Commander"
-    ],
-  
-    ncbvalues: [
-      { id: "0", ncb: 0 },
-      { id: "1", ncb: 20 },
-      { id: "2", ncb: 25 },
-      { id: "3", ncb: 40},
-      { id: "4", ncb: 80},
-      { id: "5", ncb: 100}
-    ],
+
+  financier_types: [
+    "Hypothecation",
+    "Mortgage",
+    "Lease",
+    "Pledge",
+    "Assignment",
+    "Lien",
+    "Collateral",
+  ],
+
+  financier_name: [
+    "State Bank of India (SBI)",
+    "HDFC Bank",
+    "ICICI Bank",
+    "Punjab National Bank (PNB)",
+    "Axis Bank",
+    "Kotak Mahindra Bank",
+    "Bank of Baroda",
+    "Canara Bank",
+    "Union Bank of India",
+    "IndusInd Bank",
+  ],
+
+  mstatus: ["Single", "Married", "Domestic Partnership"],
+
+  titles: [
+    "Adv",
+    "Brig",
+    "Capt",
+    "Col",
+    "Cust",
+    "Dr",
+    "Gen",
+    "Hon",
+    "Justice",
+    "Lady",
+    "Lt",
+    "Maj",
+    "Major",
+    "Mast",
+    "Md",
+    "Mis",
+    "Miss",
+    "M/s.",
+    "Mstr",
+    "Mr",
+    "Mrs",
+    "Ms",
+    "Mst",
+    "Phd",
+    "Prof",
+    "Rev",
+    "Shri",
+    "Sist",
+    "Wing Cdr",
+    "Wing Commander",
+  ],
+
+  ncbvalues: [
+    { id: "0", ncb: 0 },
+    { id: "1", ncb: 20 },
+    { id: "2", ncb: 25 },
+    { id: "3", ncb: 40 },
+    { id: "4", ncb: 80 },
+    { id: "5", ncb: 100 },
+  ],
 
   GeneralInsurance: [
     {
@@ -82,7 +170,7 @@ const Data = {
       categories: {
         motor: {
           "Pvt-Car": {
-            zero:{
+            zero: {
               name: "News",
               authLink: `${VITE_DATA}/tataaig/auth/details`,
               quoteLink: "https://uatapigw.tataaig.com/motor/v1/quote",

@@ -13,13 +13,15 @@ function AllMotorInsurances() {
   const [menuItems, setMenuItems] = useState({});
   const [selectedSubOption, setSelectedSubOption] = useState("");
   const [quoteResponses, setQuoteResponses] = useState("");
- console.log(quoteResponses);
- 
+  const [proposalResponses, setPropResponses] = useState("");
+  console.log(quoteResponses);
+  console.log(proposalResponses);
+
   // Handle SubOption change
   const handleSubOptionChange = (index) => {
     const selectedOption = menuItems[index];
     console.log(selectedOption.name);
-    
+
     sessionStorage.setItem("selectedSubOption", selectedOption.name);
     setSelectedSubOption(selectedOption.name);
     const authLink = selectedOption.authLink;
@@ -50,7 +52,6 @@ function AllMotorInsurances() {
     }
   };
 
-
   // Fetch data and handle sessionStorage for state persistence
   useEffect(() => {
     const storedSubOption = sessionStorage.getItem("selectedSubOption");
@@ -66,14 +67,40 @@ function AllMotorInsurances() {
       "Content-Type": "application/json",
     };
     console.log(formData);
-    
+
     try {
-      const response = await axios.post("/api/motor/v1/quote",
-        formData,
-        { headers }
-      );
+      const response = await axios.post("/api/motor/v1/quote", formData, {
+        headers,
+      });
       if (response.data.status === 200) {
         setQuoteResponses(response.data);
+        toast.success(`${response.data.message_txt}`);
+        console.log("Data successfully submitted:", response.data);
+        // Store the response in localStorage
+        localStorage.setItem("formResponse", JSON.stringify(response.data));
+      } else {
+        toast.error(`${response.data.message_txt}`);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Error fetching quote");
+      // handleSessionExpiry();
+    }
+  };
+
+  const handleSetAuthTokenToProposal = async (formData) => {
+    const authTokens = sessionStorage.getItem("auth_access_token");
+    const headers = {
+      Authorization: `${authTokens}`,
+      "Content-Type": "application/json",
+    };
+    console.log(formData);
+
+    try {
+      const response = await axios.post("/api/motor/v1/proposal", formData, {
+        headers,
+      });
+      if (response.data.status === 200) {
+        setPropResponses(response.data);
         toast.success(`${response.data.message_txt}`);
         console.log("Data successfully submitted:", response.data);
         // Store the response in localStorage
@@ -96,7 +123,6 @@ function AllMotorInsurances() {
   //   sessionStorage.removeItem("uat_token_received_at");
   //   navigate("/advisor/home/insurance");
   // };
-
 
   return (
     <>
@@ -124,9 +150,8 @@ function AllMotorInsurances() {
             handle={handleSubOptionChange}
           />
         )}
-      
+        <Proposer onSubmitProposal={handleSetAuthTokenToProposal} />
       </main>
-      <Proposer/>
     </>
   );
 }
