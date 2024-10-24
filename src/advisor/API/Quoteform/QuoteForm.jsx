@@ -391,6 +391,7 @@ function QuoteForm({ onSubmit, handle }) {
       setFormData({
         ...formData,
         [name]: value,
+        pol_plan_variant: selectedPlan ? selectedPlan.variant : "",
       });
 
       // Update selected plan name
@@ -399,7 +400,7 @@ function QuoteForm({ onSubmit, handle }) {
       setFormData({
         ...formData,
         [name]: value,
-        __finalize: "0",
+        // __finalize: "0",
       });
     }
   };
@@ -414,6 +415,7 @@ function QuoteForm({ onSubmit, handle }) {
       label: "Policy Plan",
       value: `(${formData.pol_plan_id}) ${selectedPolicyPlan}`,
     },
+    { label: "Policy Plan Variant", value: formData.pol_plan_variant },
     { label: "Veh. Reg. Type", value: registrationType },
     { label: "Veh. Reg. No", value: registrationParts },
     { label: "Pincode", value: formData.proposer_pincode },
@@ -445,11 +447,11 @@ function QuoteForm({ onSubmit, handle }) {
     { label: "Pa Paid", value: formData.pa_paid },
     { label: "Ll Paid", value: formData.ll_paid },
     { label: "Vehicle Blind", value: formData.vehicle_blind },
-    { label: "Antitheft Cover", value: formData.antitheft_cover },
+    
   ];
 
   // Add conditional fields based on business_type_no === "3"
-  if (formData.business_type_no === "3") {
+  if (formData.business_type_no === "03") {
     fieldMappings.push(
       { label: "Prev Policy Type", value: formData.prev_pol_type },
       { label: "Prev Policy NCB", value: formData.pre_pol_ncb },
@@ -473,6 +475,7 @@ function QuoteForm({ onSubmit, handle }) {
         label: "Atmob. Ascn Cover",
         value: formData.automobile_association_cover,
       },
+      { label: "Antitheft Cover", value: formData.antitheft_cover },
       { label: "Pa Paid", value: formData.pa_paid },
       { label: "Ll Paid", value: formData.ll_paid },
       { label: "Vehicle Blind", value: formData.vehicle_blind },
@@ -502,24 +505,24 @@ function QuoteForm({ onSubmit, handle }) {
         label: "Allowance Days Accident",
         value: formData.allowance_days_accident,
       },
-      { label: "Daily Allowance Limit", value: formData.daily_allowance_limit }
+      { label: "Daily Allowance Limit", value: formData.daily_allowance_limit },
+      {
+        label: "Allowance Days Loss",
+        value: formData.allowance_days_loss,
+      },
+      { label: "Pa Owner Declaration", value: formData.pa_owner_declaration },
+      { label: "Pa Unnamed No", value: formData.pa_unnamed_no },
+      { label: "Pa Unnamed Si", value: formData.pa_unnamed_si },
+      { label: "Pa Named", value: formData.pa_named },
+      { label: "Pa Unnamed Csi", value: formData.pa_unnamed_csi },
+      { label: "Franchise Days", value: formData.franchise_days },
+      { label: "Pa Paid No", value: formData.pa_paid_no },
     );
   }
   if (step && step === 4) {
     fieldMappings.push(
       { label: "PA Owner", value: formData.pa_owner },
       { label: "Onwer Tenure", value: formData.pa_owner_tenure },
-      { label: "Pa Owner Declaration", value: formData.pa_owner_declaration },
-      {
-        label: "Allowance Days Loss",
-        value: formData.allowance_days_loss,
-      },
-      { label: "Franchise Days", value: formData.franchise_days },
-      { label: "Pa Unnamed No", value: formData.pa_unnamed_no },
-      { label: "Pa Unnamed Si", value: formData.pa_unnamed_si },
-      { label: "Pa Named", value: formData.pa_named },
-      { label: "Pa Unnamed Csi", value: formData.pa_unnamed_csi },
-      { label: "Pa Paid No", value: formData.pa_paid_no },
       { label: "Pa Paid Si", value: formData.pa_paid_si },
       { label: "Ll Paid No", value: formData.ll_paid_no },
       { label: "Ll Paid Si", value: formData.ll_paid_si },
@@ -649,6 +652,22 @@ function QuoteForm({ onSubmit, handle }) {
                     {errors["pol_plan_id"]}
                   </p>
                 )}
+              </div>
+
+              <div>
+                <h1 className="text-sm text-start md:text-base font-semibold space-x-2 md:space-x-5 md:px-4 p-1">
+                  Selected Policy Variant
+                  <span className="text-red-500 font-extrabold"> *</span>
+                </h1>
+                <div className="flex p-1 md:px-4">
+                  <input
+                    type="text"
+                    name="pol_plan_variant"
+                    value={formData.pol_plan_variant}
+                    readOnly
+                    className="items-center border-none text-base md:text-inherit font-semibold md:p-2 p-1.5 shadow-inner text-gray-500 bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100"
+                  />
+                </div>
               </div>
 
               <div>
@@ -808,7 +827,7 @@ function QuoteForm({ onSubmit, handle }) {
                 )}
               </div>
 
-              {formData.business_type_no === "3" && (
+              {formData.business_type_no === "03" && (
                 <div>
                   <h1 className="text-sm text-start md:text-base font-semibold space-x-2 md:space-x-5 md:px-4 p-1">
                     Prev Policy Type
@@ -1031,7 +1050,7 @@ function QuoteForm({ onSubmit, handle }) {
                 )}
               </div>
 
-              {formData.business_type_no === "3" && (
+              {formData.business_type_no === "03" && (
                 <div>
                   <h1 className="text-sm text-start md:text-base font-semibold space-x-2 md:space-x-4 md:px-4 p-1">
                     Prev. Policy NCB
@@ -1057,7 +1076,7 @@ function QuoteForm({ onSubmit, handle }) {
                 </div>
               )}
 
-              {formData.business_type_no === "3" && (
+              {formData.business_type_no === "03" && (
                 <div>
                   <h1 className="text-sm text-start md:text-base font-semibold space-x-2 md:space-x-4 md:px-4 p-1">
                     Prev. CNG/LPG
@@ -1115,7 +1134,7 @@ function QuoteForm({ onSubmit, handle }) {
               {[
                 "tyre_secure",
                 "engine_secure",
-                "dep_reimburse ",
+                "dep_reimburse",
                 "add_towing",
                 "return_invoice",
                 "consumbale_expense",
@@ -1130,7 +1149,6 @@ function QuoteForm({ onSubmit, handle }) {
                 "pa_paid",
                 "ll_paid",
                 "vehicle_blind",
-                "antitheft_cover",
               ].map((field, index) => (
                 <div key={index} className="flex flex-col mb-4">
                   <h1 className="text-sm text-start md:text-base font-semibold space-x-2 md:space-x-4 md:px-4 p-1">
@@ -1163,7 +1181,7 @@ function QuoteForm({ onSubmit, handle }) {
                 </div>
               ))}
 
-              {formData.business_type_no === "3" &&
+              {formData.business_type_no === "03" &&
                 ["prev_tyre", "prev_engine", "prev_dep", "prev_consumable"].map(
                   (field, index) => (
                     <div key={index} className="flex flex-col ">
@@ -1380,9 +1398,6 @@ function QuoteForm({ onSubmit, handle }) {
 
               {[
                 "automobile_association_cover",
-                "pa_paid",
-                "ll_paid",
-                "vehicle_blind",
                 "antitheft_cover",
                 "tppd_discount",
                 "vintage_car",
@@ -1437,6 +1452,14 @@ function QuoteForm({ onSubmit, handle }) {
                 "dep_reimburse_claims",
                 "allowance_days_accident",
                 "daily_allowance_limit",
+                "allowance_days_loss",
+                "pa_owner_declaration",
+                "pa_unnamed_no",
+                "pa_unnamed_si",
+                "pa_named",
+                "pa_unnamed_csi",
+                "franchise_days",
+                "pa_paid_no",
               ].map((field, index) => (
                 <div key={index} className="flex flex-col mt-4">
                   <h1 className="text-sm text-start md:text-base font-semibold space-x-2 md:space-x-4 md:px-4 p-1">
@@ -1543,14 +1566,6 @@ function QuoteForm({ onSubmit, handle }) {
               )}
 
               {[
-                "pa_owner_declaration",
-                "allowance_days_loss",
-                "franchise_days",
-                "pa_unnamed_no",
-                "pa_unnamed_si",
-                "pa_named",
-                "pa_unnamed_csi",
-                "pa_paid_no",
                 "pa_paid_si",
                 "ll_paid_no",
                 "ll_paid_si",
@@ -1624,6 +1639,7 @@ function QuoteForm({ onSubmit, handle }) {
 
   const confirmFinalize = () => {
     handleSubmit();
+    // propo(true);
     // Form conversion is confirmed
     setShowConfirmation(false);
   };
@@ -1722,7 +1738,7 @@ function QuoteForm({ onSubmit, handle }) {
                 No
               </button>
               <button
-                className=" cursor-pointer transition-all bg-green-600 text-black font-mono font-bold px-6 py-1 rounded-lg
+                className="cursor-pointer transition-all bg-green-600 text-black font-mono font-bold px-6 py-1 rounded-lg
               border-green-700
                 border-b-[4px] hover:brightness-110 
                 active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"

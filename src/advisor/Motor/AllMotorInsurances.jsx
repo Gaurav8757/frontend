@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 // import VehicleRegistrationNo from "../vehicleNumber/VehicleRegistrationNo.jsx";
@@ -7,20 +6,23 @@ import Asidebar from "../API/Asidebar/Asidebar.jsx";
 import Navbar from "../API/Navbar/Navbar.jsx";
 import QuoteForm from "../API/Quoteform/QuoteForm.jsx";
 import Proposer from "../API/Proposer/Proposer.jsx";
+import VITE_DATA from "../../config/config.jsx";
 
 function AllMotorInsurances() {
   const [selectedOption, setSelectedOption] = useState("");
+  const [showProposer, setShowProposer] = useState(false);
   const [menuItems, setMenuItems] = useState({});
   const [selectedSubOption, setSelectedSubOption] = useState("");
   const [quoteResponses, setQuoteResponses] = useState("");
   const [proposalResponses, setPropResponses] = useState("");
+  const [token, setToken] = useState("");
+
   console.log(quoteResponses);
   console.log(proposalResponses);
 
   // Handle SubOption change
   const handleSubOptionChange = (index) => {
     const selectedOption = menuItems[index];
-    console.log(selectedOption.name);
 
     sessionStorage.setItem("selectedSubOption", selectedOption.name);
     setSelectedSubOption(selectedOption.name);
@@ -34,6 +36,7 @@ function AllMotorInsurances() {
           const uatLists = data.uatLists || {};
           const currentTime = Date.now();
           if (auth.access_token && auth.expires_in) {
+            setToken(auth.access_token);
             sessionStorage.setItem("auth_access_token", auth.access_token);
             sessionStorage.setItem("auth_expires_in", auth.expires_in);
             sessionStorage.setItem("auth_token_received_at", currentTime);
@@ -61,44 +64,50 @@ function AllMotorInsurances() {
   }, []);
 
   const handleSetAuthTokenToQuote = async (formData) => {
-    const authTokens = sessionStorage.getItem("auth_access_token");
+    // const authTokens = sessionStorage.getItem("auth_access_token");
     const headers = {
-      Authorization: `${authTokens}`,
+      Authorization: `${token}`,
       "Content-Type": "application/json",
     };
-    console.log(formData);
 
     try {
-      const response = await axios.post("/api/motor/v1/quote", formData, {
-        headers,
-      });
+      // const response = await axios.post('/api/motor/v1/quote', formData, {
+      const response = await axios.post(
+        `${VITE_DATA}/taig/motor/quote`,
+        formData,
+        {
+          headers,
+        }
+      );
+      console.log(response);
       if (response.data.status === 200) {
+        console.log(response.data);
         setQuoteResponses(response.data);
         toast.success(`${response.data.message_txt}`);
-        console.log("Data successfully submitted:", response.data);
-        // Store the response in localStorage
-        localStorage.setItem("formResponse", JSON.stringify(response.data));
+        setShowProposer(true); // Show Proposer on successful quote submissioN
       } else {
-        toast.error(`${response.data.message_txt}`);
+        toast.error(response.data.message_txt || response.data.message);
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Error fetching quote");
+      toast.error(error.response?.data?.message);
       // handleSessionExpiry();
     }
   };
 
   const handleSetAuthTokenToProposal = async (formData) => {
-    const authTokens = sessionStorage.getItem("auth_access_token");
+    // const authTokens = sessionStorage.getItem("auth_access_token");
     const headers = {
-      Authorization: `${authTokens}`,
+      Authorization: `${token}`,
       "Content-Type": "application/json",
     };
-    console.log(formData);
-
     try {
-      const response = await axios.post("/api/motor/v1/proposal", formData, {
-        headers,
-      });
+      const response = await axios.post(
+        `${VITE_DATA}/taig/motor/proposal`,
+        formData,
+        {
+          headers,
+        }
+      );
       if (response.data.status === 200) {
         setPropResponses(response.data);
         toast.success(`${response.data.message_txt}`);
@@ -150,7 +159,10 @@ function AllMotorInsurances() {
             handle={handleSubOptionChange}
           />
         )}
-        <Proposer onSubmitProposal={handleSetAuthTokenToProposal} />
+
+        {showProposer && (
+          <Proposer onSubmitProposal={handleSetAuthTokenToProposal} />
+        )}
       </main>
     </>
   );

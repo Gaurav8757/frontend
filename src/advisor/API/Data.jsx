@@ -4,29 +4,33 @@ const Data = {
     {
       id: 1,
       name: "New Business",
-      value: "1",
+      value: "01",
       authLink: `${VITE_DATA}/tataaig/auth/details`,
     },
     {
       id: 2,
       name: "Rollover",
-      value: "3",
+      value: "03",
       authLink: `${VITE_DATA}/tataaig/auth/details`,
     },
     {
       id: 3,
       name: "Used Vehicle",
-      value: "4",
+      value: "04",
       authLink: `${VITE_DATA}/tataaig/auth/details`,
     },
   ],
 
   policyPlans: [
-    { id: "01", name: "Standalone TP (1 year)" },
-    { id: "02", name: "Package (1 year OD + 1 year TP)" },
-    { id: "03", name: "Standalone TP (3 years)" },
-    { id: "04", name: "Package (1 year OD + 3 years TP)" },
-    { id: "05", name: "Standalone OD (1 year)" },
+    { id: "01", name: "Standalone TP (1 year)", variant: "Standalone TP" },
+    {
+      id: "02",
+      name: "Package (1 year OD + 1 year TP)",
+      variant: "PackagePolicy",
+    },
+    { id: "03", name: "Standalone TP (3 years)", variant: "Standalone TP" },
+    { id: "04", name: "Package (1 year OD + 3 years TP)", variant: "PackagePolicy" },
+    { id: "05", name: "Standalone OD (1 year)", variant: "Standalone OD" },
   ],
 
   customerTypes: [
