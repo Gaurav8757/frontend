@@ -117,10 +117,10 @@ function QuoteForm({ onSubmit, handle }) {
     load_imported: "",
     load_tuition: "",
     pa_unnamed_csi: "",
-    vehicle_make_no: "",
-    vehicle_model_no: "",
-    vehicle_variant_no: "",
-    place_reg_no: "",
+    vehicle_make_no: 140,
+    vehicle_model_no: 10361,
+    vehicle_variant_no: "103912",
+    place_reg_no: "99",
     pol_plan_variant: "",
     proposer_fname: "",
     proposer_mname: "",
@@ -130,12 +130,12 @@ function QuoteForm({ onSubmit, handle }) {
     claim_last_count: "",
     quote_id: "",
     product_id: "",
-    product_code: "",
+    product_code: "3184",
     product_name: "",
     ncb_protection: "",
-    ncb_no_of_claims: "",
-    motor_plan_opted: "",
-    motor_plan_opted_no: "",
+    ncb_no_of_claims: "1",
+    motor_plan_opted: "Silver",
+    motor_plan_opted_no: "P1",
     vehicle_idv: "",
     __finalize: "",
   });
@@ -396,7 +396,13 @@ function QuoteForm({ onSubmit, handle }) {
 
       // Update selected plan name
       setSelectedPolicyPlan(selectedPlan ? selectedPlan.name : "");
-    } else {
+    } else if(name === "man_year" || name === "vehicle_make_no" || name === "vehicle_model_no"){
+      setFormData({
+        ...formData,
+        [name]: Number(value),
+      })
+    }
+    else {
       setFormData({
         ...formData,
         [name]: value,
@@ -447,7 +453,6 @@ function QuoteForm({ onSubmit, handle }) {
     { label: "Pa Paid", value: formData.pa_paid },
     { label: "Ll Paid", value: formData.ll_paid },
     { label: "Vehicle Blind", value: formData.vehicle_blind },
-    
   ];
 
   // Add conditional fields based on business_type_no === "3"
@@ -516,7 +521,7 @@ function QuoteForm({ onSubmit, handle }) {
       { label: "Pa Named", value: formData.pa_named },
       { label: "Pa Unnamed Csi", value: formData.pa_unnamed_csi },
       { label: "Franchise Days", value: formData.franchise_days },
-      { label: "Pa Paid No", value: formData.pa_paid_no },
+      { label: "Pa Paid No", value: formData.pa_paid_no }
     );
   }
   if (step && step === 4) {
@@ -665,7 +670,7 @@ function QuoteForm({ onSubmit, handle }) {
                     name="pol_plan_variant"
                     value={formData.pol_plan_variant}
                     readOnly
-                    className="items-center border-none text-base md:text-inherit font-semibold md:p-2 p-1.5 shadow-inner text-gray-500 bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100"
+                    className="items-center border-none text-base md:text-inherit font-semibold md:p-2 p-1.5 shadow-inner text-gray-500 bg-slate-100 hover:text-gray-600 hover:bg-gray-100"
                   />
                 </div>
               </div>
@@ -810,8 +815,8 @@ function QuoteForm({ onSubmit, handle }) {
                     <option className="font-semibold" value="">
                       Select Pincode
                     </option>
-                    <option className="font-semibold" value="805110">
-                      nwd
+                    <option className="font-semibold" value="400001">
+                      Mumbai
                     </option>
                     {/* {Data.policyPlans.map((plan) => (
                 <option key={plan.id} value={plan.id}>
@@ -847,7 +852,7 @@ function QuoteForm({ onSubmit, handle }) {
                         />
                         <label
                           htmlFor={type.id}
-                          className={`inline-flex items-center px-2 justify-between p-1  shadow-inner text-gray-500 bg-slate-100 border border-gray-200 rounded cursor-pointer peer-checked:border-blue-600 peer-checked:bg-gradient-to-t from-blue-700 to-blue-600 peer-checked:text-white hover:text-gray-600 hover:bg-gray-100`}
+                          className={`inline-flex items-center px-2 justify-between p-1  shadow-inner text-gray-500 bg-slate-100 border border-gray-200 rounded peer-checked:border-blue-600 peer-checked:bg-gradient-to-t from-blue-700 to-blue-600 peer-checked:text-white hover:text-gray-600 hover:bg-gray-100`}
                         >
                           <div className="block my-auto">
                             <div className="w-auto text-base md:text-lg font-semibold">
@@ -879,8 +884,8 @@ function QuoteForm({ onSubmit, handle }) {
                     <option className="font-semibold" value="">
                       Select City
                     </option>
-                    <option className="font-semibold" value="patna">
-                      Patna
+                    <option className="font-semibold" value="MUMBAI">
+                      Mumbai
                     </option>
                     {/* {Data.policyPlans.map((plan) => (
                 <option key={plan.id} value={plan.id}>
@@ -909,13 +914,10 @@ function QuoteForm({ onSubmit, handle }) {
                     max={2100}
                     value={formData.man_year}
                     onChange={handleChange}
-                    onInput={(e) => {
-                      e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Only allows numbers
-                    }}
                     className={`${
                       errors["man_year"] ? "border-red-500" : "border-none"
                     }
-                      items-center  text-base md:text-inherit font-semibold md:p-2 p-1.5 shadow-inner text-gray-500 bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+                      items-center  text-base md:text-inherit font-semibold md:p-2 p-1.5 shadow-inner text-gray-500 bg-slate-100 rounded  hover:text-gray-600 hover:bg-gray-100`}
                   />
                 </div>
                 {errors["man_year"] && (
@@ -938,7 +940,7 @@ function QuoteForm({ onSubmit, handle }) {
                     onChange={handleChange}
                     className={`${
                       errors["dor"] ? "border-red-500" : "border-none"
-                    } items-center text-base md:text-inherit font-semibold md:p-2 p-1 shadow-inner text-gray-500 bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+                    } items-center text-base md:text-inherit font-semibold md:p-2 p-1 shadow-inner text-gray-500 bg-slate-100 rounded  hover:text-gray-600 hover:bg-gray-100`}
                   />
                 </div>
                 {errors["dor"] && (
@@ -966,8 +968,8 @@ function QuoteForm({ onSubmit, handle }) {
                     <option className="font-semibold" value="">
                       Select Manufacturer
                     </option>
-                    <option className="font-semibold" value="tata">
-                      Tata
+                    <option className="font-semibold" value="TATA MOTORS">
+                    TATA MOTORS
                     </option>
                     {/* {Data.policyPlans.map((plan) => (
                 <option key={plan.id} value={plan.id}>
@@ -999,8 +1001,8 @@ function QuoteForm({ onSubmit, handle }) {
                     <option className="font-semibold" value="">
                       Select Model
                     </option>
-                    <option className="font-semibold" value="SUV">
-                      SUV
+                    <option className="font-semibold" value="HARRIER">
+                    HARRIER
                     </option>
                     {/* {Data.policyPlans.map((plan) => (
                 <option key={plan.id} value={plan.id}>
@@ -1033,8 +1035,8 @@ function QuoteForm({ onSubmit, handle }) {
                     <option className="font-semibold" value="">
                       Select Variant
                     </option>
-                    <option className="font-semibold" value="700">
-                      SUV700
+                    <option className="font-semibold" value="XT">
+                      XT
                     </option>
                     {/* {Data.policyPlans.map((plan) => (
                 <option key={plan.id} value={plan.id}>
@@ -1265,7 +1267,7 @@ function QuoteForm({ onSubmit, handle }) {
                         errors["proposer_fname"]
                           ? "border-red-500"
                           : "border-none"
-                      } items-cente w-5/6 text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+                      } items-cente w-5/6 text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded hover:text-gray-600 hover:bg-gray-100`}
                     />
                   </div>
                   {errors["proposer_fname"] && (
@@ -1289,7 +1291,7 @@ function QuoteForm({ onSubmit, handle }) {
                         errors["proposer_mname"]
                           ? "border-red-500"
                           : "border-none"
-                      } items-center w-5/6 text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+                      } items-center w-5/6 text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded  hover:text-gray-600 hover:bg-gray-100`}
                     />
                   </div>
                   {errors["proposer_mname"] && (
@@ -1313,7 +1315,7 @@ function QuoteForm({ onSubmit, handle }) {
                         errors["proposer_lname"]
                           ? "border-red-500"
                           : "border-none"
-                      } items-center w-5/6 text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+                      } items-center w-5/6 text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded hover:text-gray-600 hover:bg-gray-100`}
                     />
                   </div>
                   {errors["proposer_lname"] && (
@@ -1339,7 +1341,7 @@ function QuoteForm({ onSubmit, handle }) {
                       errors["proposer_email"]
                         ? "border-red-500"
                         : "border-none"
-                    } items-center w-5/6 text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+                    } items-center w-5/6 text-base md:text-lg md:p-1 p-1 shadow-inner  bg-slate-100 rounded hover:text-gray-600 hover:bg-gray-100`}
                   />
                 </div>
                 {errors["proposer_email"] && (
@@ -1522,7 +1524,7 @@ function QuoteForm({ onSubmit, handle }) {
                         htmlFor={pa.id}
                         className={`${
                           errors["pa_owner"] ? "border-red-500 " : ""
-                        } inline-flex  items-center px-2 justify-between p-1 shadow-inner text-gray-500 bg-slate-100 border border-gray-200 rounded cursor-pointer peer-checked:border-blue-600 peer-checked:bg-gradient-to-t from-blue-700 to-blue-600 peer-checked:text-white hover:text-gray-600 hover:bg-gray-100`}
+                        } inline-flex  items-center px-2 justify-between p-1 shadow-inner text-gray-500 bg-slate-100 border cursor-pointer border-gray-200 rounded peer-checked:border-blue-600 peer-checked:bg-gradient-to-t from-blue-700 to-blue-600 peer-checked:text-white hover:text-gray-600 hover:bg-gray-100`}
                       >
                         <div className="block my-auto">
                           <div className="w-auto text-base md:text-lg font-semibold">
@@ -1550,7 +1552,7 @@ function QuoteForm({ onSubmit, handle }) {
                       name="pa_owner_tenure"
                       value={formData.pa_owner_tenure}
                       onChange={handleChange}
-                      className={`items-center border-none text-base md:text-inherit font-semibold md:p-1.5 p-1 shadow-inner text-gray-500 bg-slate-100 rounded cursor-pointer  hover:text-gray-600 hover:bg-gray-100`}
+                      className={`items-center border-none text-base md:text-inherit font-semibold md:p-1.5 p-1 shadow-inner text-gray-500 bg-slate-100 rounded  hover:text-gray-600 hover:bg-gray-100`}
                     >
                       <option className="font-semibold" value="">
                         Select Tenure
